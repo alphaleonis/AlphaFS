@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">The format of the path.</param>
       /// <param name="typeOfT">The type of objects to be retrieved.</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-      public FindFileSystemEntryInfo(KernelTransaction transaction, bool isFolder, string path, string searchPattern, DirectoryEnumerationOptions? options, DirectoryEnumerationFilters customFilters, PathFormat pathFormat, Type typeOfT)
+      internal FindFileSystemEntryInfo(KernelTransaction transaction, bool isFolder, string path, string searchPattern, DirectoryEnumerationOptions? options, DirectoryEnumerationFilters customFilters, PathFormat pathFormat, Type typeOfT)
       {
          if (null == options)
             throw new ArgumentNullException("options");
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
          OriginalInputPath = path;
 
          InputPath = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
-
+         
          IsRelativePath = !Path.IsPathRooted(OriginalInputPath, false);
 
          RelativeAbsolutePrefix = IsRelativePath ? InputPath.Replace(OriginalInputPath, string.Empty) : null;
@@ -411,21 +411,22 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private void VerifyInstanceType(NativeMethods.WIN32_FIND_DATA win32FindData)
+      internal void VerifyInstanceType(NativeMethods.WIN32_FIND_DATA win32FindData)
       {
-         var regularPath = Path.GetCleanExceptionPath(InputPath);
-
-         var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
-
-
+         var isFolder = File.IsDirectory(win32FindData.dwFileAttributes);
+         
          if (IsDirectory)
          {
             if (!isFolder)
-               throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_PATH_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, regularPath)));
+               //throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture,
+               throw new IOException(string.Format(CultureInfo.InvariantCulture,
+                  "({0}) {1}", Win32Errors.ERROR_PATH_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, Path.GetCleanExceptionPath(InputPath))));
          }
 
          else if (isFolder)
-            throw new FileNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, regularPath)));
+            //throw new FileNotFoundException(string.Format(CultureInfo.InvariantCulture,
+            throw new IOException(string.Format(CultureInfo.InvariantCulture,
+               "({0}) {1}", Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, Path.GetCleanExceptionPath(InputPath))));
       }
 
 
@@ -538,26 +539,6 @@ namespace Alphaleonis.Win32.Filesystem
          {
             NativeMethods.WIN32_FIND_DATA win32FindData;
 
-
-            // Not explicitly set to be a folder.
-
-            if (!IsDirectory)
-            {
-               using (var handle = FindFirstFile(InputPath, out win32FindData))
-               {
-                  if (null != handle)
-                     VerifyInstanceType(win32FindData);
-
-                  else
-                     return (T) (object) null;
-
-
-                  return NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, null, null, InputPath, win32FindData);
-               }
-
-            }
-
-
             using (var handle = FindFirstFile(InputPath, out win32FindData, true))
             {
                if (null == handle)
@@ -566,7 +547,10 @@ namespace Alphaleonis.Win32.Filesystem
 
                   var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
 
-                  var lastError = File.FillAttributeInfoCore(Transaction, Path.GetRegularPathCore(InputPath, GetFullPathOptions.None, false), ref attrs, false, true);
+                  //var lastError = File.FillAttributeInfoCore(Transaction, Path.GetRegularPathCore(InputPath, GetFullPathOptions.None, false), ref attrs, false, true);
+
+                  var lastError = File.FillAttributeInfoCore(Transaction, InputPath, ref attrs, false, true);
+
                   if (lastError != Win32Errors.NO_ERROR)
                   {
                      if (!ContinueOnException)

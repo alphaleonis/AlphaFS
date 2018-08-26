@@ -163,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
                   path = ApplyFullPathOptions(path, options);
                }
 
-               return path;
+               return path.StartsWith(LongPathPrefix, StringComparison.Ordinal) ? path : GetLongPathCore(path, options);
 
 
             case PathFormat.FullPath:

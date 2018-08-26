@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_ThrowsDirectoryNotFoundException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
+      public void Directory_Delete_PathIsAFileNotADirectory_ThrowsIOException_LocalAndNetwork_Success()
       {
-         Directory_Delete_ThrowsDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(false);
-         Directory_Delete_ThrowsDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(true);
+         Directory_Delete_PathIsAFileNotADirectory_ThrowsIOException(false);
+         Directory_Delete_PathIsAFileNotADirectory_ThrowsIOException(true);
       }
+      
 
-
-      private void Directory_Delete_ThrowsDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(bool isNetwork)
+      private void Directory_Delete_PathIsAFileNotADirectory_ThrowsIOException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -45,14 +45,11 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
-
             UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.Delete(file.FullName));
-            
 
-            // 2018-05-29 BUG: Throws wrong Exception.
-            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(file.FullName));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(file.FullName));
          }
-         
+
          Console.WriteLine();
       }
    }

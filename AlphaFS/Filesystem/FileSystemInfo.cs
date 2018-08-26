@@ -357,6 +357,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       private FileSystemEntryInfo _entryInfo;
+
       /// <summary>[AlphaFS] Gets the instance of the <see cref="FileSystemEntryInfo"/> class.</summary>
       public FileSystemEntryInfo EntryInfo
       {
@@ -392,7 +393,7 @@ namespace Alphaleonis.Win32.Filesystem
       protected bool IsDirectory { get; set; }
 
 
-      /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
+      /// <summary>The full path of the file system object in long path format.</summary>
       protected string LongFullName { get; set; }
 
 
@@ -491,12 +492,12 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Refreshes the current <see cref="FileSystemInfo"/> instance (<see cref="DirectoryInfo"/> or <see cref="FileInfo"/>) with a new destination path.</summary>
-      internal void UpdateSourcePath(string destinationPath, string destinationPathLp)
+      internal void UpdateSourcePath(string newSourcePathLp)
       {
-         LongFullName = destinationPathLp;
-         FullPath = null != destinationPathLp ? Path.GetRegularPathCore(LongFullName, GetFullPathOptions.None, false) : null;
+         LongFullName = newSourcePathLp;
+         FullPath = null != newSourcePathLp ? Path.GetRegularPathCore(LongFullName, GetFullPathOptions.None, false) : null;
 
-         OriginalPath = destinationPath;
+         OriginalPath = newSourcePathLp;
          DisplayPath = null != OriginalPath ? Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None, false) : null;
 
          // Flush any cached information about the FileSystemInfo instance.

@@ -609,7 +609,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          _name = Path.GetFileName(destinationPathLp, true);
 
-         UpdateSourcePath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPathLp);
       }
 
       #endregion // Internal Methods

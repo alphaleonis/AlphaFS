@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void CreateJunction(string junctionPath)
       {
-         UpdateSourcePath(junctionPath, Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, false, false, PathFormat.RelativePath));
+         UpdateSourcePath(Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, false, false, PathFormat.RelativePath));
 
          RefreshEntryInfo();
       }
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void CreateJunction(string junctionPath, PathFormat pathFormat)
       {
-         UpdateSourcePath(junctionPath, Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, false, false, pathFormat));
+         UpdateSourcePath(Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, false, false, pathFormat));
 
          RefreshEntryInfo();
       }
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void CreateJunction(string junctionPath, bool overwrite)
       {
-         UpdateSourcePath(junctionPath, Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, overwrite, false, PathFormat.RelativePath));
+         UpdateSourcePath(Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, overwrite, false, PathFormat.RelativePath));
 
          RefreshEntryInfo();
       }
@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void CreateJunction(string junctionPath, bool overwrite, PathFormat pathFormat)
       {
-         UpdateSourcePath(junctionPath, Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, overwrite, false, pathFormat));
+         UpdateSourcePath(Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, overwrite, false, pathFormat));
 
          RefreshEntryInfo();
       }
@@ -167,7 +167,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void CreateJunction(string junctionPath, bool overwrite, bool copyTargetTimestamps)
       {
-         UpdateSourcePath(junctionPath, Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, overwrite, copyTargetTimestamps, PathFormat.RelativePath));
+         UpdateSourcePath(Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, overwrite, copyTargetTimestamps, PathFormat.RelativePath));
 
          RefreshEntryInfo();
       }
@@ -198,7 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void CreateJunction(string junctionPath, bool overwrite, bool copyTargetTimestamps, PathFormat pathFormat)
       {
-         UpdateSourcePath(junctionPath, Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, overwrite, copyTargetTimestamps, pathFormat));
+         UpdateSourcePath(Directory.CreateJunctionCore(Transaction, junctionPath, LongFullName, overwrite, copyTargetTimestamps, pathFormat));
 
          RefreshEntryInfo();
       }

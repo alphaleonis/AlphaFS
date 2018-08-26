@@ -28,24 +28,24 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-
+      
       [TestMethod]
-      public void AlphaFS_Directory_GetFileSystemEntryInfo_FileExistsWithSameNameAsDirectory_ThrowsDirectoryNotFoundException_LocalAndNetwork_Success()
+      public void AlphaFS_File_GetFileSystemEntryInfo_DirectoryExistsWithSameNameAsFile_ThrowsIOException_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_GetFileSystemEntryInfo_FileExistsWithSameNameAsDirectory_ThrowsDirectoryNotFoundException(false);
-         AlphaFS_Directory_GetFileSystemEntryInfo_FileExistsWithSameNameAsDirectory_ThrowsDirectoryNotFoundException(true);
+         AlphaFS_File_GetFileSystemEntryInfo_DirectoryExistsWithSameNameAsFile_ThrowsIOException(false);
+         AlphaFS_File_GetFileSystemEntryInfo_DirectoryExistsWithSameNameAsFile_ThrowsIOException(true);
       }
 
 
-      private void AlphaFS_Directory_GetFileSystemEntryInfo_FileExistsWithSameNameAsDirectory_ThrowsDirectoryNotFoundException(bool isNetwork)
+      private void AlphaFS_File_GetFileSystemEntryInfo_DirectoryExistsWithSameNameAsFile_ThrowsIOException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateFileRandomizedAttributes();
+            var folder = tempRoot.CreateDirectoryRandomizedAttributes();
 
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
-            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(folder.FullName));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(folder.FullName));
          }
 
          Console.WriteLine();

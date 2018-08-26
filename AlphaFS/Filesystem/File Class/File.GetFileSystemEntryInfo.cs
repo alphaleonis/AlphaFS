@@ -152,7 +152,21 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var options = continueOnException ? DirectoryEnumerationOptions.ContinueOnException : DirectoryEnumerationOptions.None;
 
-         return new FindFileSystemEntryInfo(transaction, isFolder, path, Path.WildcardStarMatchAll, options, null, pathFormat, typeof(FileSystemEntryInfo)).Get<FileSystemEntryInfo>();
+         //return new FindFileSystemEntryInfo(transaction, isFolder, path, Path.WildcardStarMatchAll, options, null, pathFormat, typeof(FileSystemEntryInfo)).Get<FileSystemEntryInfo>();
+
+         var ffsei = new FindFileSystemEntryInfo(transaction, isFolder, path, Path.WildcardStarMatchAll, options, null, pathFormat, typeof(FileSystemEntryInfo));
+
+         var fsei = ffsei.Get<FileSystemEntryInfo>();
+
+         if (null != fsei)
+         {
+            if (fsei.FileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.Ordinal))
+               return null;
+
+            ffsei.VerifyInstanceType(fsei.Win32FindData);
+         }
+
+         return fsei;
       }
    }
 }

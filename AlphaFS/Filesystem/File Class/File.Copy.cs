@@ -1050,17 +1050,14 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (null != sourcePath && sourcePath.Equals(destinationPath, StringComparison.Ordinal))
             NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPath);
-
-
-         sourcePathLp = sourcePath;
-         destinationPathLp = destinationPath;
+         
 
          isCopy = IsCopyAction(copyOptions, moveOptions);
 
          var isMove = !isCopy;
          emulateMove = false;
 
-         delayUntilReboot = isMove && VerifyDelayUntilReboot(sourcePathLp, moveOptions, pathFormat);
+         delayUntilReboot = isMove && VerifyDelayUntilReboot(sourcePath, moveOptions, pathFormat);
 
          // When destinationPath is null, the file or folder needs to be removed on Computer startup.
          deleteOnStartup = delayUntilReboot && null == destinationPath;
@@ -1091,7 +1088,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                Path.CheckSupportedPathFormat(sourcePath, true, true);
 
-               sourcePathLp = Path.GetExtendedLengthPathCore(transaction, sourcePath, pathFormat, fullPathOptions);
+               sourcePath = Path.GetExtendedLengthPathCore(transaction, sourcePath, pathFormat, fullPathOptions);
             }
 
 
@@ -1099,9 +1096,14 @@ namespace Alphaleonis.Win32.Filesystem
             {
                Path.CheckSupportedPathFormat(destinationPath, true, true);
 
-               destinationPathLp = Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, fullPathOptions);
+               destinationPath = Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, fullPathOptions);
             }
          }
+
+
+         sourcePathLp = sourcePath;
+
+         destinationPathLp = destinationPath;
       }
 
 

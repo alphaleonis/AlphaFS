@@ -69,8 +69,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          var driveExists = null != drive && File.ExistsCore(transaction, true, drive, PathFormat.FullPath);
 
-         var regularPath = Path.GetCleanExceptionPath(path);
-
 
          if (!driveExists && throwIfDriveNotExists || lastError == Win32Errors.ERROR_NOT_READY)
             throw new DeviceNotReadyException(drive, true);
@@ -83,15 +81,15 @@ namespace Alphaleonis.Win32.Filesystem
             if (lastError != Win32Errors.NO_ERROR)
             {
                if (lastError == Win32Errors.ERROR_PATH_NOT_FOUND)
-                  throw new DirectoryNotFoundException(regularPath);
+                  throw new DirectoryNotFoundException(Path.GetCleanExceptionPath(path));
 
 
                if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
                {
                   if (isFolder)
-                     throw new DirectoryNotFoundException(regularPath);
+                     throw new DirectoryNotFoundException(Path.GetCleanExceptionPath(path));
 
-                  throw new FileNotFoundException(regularPath);
+                  throw new FileNotFoundException(Path.GetCleanExceptionPath(path));
                }
             }
          }
