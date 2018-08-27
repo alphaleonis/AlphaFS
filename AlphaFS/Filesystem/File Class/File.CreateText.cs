@@ -20,9 +20,9 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Security;
 using System.Text;
-using StreamWriter = System.IO.StreamWriter;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates or opens a file for writing UTF-8 encoded text.</summary>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
+      /// <returns>Returns a StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public static StreamWriter CreateText(string path)
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
+      /// <returns>Returns a StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public static StreamWriter CreateText(string path, PathFormat pathFormat)
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
+      /// <returns>Returns a StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public static StreamWriter CreateText(string path, Encoding encoding, PathFormat pathFormat)

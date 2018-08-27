@@ -19,11 +19,11 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Network
       #region Methods
 
       /// <summary>Returns the Universal Naming Convention (UNC) path of the DFS root or link.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return EntryPath;

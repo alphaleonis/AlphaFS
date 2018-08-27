@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the root directory information of the specified path.</summary>
       /// <returns>
-      ///   Returns the root directory of <paramref name="path"/>, such as "C:\",
+      ///   Returns the root directory of <paramref name="path"/>, such as <c>C:\</c>,
       ///   or <c>null</c> if <paramref name="path"/> is <c>null</c>,
       ///   or an empty string if <paramref name="path"/> does not contain root directory information.
       /// </returns>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the root directory information of the specified path.</summary>
       /// <returns>
-      ///   Returns the root directory of <paramref name="path"/>, such as "C:\",
+      ///   Returns the root directory of <paramref name="path"/>, such as <c>C:\</c>,
       ///   or <c>null</c> if <paramref name="path"/> is <c>null</c>,
       ///   or an empty string if <paramref name="path"/> does not contain root directory information.
       /// </returns>

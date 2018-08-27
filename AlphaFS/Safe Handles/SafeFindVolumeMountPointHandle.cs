@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       protected override bool ReleaseHandle()
       {
-         return NativeMethods.FindVolumeMountPointClose(handle);
+         return Device.NativeMethods.FindVolumeMountPointClose(handle);
       }
    }
 }

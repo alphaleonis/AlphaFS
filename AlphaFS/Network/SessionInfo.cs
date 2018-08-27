@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Network
    [Serializable]
    public sealed class SessionInfo
    {
-      #region Private Fields
+      #region Fields
 
       private string _netName;
 
@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Network
       #region Methods
 
       /// <summary>Returns the host name of this session information.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return HostName;

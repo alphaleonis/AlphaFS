@@ -1,0 +1,253 @@
+/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
+ */
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Security;
+
+namespace Alphaleonis.Win32.Device
+{
+   /// <summary>[AlphaFS] Provides access to GPT partition information of a storage device.</summary>
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt"), Serializable]
+   [SecurityCritical]
+   public sealed class StorageGptPartitionInfo
+   {
+      #region Fields
+
+      private readonly int _partitionNumber;
+      private ulong _partitionLength;
+      private ulong _startingOffset;
+
+      #endregion // Private Fields
+
+
+      #region Constructors
+
+      /// <summary>[AlphaFS] Initializes an empty StorageGptPartitionInfo instance.</summary>
+      public StorageGptPartitionInfo()
+      {
+         _partitionNumber = -1;
+      }
+
+
+      internal StorageGptPartitionInfo(NativeMethods.PARTITION_INFORMATION_EX partition, PartitionType[] partitionTypes) : this()
+      {
+         _partitionLength = partition.PartitionLength;
+
+         _startingOffset = partition.StartingOffset;
+
+         _partitionNumber = (int) partition.PartitionNumber;
+
+         
+         RewritePartition = partition.RewritePartition;
+         
+         var gptPartition = partition.Gpt;
+         
+         Description = gptPartition.Name.Trim();
+
+         PartitionId = gptPartition.PartitionId;
+         
+         
+         
+         
+         // Convert the native enum since it is of type ulong.
+
+         var attrs = gptPartition.Attributes;
+
+         if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_ATTRIBUTE_PLATFORM_REQUIRED) != 0)
+            Attributes |= EfiPartitionAttributes.PlatformRequired;
+
+         if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_READ_ONLY) != 0)
+            Attributes |= EfiPartitionAttributes.ReadOnly;
+
+         if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_SHADOW_COPY) != 0)
+            Attributes |= EfiPartitionAttributes.ShadowCopy;
+
+         if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_HIDDEN) != 0)
+            Attributes |= EfiPartitionAttributes.Hidden;
+
+         if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_NO_DRIVE_LETTER) != 0)
+            Attributes |= EfiPartitionAttributes.NoDriveLetter;
+
+
+
+
+         var partitionType = gptPartition.PartitionType.ToString();
+
+         foreach (var guid in partitionTypes)
+            if (partitionType.Equals(Utils.GetEnumDescription(guid), StringComparison.OrdinalIgnoreCase))
+            {
+               PartitionType = guid;
+               break;
+            }
+      }
+
+      #endregion // Constructors
+
+
+      #region Properties
+
+      /// <summary>The Extensible Firmware Interface (EFI) attributes of the partition.</summary>
+      public EfiPartitionAttributes Attributes { get; private set; }
+
+
+      /// <summary>The description of the partition.</summary>
+      public string Description { get; private set; }
+
+
+      /// <summary>The GUID of the partition.</summary>
+      public Guid PartitionId { get; private set; }
+
+
+      /// <summary>The size of the partition.</summary>
+      public long PartitionLength
+      {
+         get
+         {
+            unchecked
+            {
+               return (long) _partitionLength;
+            }
+         }
+
+         internal set
+         {
+            unchecked
+            {
+               _partitionLength = (ulong) value;
+            }
+         }
+      }
+
+
+#if DEBUG
+      /// <summary/>
+      public string PartitionLengthUnitSize
+      {
+         get { return Utils.UnitSizeToText(PartitionLength); }
+      }
+#endif
+
+
+      /// <summary>The storage partition number, starting at 1.</summary>
+      public int PartitionNumber
+      {
+         get { return _partitionNumber; }
+      }
+
+
+      /// <summary>The the partition type. Each partition type that the EFI specification supports is identified by its own GUID, which is published by the developer of the partition.</summary>
+      public PartitionType PartitionType { get; private set; }
+
+
+      /// <summary>The rewritable status of the storage partition.</summary>
+      public bool RewritePartition { get; private set; }
+
+
+      /// <summary>The starting offset of the partition.</summary>
+      public long StartingOffset
+      {
+         get
+         {
+            unchecked
+            {
+               return (long) _startingOffset;
+            }
+         }
+
+         internal set
+         {
+            unchecked
+            {
+               _startingOffset = (ulong) value;
+            }
+         }
+      }
+
+      #endregion // Properties
+
+
+      #region Methods
+
+      /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
+      /// <returns>Returns a string that represents this instance.</returns>
+      public override string ToString()
+      {
+         return string.Format(CultureInfo.CurrentCulture, "{0} {1}", Description, Attributes.ToString()).Trim();
+      }
+
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="obj">Another object to compare to.</param>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+      public override bool Equals(object obj)
+      {
+         if (null == obj || GetType() != obj.GetType())
+            return false;
+
+         var other = obj as StorageGptPartitionInfo;
+
+         return null != other &&
+                other.Attributes == Attributes &&
+                other.Description == Description &&
+                other.PartitionId == PartitionId &&
+                other.PartitionLength == PartitionLength &&
+                other.PartitionNumber == PartitionNumber &&
+                other.PartitionType == PartitionType &&
+                other.RewritePartition == RewritePartition &&
+                other.StartingOffset == StartingOffset;
+      }
+
+
+      /// <summary>Serves as a hash function for a particular type.</summary>
+      /// <returns>Returns a hash code for the current Object.</returns>
+      public override int GetHashCode()
+      {
+         unchecked
+         {
+            return PartitionLength.GetHashCode() + StartingOffset.GetHashCode() + PartitionNumber.GetHashCode();
+         }
+      }
+
+
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(StorageGptPartitionInfo left, StorageGptPartitionInfo right)
+      {
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
+      }
+
+
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(StorageGptPartitionInfo left, StorageGptPartitionInfo right)
+      {
+         return !(left == right);
+      }
+
+      #endregion // Methods
+   }
+}

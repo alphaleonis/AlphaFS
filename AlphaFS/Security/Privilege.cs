@@ -320,7 +320,7 @@ namespace Alphaleonis.Win32.Security
             NativeError.ThrowException(lastError, _name);
 
 
-         return Filesystem.NativeMethods.LuidToLong(luid);
+         return Utils.LuidToLong(luid);
       }
 
 

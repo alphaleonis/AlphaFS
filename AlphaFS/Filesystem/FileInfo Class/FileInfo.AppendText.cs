@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates a <see cref="StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <returns>A new <see cref="StreamWriter"/></returns>
+      /// <returns>Returns a new <see cref="StreamWriter"/></returns>
       [SecurityCritical]
       public StreamWriter AppendText(Encoding encoding)
       {

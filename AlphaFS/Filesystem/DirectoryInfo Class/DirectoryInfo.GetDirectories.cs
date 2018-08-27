@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns the subdirectories of the current directory.</summary>
-      /// <returns>An array of <see cref="DirectoryInfo"/> objects.</returns>
+      /// <returns>Returns an array of <see cref="DirectoryInfo"/> objects.</returns>
       /// <remarks>If there are no subdirectories, this method returns an empty array. This method is not recursive.</remarks>
       /// <remarks>
       /// The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria.</summary>
-      /// <returns>An array of type <see cref="DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
+      /// <returns>Returns an array of type <see cref="DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
       /// <remarks>
       /// The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
       /// before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria and using a value to determine whether to search subdirectories.</summary>
-      /// <returns>An array of type <see cref="DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
+      /// <returns>Returns an array of type <see cref="DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
       /// <remarks>If there are no subdirectories, or no subdirectories match the searchPattern parameter, this method returns an empty array.</remarks>
       /// <remarks>
       /// The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names

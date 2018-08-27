@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// <summary>Specifies how the operating system should open a file.</summary>   
    [SuppressMessage("Microsoft.Usage", "CA2217:DoNotMarkEnumsWithFlags")]
    [Flags]
-   public enum ExtendedFileAttributes 
+   public enum ExtendedFileAttributes
    {
       /// <summary>If you pass <see cref="ExtendedFileAttributes.None"/>, the set of attributes is unspecified. <see cref="ExtendedFileAttributes.Normal"/> explicitly sets no attributes.</summary>
       None = 0,

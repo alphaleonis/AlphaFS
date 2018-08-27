@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Network
    public static partial class Host
    {
       /// <summary>Enumerates the DFS Links from a DFS namespace.</summary>
-      /// <returns><see cref="IEnumerable{DfsInfo}"/> of DFS namespaces.</returns>
+      /// <returns>Returns <see cref="IEnumerable{DfsInfo}"/> of DFS namespaces.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>

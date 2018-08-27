@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Network
    public static partial class Host
    {
       /// <summary>Gets information about a specified DFS root or link in a DFS namespace.</summary>
-      /// <returns>A <see cref="DfsInfo"/> instance.</returns>
+      /// <returns>Returns a <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Retrieves information about a specified DFS root or link in a DFS namespace.</summary>
-      /// <returns>A <see cref="DfsInfo"/> instance.</returns>
+      /// <returns>Returns a <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Network
          var lastError = getFromClient ? NativeMethods.NetDfsGetClientInfo(dfsName, serverName, shareName, 9, out safeBuffer) : NativeMethods.NetDfsGetInfo(dfsName, null, null, 9, out safeBuffer);
 
          if (lastError == Win32Errors.NERR_Success)
-            return new DfsInfo(safeBuffer.PtrToStructure<NativeMethods.DFS_INFO_9>(0));
+            return new DfsInfo(safeBuffer.PtrToStructure<NativeMethods.DFS_INFO_9>());
 
          throw new NetworkInformationException((int)lastError);
       }

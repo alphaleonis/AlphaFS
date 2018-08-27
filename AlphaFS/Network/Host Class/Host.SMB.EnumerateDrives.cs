@@ -19,20 +19,20 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
    public static partial class Host
    {
       /// <summary>Enumerates drives from the local host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> drives from the local host.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{DriveInfo}"/> collection of drives from the local host.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static IEnumerable<DriveInfo> EnumerateDrives()
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Enumerates local drives from the specified host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{DriveInfo}"/> collection of drives from the specified host.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       [SecurityCritical]
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Enumerates local drives from the specified host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{DriveInfo}"/> collection of drives from the specified host.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="continueOnException">
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Enumerates local drives from the specified host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{DriveInfo}"/> collection of drives from the specified host.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>

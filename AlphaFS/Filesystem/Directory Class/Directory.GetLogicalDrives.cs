@@ -28,25 +28,25 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region .NET
 
-      /// <summary>Retrieves the names of the logical drives on the Computer in the form "&lt;drive letter&gt;:\".</summary>
-      /// <returns>An array of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
+      /// <summary>Retrieves the names of the logical drives on the Computer in the form "drive letter:\".</summary>
+      /// <returns>Returns an array of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
       [SecurityCritical]
       public static string[] GetLogicalDrives()
       {
-         return EnumerateLogicalDrivesCore(false, false).Select(drive => drive.Name).ToArray();
+         return DriveInfo.EnumerateLogicalDrivesCore(false, false).ToArray();
       }
 
       #endregion // .NET
-      
 
-      /// <summary>[AlphaFS] Retrieves the names of the logical drives on the Computer in the form "C:\".</summary>
-      /// <returns>An array of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
+
+      /// <summary>[AlphaFS] Retrieves the names of the logical drives on the Computer in the form "drive letter:\".</summary>
+      /// <returns>Returns an array of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       [SecurityCritical]
       public static string[] GetLogicalDrives(bool fromEnvironment, bool isReady)
       {
-         return EnumerateLogicalDrivesCore(fromEnvironment, isReady).Select(drive => drive.Name).ToArray();
+         return DriveInfo.EnumerateLogicalDrivesCore(fromEnvironment, isReady).OrderBy(driveName => driveName).ToArray();
       }
    }
 }

@@ -19,9 +19,9 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.Win32.SafeHandles;
 using System;
 using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32
 {
@@ -197,7 +197,7 @@ namespace Alphaleonis.Win32
          Marshal.WriteInt32(handle, offset, value);
       }
 
-      public void WriteInt32(int value)
+      public void WriteInt32(int value = 0)
       {
          Marshal.WriteInt32(handle, value);
       }
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32
          Marshal.WriteInt64(handle, offset, value);
       }
 
-      public void WriteInt64(long value)
+      public void WriteInt64(long value = 0)
       {
          Marshal.WriteInt64(handle, value);
       }
@@ -217,7 +217,7 @@ namespace Alphaleonis.Win32
          Marshal.WriteByte(handle, offset, value);
       }
 
-      public void WriteByte(byte value)
+      public void WriteByte(byte value = 0)
       {
          Marshal.WriteByte(handle, value);
       }
@@ -237,52 +237,31 @@ namespace Alphaleonis.Win32
 
       #region Read
 
-      public byte ReadByte()
-      {
-         return Marshal.ReadByte(handle);
-      }
-
-      public byte ReadByte(int offset)
+      public byte ReadByte(int offset = 0)
       {
          return Marshal.ReadByte(handle, offset);
       }
 
-      public short ReadInt16()
-      {
-         return Marshal.ReadInt16(handle);
-      }
-
-      public short ReadInt16(int offset)
+      
+      public short ReadInt16(int offset = 0)
       {
          return Marshal.ReadInt16(handle, offset);
       }
 
-      public int ReadInt32()
-      {
-         return Marshal.ReadInt32(handle);
-      }
-
-      public int ReadInt32(int offset)
+      
+      public int ReadInt32(int offset = 0)
       {
          return Marshal.ReadInt32(handle, offset);
       }
 
-      public long ReadInt64()
-      {
-         return Marshal.ReadInt64(handle);
-      }
-
-      public long ReadInt64(int offset)
+      
+      public long ReadInt64(int offset = 0)
       {
          return Marshal.ReadInt64(handle, offset);
       }
 
-      public IntPtr ReadIntPtr()
-      {
-         return Marshal.ReadIntPtr(handle);
-      }
-
-      public IntPtr ReadIntPtr(int offset)
+      
+      public IntPtr ReadIntPtr(int offset = 0)
       {
          return Marshal.ReadIntPtr(handle, offset);
       }
@@ -299,22 +278,22 @@ namespace Alphaleonis.Win32
 
 
       /// <summary>Marshals data from an unmanaged block of memory to a newly allocated managed object of the specified type.</summary>
-      /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
-      public T PtrToStructure<T>(int offset)
+      /// <returns>Returns a managed object containing the data pointed to by the ptr parameter.</returns>
+      public T PtrToStructure<T>(int offset = 0)
       {
-         return (T) Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof (T));
+         return (T) Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof(T));
       }
-
+      
 
       /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged ANSI string into it.</summary>
-      /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
-      public string PtrToStringAnsi(int offset)
+      /// <returns>Returns a managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
+      public string PtrToStringAnsi(int offset = 0)
       {
          return Marshal.PtrToStringAnsi(new IntPtr(handle.ToInt64() + offset));
       }
 
       /// <summary>Allocates a managed System.String and copies all characters up to the first null character from an unmanaged Unicode string into it.</summary>
-      /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
+      /// <returns>Returns a managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
       public string PtrToStringUni()
       {
          return Marshal.PtrToStringUni(handle);
@@ -322,7 +301,7 @@ namespace Alphaleonis.Win32
 
 
       /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged Unicode string into it.</summary>
-      /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
+      /// <returns>Returns a managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
       public string PtrToStringUni(int offset, int length)
       {
          return Marshal.PtrToStringUni(new IntPtr(handle.ToInt64() + offset), length);

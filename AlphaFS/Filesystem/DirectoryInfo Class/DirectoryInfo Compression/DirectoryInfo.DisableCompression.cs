@@ -20,6 +20,7 @@
  */
 
 using System.Security;
+using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -33,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DisableCompression()
       {
-         Device.ToggleCompressionCore(Transaction, true, LongFullName, false, PathFormat.LongFullPath);
+         FilesystemHelper.ToggleCompressionCore(Transaction, true, LongFullName, false, PathFormat.LongFullPath);
       }
    }
 }

@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Returns the full path to the share.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return Id.ToString(CultureInfo.InvariantCulture);
@@ -73,7 +73,10 @@ namespace Alphaleonis.Win32.Network
       /// <summary>The local or remote Host.</summary>
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       [Obsolete("Use HostName")]
-      public string Host { get; private set; }
+      public string Host
+      {
+         get { return HostName; }
+      }
 
       /// <summary>The host name of this resource information.</summary>
       public string HostName { get; private set; }

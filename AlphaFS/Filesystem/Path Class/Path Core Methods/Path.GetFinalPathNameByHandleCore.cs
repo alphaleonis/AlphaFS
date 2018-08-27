@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   if (!Utils.IsNullOrWhiteSpace(file))
                   { 
-                     foreach (var drive in Directory.EnumerateLogicalDrivesCore(false, false)
+                     foreach (var drive in DriveInfo.GetDrives(false, false)
                         
                         .Select(drv => drv.Name).Where(drv => driveLetter.Equals(RemoveTrailingDirectorySeparator(drv), StringComparison.OrdinalIgnoreCase)))
 
@@ -159,7 +159,7 @@ namespace Alphaleonis.Win32.Filesystem
             return string.Empty;
 
 
-         foreach (var drive in Directory.EnumerateLogicalDrivesCore(false, false).Select(drv => drv.Name))
+         foreach (var drive in DriveInfo.GetDrives(false, false).Select(drv => drv.Name))
          {
             try
             {

@@ -28,8 +28,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
+      /// <returns>Returns a byte array containing the contents of the file.</returns>
       /// <param name="path">The file to open for reading.</param>
-      /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path)
       {
@@ -40,9 +40,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
+      /// <returns>Returns a byte array containing the contents of the file.</returns>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path, PathFormat pathFormat)
       {

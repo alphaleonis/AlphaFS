@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var lastError = Marshal.GetLastWin32Error();
 
-            if (!NativeMethods.IsValidHandle(safeHandle, false))
+            if (!Utils.IsValidHandle(safeHandle, false))
             {
                switch ((uint) lastError)
                {

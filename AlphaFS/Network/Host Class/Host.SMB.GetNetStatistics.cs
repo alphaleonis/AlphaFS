@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Network
    public static partial class Host
    {
       /// <summary>[AlphaFS] Retrieves <see cref="ServerStatisticsInfo"/> operating statistics for the Server service from the local host.</summary>
-      /// <returns>A <see cref="ServerStatisticsInfo"/> instance.</returns>
+      /// <returns>Returns a <see cref="ServerStatisticsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static ServerStatisticsInfo GetServerStatistics()
@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>[AlphaFS] Retrieves <see cref="ServerStatisticsInfo"/> operating statistics for the Server service from the specified host.</summary>
-      /// <returns>A <see cref="ServerStatisticsInfo"/> instance.</returns>
+      /// <returns>Returns a <see cref="ServerStatisticsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="hostName">The DNS or NetBIOS name of the local or remote host to retrieve statistics from.</param>
       [SecurityCritical]
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>[AlphaFS] Retrieves <see cref="WorkstationStatisticsInfo"/> operating statistics for the Workstation service from the local host.</summary>
-      /// <returns>A <see cref="WorkstationStatisticsInfo"/> instance.</returns>
+      /// <returns>Returns a <see cref="WorkstationStatisticsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static WorkstationStatisticsInfo GetWorkstationStatistics()
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>[AlphaFS] Retrieves <see cref="WorkstationStatisticsInfo"/> operating statistics for the Workstation service from the specified host.</summary>
-      /// <returns>A <see cref="WorkstationStatisticsInfo"/> instance.</returns>
+      /// <returns>Returns a <see cref="WorkstationStatisticsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="hostName">The DNS or NetBIOS name of the local or remote host to retrieve statistics from.</param>
       [SecurityCritical]
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>[AlphaFS] Retrieves <see cref="ServerStatisticsInfo"/> or <see cref="WorkstationStatisticsInfo"/> operating statistics for the Server- or Workstation service from the specified host.</summary>
-      /// <returns>A <see cref="ServerStatisticsInfo"/> or <see cref="WorkstationStatisticsInfo"/> instance, depending on the <paramref name="isServer"/> value.</returns>
+      /// <returns>Returns a <see cref="ServerStatisticsInfo"/> or <see cref="WorkstationStatisticsInfo"/> instance, depending on the <paramref name="isServer"/> value.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="isServer">true returns <see cref="ServerStatisticsInfo"/> information, false <see cref="WorkstationStatisticsInfo"/>.</param>
       /// <param name="hostName">The DNS or NetBIOS name of the local or remote host to retrieve statistics from.</param>
@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Network
                throw new NetworkInformationException((int) lastError);
 
 
-            return safeBuffer.PtrToStructure<T>(0);
+            return safeBuffer.PtrToStructure<T>();
          }
       }
    }

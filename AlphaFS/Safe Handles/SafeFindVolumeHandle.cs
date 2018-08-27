@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       protected override bool ReleaseHandle()
       {
-         return NativeMethods.FindVolumeClose(handle);
+         return Device.NativeMethods.FindVolumeClose(handle);
       }
    }
 }

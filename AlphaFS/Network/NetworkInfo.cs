@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Network
    [Serializable]
    public class NetworkInfo : IEquatable<NetworkInfo>
    {
-      #region Private Fields
+      #region Fields
 
       [NonSerialized]
       private readonly NativeMethods.INetwork _network;
@@ -186,7 +186,7 @@ namespace Alphaleonis.Win32.Network
       #region Methods
       
       /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          var description = !Utils.IsNullOrWhiteSpace(Description) && !Equals(Name, Description) ? " (" + Description + ")" : string.Empty;

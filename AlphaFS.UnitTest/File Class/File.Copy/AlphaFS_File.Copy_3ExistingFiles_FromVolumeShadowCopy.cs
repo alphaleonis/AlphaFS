@@ -40,7 +40,7 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_File_Copy_3ExistingFiles_FromVolumeShadowCopy(bool isNetwork)
       {
-         var testOk = false;
+         var foundShadowCopy = false;
          
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -50,7 +50,7 @@ namespace AlphaFS.UnitTest
 
             foreach (var dosDevice in dosDevices)
             {
-               if (testOk)
+               if (foundShadowCopy)
                   break;
 
                var shadowSource = Alphaleonis.Win32.Filesystem.Path.GlobalRootDevicePrefix + dosDevice;
@@ -95,7 +95,7 @@ namespace AlphaFS.UnitTest
                   Assert.AreEqual((int) Alphaleonis.Win32.Win32Errors.NO_ERROR, cmr.ErrorCode);
 
 
-                  testOk = true;
+                  foundShadowCopy = true;
 
                   copyCount++;
                }
@@ -104,10 +104,10 @@ namespace AlphaFS.UnitTest
 
 
          Console.WriteLine();
+         
 
-
-         if (!testOk)
-            UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
+         if (!foundShadowCopy)
+            UnitTestAssert.InconclusiveBecauseFileNotFound("No volume shadow copy found.");
       }
    }
 }

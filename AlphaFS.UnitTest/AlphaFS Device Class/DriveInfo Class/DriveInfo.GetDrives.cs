@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-
+      
       [TestMethod]
       public void DriveInfo_GetDrives_Local_Success()
       {
@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var drivePath in drivesAlphaFS)
             Console.WriteLine("Logical Drive: [{0}]\n", drivePath);
-
+         
 
          CollectionAssert.AreEqual(drivesSystemIO, drivesAlphaFS);
       }

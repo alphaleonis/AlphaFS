@@ -18,15 +18,17 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
  *  THE SOFTWARE. 
  */
-using Alphaleonis.Win32.Security;
-using Microsoft.Win32.SafeHandles;
+
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
 using System.Text;
+using Alphaleonis.Win32.Security;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -98,6 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateFileW"), SuppressUnmanagedCodeSecurity]
       internal static extern SafeFileHandle CreateFile([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] FileSystemRights dwDesiredAccess, [MarshalAs(UnmanagedType.U4)] FileShare dwShareMode, [MarshalAs(UnmanagedType.LPStruct)] Security.NativeMethods.SecurityAttributes lpSecurityAttributes, [MarshalAs(UnmanagedType.U4)] FileMode dwCreationDisposition, [MarshalAs(UnmanagedType.U4)] ExtendedFileAttributes dwFlagsAndAttributes, IntPtr hTemplateFile);
+
 
       /// <summary>
       ///   Creates or opens a file or I/O device. The most commonly used I/O devices are as follows: file, file stream, directory, physical
@@ -336,7 +339,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static extern SafeFindFileHandle FindFirstFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FINDEX_INFO_LEVELS fInfoLevelId, out WIN32_FIND_DATA lpFindFileData, FINDEX_SEARCH_OPS fSearchOp, IntPtr lpSearchFilter, FIND_FIRST_EX_FLAGS dwAdditionalFlags, SafeHandle hTransaction);
 
       /// <summary>
-      ///   Creates an enumeration of all the hard links to the specified file. The FindFirstFileNameW function returns a handle to the
+      ///   Returns an <see cref="IEnumerable{T}"/> collection of all the hard links to the specified file. The FindFirstFileNameW function returns a handle to the
       ///   enumeration that can be used on subsequent calls to the FindNextFileNameW function.
       /// </summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
@@ -351,7 +354,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static extern SafeFindFileHandle FindFirstFileNameW([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] uint dwFlags, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName);
 
       /// <summary>
-      ///   Creates an enumeration of all the hard links to the specified file as a transacted operation. The function returns a handle to the
+      ///   Returns an <see cref="IEnumerable{String}"/> collection of all the hard links to the specified file as a transacted operation. The function returns a handle to the
       ///   enumeration that can be used on subsequent calls to the FindNextFileNameW function.
       /// </summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
@@ -655,7 +658,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>An application-defined callback function used with the CopyFileEx, MoveFileTransacted, and MoveFileWithProgress functions.
       /// <para>It is called when a portion of a copy or move operation is completed.</para>
       /// <para>The LPPROGRESS_ROUTINE type defines a pointer to this callback function.</para>
-      /// <para>NativeCopyMoveProgressRoutine (NativeCopyMoveProgressRoutine) is a placeholder for the application-defined function name.</para>
+      /// <para>NativeCopyMoveProgressRoutine is a placeholder for the application-defined function name.</para>
       /// </summary>
       [SuppressUnmanagedCodeSecurity]
       internal delegate CopyMoveProgressResult NativeCopyMoveProgressRoutine([MarshalAs(UnmanagedType.I8)] long totalFileSize, [MarshalAs(UnmanagedType.I8)] long totalBytesTransferred, [MarshalAs(UnmanagedType.I8)] long streamSize, [MarshalAs(UnmanagedType.I8)] long streamBytesTransferred, [MarshalAs(UnmanagedType.U4)] uint dwStreamNumber, [MarshalAs(UnmanagedType.U4)] CopyMoveProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);
@@ -746,7 +749,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool UnmapViewOfFile(SafeLocalMemoryBufferHandle lpBaseAddress);
 
-      
+
       /// <summary>Enumerates the first stream with a ::$DATA stream type in the specified file or directory.</summary>
       /// <returns>
       /// If the function succeeds, the return value is a search handle that can be used in subsequent calls to the <see cref="FindNextStreamW"/> function.
@@ -883,7 +886,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.I4)]
       internal static extern int RmStartSession([MarshalAs(UnmanagedType.U4)] out uint pSessionHandle, [MarshalAs(UnmanagedType.I4)] int dwSessionFlags, [MarshalAs(UnmanagedType.LPWStr)] string strSessionKey);
-      
+
       #endregion // Restart Manager
    }
 }

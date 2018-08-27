@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns an array of strongly typed <see cref="FileSystemInfo"/> entries representing all the files and subdirectories in a directory.</summary>
-      /// <returns>An array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
+      /// <returns>Returns an array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
       /// <remarks>
       /// For subdirectories, the <see cref="FileSystemInfo"/> objects returned by this method can be cast to the derived class <see cref="DirectoryInfo"/>.
       /// Use the <see cref="FileAttributes"/> value returned by the <see cref="FileSystemInfo.Attributes"/> property to determine whether the <see cref="FileSystemInfo"/> represents a file or a directory.
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   This parameter can contain a combination of valid literal path and wildcard
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
-      /// <returns>An array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
+      /// <returns>Returns an array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
       /// <remarks>
       /// For subdirectories, the <see cref="FileSystemInfo"/> objects returned by this method can be cast to the derived class <see cref="DirectoryInfo"/>.
       /// Use the <see cref="FileAttributes"/> value returned by the <see cref="FileSystemInfo.Attributes"/> property to determine whether the <see cref="FileSystemInfo"/> represents a file or a directory.
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/>
       ///   should include only the current directory or should include all subdirectories.
       /// </param>
-      /// <returns>An array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
+      /// <returns>Returns an array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
       /// <remarks>
       /// For subdirectories, the <see cref="FileSystemInfo"/> objects returned by this method can be cast to the derived class <see cref="DirectoryInfo"/>.
       /// Use the <see cref="FileAttributes"/> value returned by the <see cref="FileSystemInfo.Attributes"/> property to determine whether the <see cref="FileSystemInfo"/> represents a file or a directory.

@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>(FileNameNormalized / VolumeNameDos) Return the normalized drive name. This is the default.</summary>
       None = 0,
 
-      /// <summary>Return the path with a volume GUID path instead of the drive name.</summary>
+      /// <summary>Return the path with a volume <see cref="Guid"/> path instead of the drive name.</summary>
       VolumeNameGuid = 1,
 
       /// <summary>Return the path with the volume device path.</summary>

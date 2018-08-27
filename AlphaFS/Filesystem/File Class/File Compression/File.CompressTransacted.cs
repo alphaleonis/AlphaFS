@@ -20,6 +20,7 @@
  */
 
 using System.Security;
+using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -31,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CompressTransacted(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionCore(transaction, false, path, true, PathFormat.RelativePath);
+         FilesystemHelper.ToggleCompressionCore(transaction, false, path, true, PathFormat.RelativePath);
       }
 
 
@@ -42,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(transaction, false, path, true, pathFormat);
+         FilesystemHelper.ToggleCompressionCore(transaction, false, path, true, pathFormat);
       }
    }
 }

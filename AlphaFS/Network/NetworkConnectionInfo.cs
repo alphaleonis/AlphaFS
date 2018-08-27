@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Network
    /// <summary>Represents a connection to a network.</summary>
    public class NetworkConnectionInfo
    {
-      #region Private Fields
+      #region Fields
 
       private readonly NativeMethods.INetworkConnection _networkConnection;
 
@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Retrieves an instance that represents the network associated with this connection. This value of this property is not cached.</summary>
-      /// <returns>A <see cref="NetworkInfo"/> instance.</returns>
+      /// <returns>Returns a <see cref="NetworkInfo"/> instance.</returns>
       public NetworkInfo NetworkInfo
       {
          get { return new NetworkInfo(_networkConnection.GetNetwork()); }
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Network
       #region Methods
 
       /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return null != NetworkInfo && null != NetworkInterface ? string.Format(CultureInfo.CurrentCulture, "{0} {1}", NetworkInfo.Name, NetworkInterface.Name) : GetType().Name;
@@ -152,7 +152,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>A hash code for the current Object.</returns>
+      /// <returns>Returns a hash code for the current Object.</returns>
       public override int GetHashCode()
       {
          unchecked

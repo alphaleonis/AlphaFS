@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
    partial class FileInfo
    {
       /// <summary>Creates a <see cref="StreamReader"/> with NativeMethods.DefaultFileEncoding encoding that reads from an existing text file.</summary>
-      /// <returns>A new <see cref="StreamReader"/> with NativeMethods.DefaultFileEncoding encoding.</returns>
+      /// <returns>Returns a new <see cref="StreamReader"/> with NativeMethods.DefaultFileEncoding encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public StreamReader OpenText()
@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a <see cref="StreamReader"/> with <see cref="Encoding"/> that reads from an existing text file.</summary>
-      /// <returns>A new <see cref="StreamReader"/> with the specified <see cref="Encoding"/>.</returns>
+      /// <returns>Returns a new <see cref="StreamReader"/> with the specified <see cref="Encoding"/>.</returns>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]

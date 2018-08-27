@@ -23,6 +23,7 @@ using System;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Security;
+using Alphaleonis.Win32.Network;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -55,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Converts a local path to a network share path.  
-      ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
+      ///   <para>A Local path, e.g.: <c>C:\Windows</c> or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
       ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
@@ -84,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="PathTooLongException"/>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
+      /// <param name="localPath">A local path, e.g.: <c>C:\Windows</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter.</param>
       [SecurityCritical]
       public static string LocalToUnc(string localPath, PathFormat pathFormat)
@@ -94,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       
 
       /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it as a long path format and the ability to add or remove a trailing backslash.
-      ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
+      ///   <para>A Local path, e.g.: <c>C:\Windows</c> or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
       ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
@@ -104,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="PathTooLongException"/>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
+      /// <param name="localPath">A local path, e.g.: <c>C:\Windows</c>.</param>
       /// <param name="fullPathOptions">Options for controlling the full path retrieval.</param>
       [SecurityCritical]
       public static string LocalToUnc(string localPath, GetFullPathOptions fullPathOptions)
@@ -124,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="PathTooLongException"/>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
+      /// <param name="localPath">A local path, e.g.: <c>C:\Windows</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter.</param>
       /// <param name="fullPathOptions">Options for controlling the full path retrieval.</param>
       [SecurityCritical]

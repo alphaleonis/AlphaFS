@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Gets an array containing the characters that are not allowed in path names.</summary>
-      /// <returns>An array containing the characters that are not allowed in path names.</returns>
+      /// <returns>Returns an array containing the characters that are not allowed in path names.</returns>
       [SecurityCritical]
       public static char[] GetInvalidPathChars()
       {

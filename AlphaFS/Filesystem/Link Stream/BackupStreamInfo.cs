@@ -43,9 +43,9 @@ namespace Alphaleonis.Win32.Filesystem
       internal BackupStreamInfo(NativeMethods.WIN32_STREAM_ID streamId, string name)
       {
          _streamName = name;
-         _streamSize = (long)streamId.Size;
-         _streamAttribute = (StreamAttribute)streamId.dwStreamAttribute;
-         _streamId = (StreamId)streamId.dwStreamId;
+         _streamSize = (long) streamId.Size;
+         _streamAttribute = (StreamAttribute) streamId.dwStreamAttribute;
+         _streamId = (StreamId) streamId.dwStreamId;
       }
 
       #endregion // Constructor

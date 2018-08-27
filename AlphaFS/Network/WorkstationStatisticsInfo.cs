@@ -454,7 +454,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Returns the local time when statistics collection started or when the statistics were last cleared.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return HostName;

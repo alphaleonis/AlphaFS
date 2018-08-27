@@ -113,7 +113,10 @@ namespace Alphaleonis.Win32
       public const uint ERROR_HANDLE_EOF = 38;
 
       //public const uint ERROR_HANDLE_DISK_FULL = 39;
+
+      /// <summary>(50) The request is not supported</summary>
       public const uint ERROR_NOT_SUPPORTED = 50;
+
       //public const uint ERROR_REM_NOT_LIST = 51;
       //public const uint ERROR_DUP_NAME = 52;
 
@@ -237,7 +240,10 @@ namespace Alphaleonis.Win32
 
       //public const uint ERROR_BAD_THREADID_ADDR = 159;
       //public const uint ERROR_BAD_ARGUMENTS = 160;
-      //public const uint ERROR_BAD_PATHNAME = 161;
+
+      /// <summary>(161) The specified path is invalid.</summary>
+      public const uint ERROR_BAD_PATHNAME = 161;
+
       //public const uint ERROR_SIGNAL_PENDING = 162;
       //public const uint ERROR_MAX_THRDS_REACHED = 164;
       //public const uint ERROR_LOCK_FAILED = 167;
@@ -296,7 +302,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_EA_LIST_INCONSISTENT = 255;
       //public const uint WAIT_TIMEOUT = 258;   
 
-      ///// <summary>(259) No more data is available.</summary>
+      /// <summary>(259) No more data is available.</summary>
       public const uint ERROR_NO_MORE_ITEMS = 259;
 
       //public const uint ERROR_CANNOT_COPY = 266;
@@ -4110,7 +4116,7 @@ namespace Alphaleonis.Win32
       ///// <summary>This link is already supported by the specified server-share.</summary>
       //public const uint NERR_DfsDuplicateService = 2676;
 
-      ///// <summary>Can't remove the last server-share supporting this root or link.</summary>
+      ///// <summary>Cannot remove the last server-share supporting this root or link.</summary>
       //public const uint NERR_DfsCantRemoveLastServerShare = 2677;
 
       ///// <summary>The operation is not supported for an Inter-DFS link.</summary>

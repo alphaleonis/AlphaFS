@@ -31,8 +31,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region .NET
 
-      /// <summary>Returns an enumerable collection of file system information in the current directory.</summary>
-      /// <returns>An enumerable collection of file system information in the current directory. </returns>
+      /// <summary>Returns an <see cref="IEnumerable{FileSystemInfo}"/> collection of file system information in the current directory.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{FileSystemInfo}"/> collection of file system information in the current directory. </returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>

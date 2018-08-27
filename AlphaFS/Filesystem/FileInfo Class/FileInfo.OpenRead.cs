@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    partial class FileInfo
    {
       /// <summary>Creates a read-only <see cref="FileStream"/>.</summary>
-      /// <returns>A new read-only <see cref="FileStream"/> object.</returns>
+      /// <returns>Returns a new read-only <see cref="FileStream"/> object.</returns>
       /// <remarks>This method returns a read-only <see cref="FileStream"/> object with the <see cref="FileShare"/> mode set to Read.</remarks>
       [SecurityCritical]
       public FileStream OpenRead()

@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Security
       }
 
 
-      /// <summary>[AlphaFS] Determines if UAC is enabled and that the current process is in an elevated state.
+      /// <summary>[AlphaFS] Determines that UAC is enabled and that the current process is in an elevated state.
       /// <para>If the current User is the default Administrator then the process is assumed to be in an elevated state.</para>
       /// <para>This assumption is made because by default, the default Administrator (disabled by default) gets all access rights without showing an UAC prompt.</para>
       /// </summary>
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Security
       }
 
 
-      /// <summary>[AlphaFS] Determines if UAC is enabled by reading the "EnableLUA" registry key of the local Computer.</summary>
+      /// <summary>[AlphaFS] Determines that UAC is enabled by reading the "EnableLUA" registry key of the local Computer.</summary>
       /// <returns><c>true</c> if the UAC status was successfully read from registry; otherwise, <c>false</c>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Uac")]
       public static bool IsUacEnabled
@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Security
       }
 
 
-      /// <summary>[AlphaFS] Determines if the current process is run in the context of a Windows Service.</summary>
+      /// <summary>[AlphaFS] Determines that the current process is run in the context of a Windows Service.</summary>
       /// <returns><c>true</c> if the current process is run in the context of a Windows Service; otherwise, <c>false</c>.</returns>
       public static bool IsWindowsService
       {
@@ -115,9 +115,9 @@ namespace Alphaleonis.Win32.Security
 
 
       /// <summary>[AlphaFS] Retrieves the elevation type of the current process.</summary>
-      /// <returns>A <see cref="NativeMethods.TOKEN_ELEVATION_TYPE"/> value.</returns>
-      [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "GetTokenInformation")]
+      /// <returns>Returns a <see cref="NativeMethods.TOKEN_ELEVATION_TYPE"/> value.</returns>
       [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "OpenProcessToken")]
+      [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "GetTokenInformation")]
       private static NativeMethods.TOKEN_ELEVATION_TYPE GetProcessElevationType()
       {
          SafeTokenHandle tokenHandle;
@@ -141,7 +141,7 @@ namespace Alphaleonis.Win32.Security
                throw new Win32Exception(lastError, string.Format(CultureInfo.CurrentCulture, "{0}: GetTokenInformation failed with error: {1}", MethodBase.GetCurrentMethod().Name, lastError.ToString(CultureInfo.CurrentCulture)));
 
 
-            return (NativeMethods.TOKEN_ELEVATION_TYPE) safeBuffer.ReadInt32();
+            return (NativeMethods.TOKEN_ELEVATION_TYPE)safeBuffer.ReadInt32();
          }
       }
    }

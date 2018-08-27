@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Security
 
 
          /// <summary>Marshals an ObjectSecurity instance to unmanaged memory.</summary>
-         /// <returns>A safe handle containing the marshalled security descriptor.</returns>
+         /// <returns>Returns a safe handle containing the marshalled security descriptor.</returns>
          /// <param name="securityDescriptor">The security descriptor.</param>
          [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
          private static SafeGlobalMemoryBufferHandle ToUnmanagedSecurityAttributes(ObjectSecurity securityDescriptor)

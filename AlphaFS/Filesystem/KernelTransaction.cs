@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
             _hTrans = NativeMethods.CreateTransaction(securityAttributes, IntPtr.Zero, 0, 0, 0, timeout, description);
             int lastError = Marshal.GetLastWin32Error();            
 
-            NativeMethods.IsValidHandle(_hTrans, lastError);
+            Utils.IsValidHandle(_hTrans, lastError);
          }
       }
 
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IDisposable Members
 
       /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-      [SecurityPermissionAttribute(SecurityAction.Demand, UnmanagedCode = true)]
+      [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
       public void Dispose()
       {
          _hTrans.Close();

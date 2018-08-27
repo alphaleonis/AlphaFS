@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Opens a file in the specified mode.</summary>
-      /// <returns>A <see cref="FileStream"/> file opened in the specified mode, with read/write access and unshared.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> file opened in the specified mode, with read/write access and unshared.</returns>
       /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
       [SecurityCritical]
       public FileStream Open(FileMode mode)
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access.</summary>
-      /// <returns>A <see cref="FileStream"/> object opened in the specified mode and access, and unshared.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> object opened in the specified mode and access, and unshared.</returns>
       /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
       /// <param name="access">A <see cref="FileAccess"/> constant specifying whether to open the file with Read, Write, or ReadWrite file access.</param>
       [SecurityCritical]
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
-      /// <returns>A <see cref="FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
       /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
       /// <param name="access">A <see cref="FileAccess"/> constant specifying whether to open the file with Read, Write, or ReadWrite file access.</param>
       /// <param name="share">A <see cref="FileShare"/> constant specifying the type of access other <see cref="FileStream"/> objects have to this file.</param>
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access.</summary>
-      /// <returns>A <see cref="FileStream"/> object opened in the specified mode and access, and unshared.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> object opened in the specified mode and access, and unshared.</returns>
       /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
       /// <param name="rights">A <see cref="FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten along with additional options.</param>
       [SecurityCritical]
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
-      /// <returns>A <see cref="FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
       /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
       /// <param name="rights">A <see cref="FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten along with additional options.</param>
       /// <param name="share">A <see cref="FileShare"/> constant specifying the type of access other <see cref="FileStream"/> objects have to this file.</param>

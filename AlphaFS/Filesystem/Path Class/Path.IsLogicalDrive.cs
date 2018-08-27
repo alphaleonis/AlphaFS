@@ -25,8 +25,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Checks if <paramref name="path"/> is in a logical drive format, such as "C:", "D:".</summary>
-      /// <returns>true when <paramref name="path"/> is in a logical drive format, such as "C:", "D:".</returns>
+      /// <summary>[AlphaFS] Checks if <paramref name="path"/> is in a logical drive format, such as <c>C:</c>, <c>D:</c></summary>
+      /// <returns>true when <paramref name="path"/> is in a logical drive format, such as <c>C:</c>, <c>D:</c></returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The absolute path to check.</param>
@@ -36,8 +36,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Checks if <paramref name="path"/> is in a logical drive format, such as "C:", "D:".</summary>
-      /// <returns>true when <paramref name="path"/> is in a logical drive format, such as "C:", "D:".</returns>
+      /// <summary>[AlphaFS] Checks if <paramref name="path"/> is in a logical drive format, such as <c>C:</c>, <c>D:</c></summary>
+      /// <returns>true when <paramref name="path"/> is in a logical drive format, such as <c>C:</c>, <c>D:</c></returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The absolute path to check.</param>
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
          
          var c = regularPath.ToUpperInvariant()[0];
 
-         // Don't use char.IsLetter() here as that can be misleading; The only valid drive letters are: A-Z.
+         // Do not use char.IsLetter() here as that can be misleading; The only valid drive letters are: A-Z.
 
          return regularPath[1] == VolumeSeparatorChar && c >= 'A' && c <= 'Z';
       }

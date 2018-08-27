@@ -23,15 +23,15 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security;
-using Path = Alphaleonis.Win32.Filesystem.Path;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
    /// <summary>Provides static methods to retrieve network resource information from a local- or remote host.</summary>
    public static partial class Host
    {
-      /// <summary>Return the host name in UNC format, for example: \\hostname</summary>
-      /// <returns>The unc name.</returns>
+      /// <summary>Return the local host name in UNC format, for example: \\hostname</summary>
+      /// <returns>The UNC host name.</returns>
       [SecurityCritical]
       public static string GetUncName()
       {
@@ -40,13 +40,13 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Return the host name in UNC format, for example: \\hostname</summary>
-      /// <param name="computerName">Name of the computer.</param>
+      /// <param name="hostName">The name of the local or remote Computer.</param>
       /// <returns>The unc name.</returns>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
       [SecurityCritical]
-      public static string GetUncName(string computerName)
+      public static string GetUncName(string hostName)
       {
-         return Utils.IsNullOrWhiteSpace(computerName) ? GetUncName() : (computerName.StartsWith(Path.UncPrefix, StringComparison.Ordinal) ? computerName.Trim() : Path.UncPrefix + computerName.Trim());
+         return Utils.IsNullOrWhiteSpace(hostName) ? GetUncName() : (hostName.StartsWith(Path.UncPrefix, StringComparison.Ordinal) ? hostName.Trim() : Path.UncPrefix + hostName.Trim());
       }
    }
 }

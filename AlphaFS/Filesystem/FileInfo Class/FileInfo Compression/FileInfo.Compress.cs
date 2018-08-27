@@ -20,6 +20,7 @@
  */
 
 using System.Security;
+using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -29,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Compress()
       {
-         Device.ToggleCompressionCore(Transaction, false, LongFullName, true, PathFormat.LongFullPath);
+         FilesystemHelper.ToggleCompressionCore(Transaction, false, LongFullName, true, PathFormat.LongFullPath);
       }
    }
 }

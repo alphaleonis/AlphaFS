@@ -42,15 +42,15 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
 
-         var logicalDriveCount = 0;
+         var driveCount = 0;
 
-         foreach (var logicalDrive in System.IO.DriveInfo.GetDrives())
+         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
-            var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(logicalDrive.Name) : logicalDrive.Name;
+            var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveInfo.Name) : driveInfo.Name;
 
-            Console.Write("#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveName);
+            Console.Write("#{0:000}\tInput Logical Drive Path: [{1}]", ++driveCount, driveName);
 
-            if (logicalDrive.DriveType == System.IO.DriveType.CDRom)
+            if (driveInfo.DriveType == System.IO.DriveType.CDRom)
             {
                Console.WriteLine();
                continue;
@@ -68,12 +68,12 @@ namespace AlphaFS.UnitTest
             }
 
             else
-               Assert.AreEqual(logicalDrive.DriveType, driveType);
+               Assert.AreEqual(driveInfo.DriveType, driveType);
 
          }
 
 
-         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
+         Assert.IsTrue(driveCount > 0, "No logical drives enumerated, but it is expected.");
 
 
          Console.WriteLine();

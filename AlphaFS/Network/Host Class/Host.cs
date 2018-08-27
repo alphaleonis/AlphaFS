@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -30,6 +29,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using Alphaleonis.Win32.Filesystem;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace Alphaleonis.Win32.Network
@@ -280,7 +280,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>This method uses <see cref="NativeMethods.REMOTE_NAME_INFO"/> level to retrieve full REMOTE_NAME_INFO structure.</summary>
-      /// <returns>A <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>
+      /// <returns>Returns a <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -311,7 +311,7 @@ namespace Alphaleonis.Win32.Network
                lastError = NativeMethods.WNetGetUniversalName(path, 2, buffer, out bufferSize);
 
                if (lastError == Win32Errors.NO_ERROR)
-                  return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>(0);
+                  return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>();
             }
 
          } while (lastError == Win32Errors.ERROR_MORE_DATA);

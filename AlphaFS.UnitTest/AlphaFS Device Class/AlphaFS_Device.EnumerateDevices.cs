@@ -45,14 +45,14 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var tempPath = Environment.MachineName;
+         var hostName = Environment.MachineName;
          var classCnt = 0;
 
-         foreach (var deviceClass in EnumMemberToList<Alphaleonis.Win32.Filesystem.DeviceGuid>())
+         foreach (var deviceClass in EnumMemberToList<Alphaleonis.Win32.Device.DeviceGuid>())
          {
             Console.WriteLine("#{0:000}\tClass: [{1}]", ++classCnt, deviceClass);
 
-            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(tempPath, deviceClass))
+            foreach (var device in Alphaleonis.Win32.Device.Local.EnumerateDevices(hostName, deviceClass))
                UnitTestConstants.Dump(device);
 
             Console.WriteLine();
@@ -67,7 +67,7 @@ namespace AlphaFS.UnitTest
       {
          var enumType = typeof(T);
 
-         // Can't use generic type constraints on value types, so have to do check like this.
+         // Cannot use generic type constraints on value types, so have to do check like this.
          if (enumType.BaseType != typeof(Enum))
             throw new ArgumentException("T must be of type System.Enum", "T");
 

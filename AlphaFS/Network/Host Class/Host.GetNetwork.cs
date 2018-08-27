@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Network
    public static partial class Host
    {
       /// <summary>[AlphaFS] Rretrieves a network based on a supplied network ID from the local host.</summary>
-      /// <returns>A <see cref="NetworkInfo"/> instance from the local host, as specified by <paramref name="networkID"/>.</returns>
+      /// <returns>Returns a <see cref="NetworkInfo"/> instance from the local host, as specified by <paramref name="networkID"/>.</returns>
       /// <param name="networkID">The <see cref="Guid"/> that defines a network.</param>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
       [SecurityCritical]

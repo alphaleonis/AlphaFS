@@ -28,11 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    public sealed partial class DirectoryInfo
    {
       /// <summary>[AlphaFS] Removes the directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -50,11 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Removes the directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>

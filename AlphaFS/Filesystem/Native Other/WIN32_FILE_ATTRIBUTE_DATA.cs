@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>The file size.</summary>
          public long FileSize
          {
-            get { return ToLong(nFileSizeHigh, nFileSizeLow); }
+            get { return Utils.ToLong(nFileSizeHigh, nFileSizeLow); }
          }
       }
    }

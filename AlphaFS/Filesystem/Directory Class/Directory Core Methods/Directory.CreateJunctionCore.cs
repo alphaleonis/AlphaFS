@@ -24,6 +24,7 @@ using System.Globalization;
 using System.IO;
 using System.Security;
 using System.Security.AccessControl;
+using Alphaleonis.Win32.Device;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -110,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
          CreateDirectoryCore(true, transaction, junctionPath, null, null, false, pathFormat);
 
          using (var safeHandle = OpenDirectoryJunction(transaction, junctionPath, pathFormat))
-            Device.CreateDirectoryJunction(safeHandle, directoryPath);
+            FilesystemHelper.CreateDirectoryJunction(safeHandle, directoryPath);
 
 
          // Copy the target date and time stamps to the directory junction.

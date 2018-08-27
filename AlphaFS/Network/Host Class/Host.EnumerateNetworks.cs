@@ -27,8 +27,8 @@ namespace Alphaleonis.Win32.Network
 {
    public static partial class Host
    {
-      /// <summary>[AlphaFS] Returns an enumerable collection of networks available on the local host.</summary>
-      /// <returns>An <see cref="IEnumerable{NetworkInfo}"/> collection of connected and disconnected networks on the local host.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{NetworkInfo}"/> collection of networks available on the local host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{NetworkInfo}"/> collection of connected and disconnected networks on the local host.</returns>
       [SecurityCritical]
       public static IEnumerable<NetworkInfo> EnumerateNetworks()
       {
@@ -36,8 +36,8 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of networks available on the local host.</summary>
-      /// <returns>An <see cref="IEnumerable{NetworkInfo}"/> collection of networks on the local host, as specified by <paramref name="networkConnectivityLevels"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{NetworkInfo}"/> collection of networks available on the local host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{NetworkInfo}"/> collection of networks on the local host, as specified by <paramref name="networkConnectivityLevels"/>.</returns>
       /// <param name="networkConnectivityLevels">The <see cref="NetworkConnectivityLevels"/> that specify the connectivity level of the returned <see cref="NetworkInfo"/> instances.</param>
       [SecurityCritical]
       public static IEnumerable<NetworkInfo> EnumerateNetworks(NetworkConnectivityLevels networkConnectivityLevels)
@@ -48,8 +48,8 @@ namespace Alphaleonis.Win32.Network
 
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of networks available on the local host.</summary>
-      /// <returns>An <see cref="IEnumerable{NetworkInfo}"/> collection of networks on the local host, as specified by <paramref name="networkConnectivityLevels"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{NetworkInfo}"/> collection of networks available on the local host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{NetworkInfo}"/> collection of networks on the local host, as specified by <paramref name="networkConnectivityLevels"/>.</returns>
       /// <param name="networkID">The <see cref="Guid"/> that defines a network.</param>
       /// <param name="networkConnectivityLevels">The <see cref="NetworkConnectivityLevels"/> that specify the connectivity level of the returned <see cref="NetworkInfo"/> instances.</param>
       [SecurityCritical]

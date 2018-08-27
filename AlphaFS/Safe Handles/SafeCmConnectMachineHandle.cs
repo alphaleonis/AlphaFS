@@ -22,7 +22,7 @@
 using System.Security;
 using Microsoft.Win32.SafeHandles;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
    /// <summary>Represents a wrapper class for a handle used by the CM_Connect_Machine/CM_Disconnect_Machine Win32 API functions.</summary>
    [SecurityCritical]

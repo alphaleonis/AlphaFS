@@ -26,7 +26,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Path
    {
       /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path.</summary>
-      /// <returns><c>true</c> if the specified path is a Universal Naming Convention (UNC) path, <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the specified path is a Universal Naming Convention (UNC) path; otherwise, <c>false</c>.</returns>
       /// <param name="path">The path to check.</param>
       [SecurityCritical]
       public static bool IsUncPath(string path)
@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Determines if a path string is a valid Universal Naming Convention (UNC) path, optionally skip invalid path character check.</summary>
-      /// <returns><c>true</c> if the specified path is a Universal Naming Convention (UNC) path, <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the specified path is a Universal Naming Convention (UNC) path; otherwise, <c>false</c>.</returns>
       /// <param name="path">The path to check.</param>
       /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]

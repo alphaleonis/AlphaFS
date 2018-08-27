@@ -37,8 +37,8 @@ namespace Alphaleonis.Win32.Filesystem
          LastWriteTimeUtc = DateTime.FromFileTimeUtc(fibh.ftLastWriteTime);
 
          Attributes = fibh.dwFileAttributes;
-         FileIndex = NativeMethods.ToLong(fibh.nFileIndexHigh, fibh.nFileIndexLow);
-         FileSize = NativeMethods.ToLong(fibh.nFileSizeHigh, fibh.nFileSizeLow);
+         FileIndex = Utils.ToLong(fibh.nFileIndexHigh, fibh.nFileIndexLow);
+         FileSize = Utils.ToLong(fibh.nFileSizeHigh, fibh.nFileSizeLow);
          NumberOfLinks = (int) fibh.nNumberOfLinks;
          VolumeSerialNumber = fibh.dwVolumeSerialNumber;
       }

@@ -19,9 +19,9 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Globalization;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -119,7 +119,7 @@ namespace Alphaleonis.Win32.Network
       #region Methods
 
       /// <summary>Returns the full path to the share.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return NetFullPath;

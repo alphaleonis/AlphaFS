@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Network
    public static partial class Host
    {
       /// <summary>Enumerates open resources from the local host.</summary>
-      /// <returns><see cref="IEnumerable{OpenResourceInfo}"/> open resources from the local host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{OpenResourceInfo}"/> open resources from the local host.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Network
 
       
       /// <summary>Enumerates open resources from the specified host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{OpenResourceInfo}"/> collection of open resources from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>>Enumerates open resources from the specified host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{OpenResourceInfo}"/> collection of open resources from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>

@@ -29,14 +29,10 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
-      /// <para>&#160;</para>
-      /// <para>The directory must be empty and reside on a local volume.</para>
-      /// <para></para>
-      /// <para></para>
-      /// <para>&#160;</para>
-      /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
-      /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
-      /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
+      ///   The directory must be empty and reside on a local volume.
+      ///   MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,
+      ///   and a junction can link directories located on different local volumes on the same computer.
+      ///   Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -57,14 +53,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
-      /// <para>&#160;</para>
-      /// <para>The directory must be empty and reside on a local volume.</para>
-      /// <para></para>
-      /// <para></para>
-      /// <para>&#160;</para>
-      /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
-      /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
-      /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
+      ///   The directory must be empty and reside on a local volume.
+      ///   MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,
+      ///   and a junction can link directories located on different local volumes on the same computer.
+      ///   Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -86,14 +78,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
-      /// <para>&#160;</para>
-      /// <para>The directory must be empty and reside on a local volume.</para>
-      /// <para></para>
-      /// <para></para>
-      /// <para>&#160;</para>
-      /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
-      /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
-      /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
+      ///   The directory must be empty and reside on a local volume.
+      ///   MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,
+      ///   and a junction can link directories located on different local volumes on the same computer.
+      ///   Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -115,14 +103,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
-      /// <para>&#160;</para>
-      /// <para>The directory must be empty and reside on a local volume.</para>
-      /// <para></para>
-      /// <para></para>
-      /// <para>&#160;</para>
-      /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
-      /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
-      /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
+      ///   The directory must be empty and reside on a local volume.
+      ///   MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,
+      ///   and a junction can link directories located on different local volumes on the same computer.
+      ///   Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -145,14 +129,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
-      /// <para>&#160;</para>
-      /// <para>The directory must be empty and reside on a local volume.</para>
-      /// <para></para>
-      /// <para></para>
-      /// <para>&#160;</para>
-      /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
-      /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
-      /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
+      ///   The directory must be empty and reside on a local volume.
+      ///   MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,
+      ///   and a junction can link directories located on different local volumes on the same computer.
+      ///   Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -175,14 +155,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
-      /// <para>&#160;</para>
-      /// <para>The directory must be empty and reside on a local volume.</para>
-      /// <para></para>
-      /// <para></para>
-      /// <para>&#160;</para>
-      /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
-      /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
-      /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
+      ///   The directory must be empty and reside on a local volume.
+      ///   MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,
+      ///   and a junction can link directories located on different local volumes on the same computer.
+      ///   Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>

@@ -22,13 +22,14 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>[AlphaFS] The function attempted to use a name that is reserved for use by another transaction.</summary>
    [Serializable]
-   public class UnrecognizedReparsePointException : System.IO.IOException
+   public class UnrecognizedReparsePointException : IOException
    {
       private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_INVALID_REPARSE_DATA);
       private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_INVALID_REPARSE_DATA, new Win32Exception((int) Win32Errors.ERROR_INVALID_REPARSE_DATA).Message.Trim().TrimEnd('.').Trim());

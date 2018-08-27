@@ -69,30 +69,5 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Invalid FileAttributes = -1</summary>
       internal const FileAttributes InvalidFileAttributes = (FileAttributes) (-1);
-
-
-
-
-      /// <summary>MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384</summary>
-      internal const int MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384;
-
-      /// <summary>REPARSE_DATA_BUFFER_HEADER_SIZE = 8</summary>
-      internal const int REPARSE_DATA_BUFFER_HEADER_SIZE = 8;
-
-
-      private const int DeviceIoControlMethodBuffered = 0;
-      private const int DeviceIoControlFileDeviceFileSystem = 9;
-
-      // <summary>Command to compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
-      internal const int FSCTL_SET_COMPRESSION = (DeviceIoControlFileDeviceFileSystem << 16) | (16 << 2) | DeviceIoControlMethodBuffered | (int) (FileAccess.Read | FileAccess.Write) << 14;
-
-      // <summary>Command to set the reparse point data block.</summary>
-      internal const int FSCTL_SET_REPARSE_POINT = (DeviceIoControlFileDeviceFileSystem << 16) | (41 << 2) | DeviceIoControlMethodBuffered | (0 << 14);
-      
-      /// <summary>Command to delete the reparse point data base.</summary>
-      internal const int FSCTL_DELETE_REPARSE_POINT = (DeviceIoControlFileDeviceFileSystem << 16) | (43 << 2) | DeviceIoControlMethodBuffered | (0 << 14);
-
-      /// <summary>Command to get the reparse point data block.</summary>
-      internal const int FSCTL_GET_REPARSE_POINT = (DeviceIoControlFileDeviceFileSystem << 16) | (42 << 2) | DeviceIoControlMethodBuffered | (0 << 14);
    }
 }

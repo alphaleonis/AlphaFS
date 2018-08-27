@@ -21,7 +21,6 @@
 
 using System.IO;
 using System.Security;
-using FileStream = System.IO.FileStream;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -31,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Opens an existing file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
-      /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
+      /// <returns>Returns a read-only <see cref="FileStream"/> on the specified path.</returns>
       /// <remarks>
       ///   This method is equivalent to the <see cref="FileStream"/>(string, FileMode, FileAccess, FileShare) constructor overload with a
       ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
@@ -48,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
+      /// <returns>Returns a read-only <see cref="FileStream"/> on the specified path.</returns>
       /// <remarks>
       ///   This method is equivalent to the <see cref="FileStream"/>(string, FileMode, FileAccess, FileShare) constructor overload with a
       ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.

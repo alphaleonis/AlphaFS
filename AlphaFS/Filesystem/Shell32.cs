@@ -530,7 +530,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Icon size <see cref="Shell32.FileAttributes.SmallIcon"/> or <see cref="Shell32.FileAttributes.LargeIcon"/>. Can also be combined
       ///   with <see cref="Shell32.FileAttributes.AddOverlays"/> and others.
       /// </param>
-      /// <returns>An <see cref="IntPtr"/> handle to the Shell icon that represents the file, or IntPtr.Zero on failure.</returns>
+      /// <returns>Returns an <see cref="IntPtr"/> handle to the Shell icon that represents the file, or IntPtr.Zero on failure.</returns>
       [SecurityCritical]
       public static IntPtr GetFileIcon(string filePath, FileAttributes iconAttributes)
       {
@@ -565,7 +565,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves an instance of <see cref="Shell32Info"/> containing information about the specified file.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>A <see cref="Shell32Info"/> class instance.</returns>
+      /// <returns>Returns a <see cref="Shell32Info"/> class instance.</returns>
       [SecurityCritical]
       public static Shell32Info GetShell32Info(string path)
       {
@@ -575,7 +575,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Retrieves an instance of <see cref="Shell32Info"/> containing information about the specified file.</summary>
       /// <param name="path">A path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="Shell32Info"/> class instance.</returns>
+      /// <returns>Returns a <see cref="Shell32Info"/> class instance.</returns>
       [SecurityCritical]
       public static Shell32Info GetShell32Info(string path, PathFormat pathFormat)
       {
@@ -620,7 +620,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          var lastError = NativeMethods.PathCreateFromUrl(urlPath, buffer, ref bufferSize, 0);
 
-         // Don't throw exception, but return string.Empty;
+         // Do not throw exception, but return string.Empty;
          return lastError == Win32Errors.S_OK ? buffer.ToString() : string.Empty;
       }
 
@@ -636,7 +636,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string PathCreateFromUrlAlloc(string urlPath)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(new Win32Exception((int)Win32Errors.ERROR_OLD_WIN_VERSION).Message);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
 
 
          if (urlPath == null)
@@ -645,14 +645,14 @@ namespace Alphaleonis.Win32.Filesystem
          StringBuilder buffer;
          var lastError = NativeMethods.PathCreateFromUrlAlloc(urlPath, out buffer, 0);
 
-         // Don't throw exception, but return string.Empty;
+         // Do not throw exception, but return string.Empty;
          return lastError == Win32Errors.S_OK ? buffer.ToString() : string.Empty;
       }
 
 
       /// <summary>Determines whether a path to a file system object such as a file or folder is valid.</summary>
       /// <param name="path">The full path of maximum length the maximum path length to the object to verify.</param>
-      /// <returns><c>true</c> if the file exists; <c>false</c> otherwise</returns>
+      /// <returns><c>true</c> if the file exists; otherwise, <c>false</c></returns>
       [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastError")]
       [SecurityCritical]
       public static bool PathFileExists(string path)
@@ -668,9 +668,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="url">The URL.</param>
       /// <param name="urlType"></param>
       /// <returns>
-      /// For all but one of the URL types, UrlIs returns <c>true</c> if the URL is the specified type, or <c>false</c> otherwise.
+      /// For all but one of the URL types, UrlIs returns <c>true</c> if the URL is the specified type, or otherwise, <c>false</c>.
       /// If UrlIs is set to <see cref="UrlType.IsAppliable"/>, UrlIs will attempt to determine the URL scheme.
-      /// If the function is able to determine a scheme, it returns <c>true</c>, or <c>false</c> otherwise.
+      /// If the function is able to determine a scheme, it returns <c>true</c>, or otherwise, <c>false</c>.
       /// </returns>
       [SecurityCritical]
       internal static bool UrlIs(string url, UrlType urlType)
@@ -699,7 +699,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          var lastError = NativeMethods.UrlCreateFromPath(pathRp, buffer, ref bufferSize, 0);
 
-         // Don't throw exception, but return null;
+         // Do not throw exception, but return null;
          var url = buffer.ToString();
          if (Utils.IsNullOrWhiteSpace(url))
             url = string.Empty;
@@ -710,7 +710,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Tests a URL to determine if it is a file URL.</summary>
       /// <param name="url">The URL.</param>
-      /// <returns><c>true</c> if the URL is a file URL, or <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the URL is a file URL, or otherwise, <c>false</c>.</returns>
       [SecurityCritical]
       internal static bool UrlIsFileUrl(string url)
       {
@@ -720,7 +720,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns whether a URL is a URL that browsers typically do not include in navigation history.</summary>
       /// <param name="url">The URL.</param>
-      /// <returns><c>true</c> if the URL is a URL that is not included in navigation history, or <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the URL is a URL that is not included in navigation history, or otherwise, <c>false</c>.</returns>
       [SecurityCritical]
       internal static bool UrlIsNoHistory(string url)
       {
@@ -730,7 +730,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns whether a URL is opaque.</summary>
       /// <param name="url">The URL.</param>
-      /// <returns><c>true</c> if the URL is opaque, or <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the URL is opaque, or otherwise, <c>false</c>.</returns>
       [SecurityCritical]
       internal static bool UrlIsOpaque(string url)
       {
@@ -747,7 +747,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
       /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
-      private static string GetFileAssociationCore(string path, AssociationAttributes attributes, AssociationString associationType)
+      internal static string GetFileAssociationCore(string path, AssociationAttributes attributes, AssociationString associationType)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");

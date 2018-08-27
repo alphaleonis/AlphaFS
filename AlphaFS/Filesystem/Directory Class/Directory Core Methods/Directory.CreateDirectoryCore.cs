@@ -26,6 +26,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
+using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -156,7 +157,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
                else if (compress)
-                  Device.ToggleCompressionCore(transaction, true, folderLp, true, PathFormat.LongFullPath);
+                  FilesystemHelper.ToggleCompressionCore(transaction, true, folderLp, true, pathFormat);
             }
 
 

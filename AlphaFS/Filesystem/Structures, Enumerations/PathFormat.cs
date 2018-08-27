@@ -23,12 +23,12 @@ namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Indicates the format of a path passed to a method.</summary>
    /// <remarks>
-   /// At some point in code you know the full path of file system objects, e.g.: "C:\Windows".
+   /// At some point in code you know the full path of file system objects, e.g.: <c>C:\Windows</c>.
    /// For example, Directory.EnumerateFileSystemEntries() will return all files and directories from a given path.
    /// Most likely, some processing will happen on the results of the enum. The file or directory may be passed
    /// on to another function. Whenever a file path is required, some performance can be gained.
    /// <para>&#160;</para>
-   /// A path like: "C:\Windows" or "\\server\share" is considered a full path for a directory because it is rooted and has a drive/unc path.
+   /// A path like: <c>C:\Windows</c> or "\\server\share" is considered a full path for a directory because it is rooted and has a drive/unc path.
    /// If the method supports it, <see cref="PathFormat.FullPath"/> and <see cref="PathFormat.LongFullPath"/> will skip GetFullPath()
    /// calls for path resolving of the object, while also avoiding path validation and checks.
    /// Using <see cref="PathFormat.RelativePath"/> (default) will always call GetFullPath() and perform path validation and checks.
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The path is a full path in either normal or extended length (UNICODE) format.
       /// Internally it will be converted to an extended length (UNICODE) path.
       /// Using this option has a very slight performance advantage compared to using <see cref="RelativePath"/>.
-      /// <para>Example full path: "C:\Windows" or "\\server\share".</para>
+      /// <para>Example full path: <c>C:\Windows</c> or "\\server\share".</para>
       /// </summary>
       FullPath,
 

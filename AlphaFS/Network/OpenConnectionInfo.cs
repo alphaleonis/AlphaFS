@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Network
    [Serializable]
    public sealed class OpenConnectionInfo
    {
-      #region Private Fields
+      #region Fields
 
       private string _netName;
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Network
       #region Methods
 
       /// <summary>Returns the full path to the share.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return Id.ToString(CultureInfo.InvariantCulture);
@@ -72,7 +72,10 @@ namespace Alphaleonis.Win32.Network
       /// <summary>The local or remote Host.</summary>
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       [Obsolete("Use HostName")]
-      public string Host { get; private set; }
+      public string Host
+      {
+         get { return HostName; }
+      }
 
       /// <summary>The host name of this connection information.</summary>
       public string HostName { get; private set; }
@@ -92,7 +95,10 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Specifies the number of seconds that the connection has been established.</summary>
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       [Obsolete("Use ConnectedTime property.")]
-      public long ConnectedSeconds { get; private set; }
+      public long ConnectedSeconds
+      {
+         get { return ConnectedTime.Seconds; }
+      }
 
       /// <summary>Specifies duration that the connection has been established.</summary>
       public TimeSpan ConnectedTime { get; private set; }

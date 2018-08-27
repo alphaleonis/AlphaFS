@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Security
             var newPrivilege = new TOKEN_PRIVILEGES
             {
                PrivilegeCount = 1,
-               Luid = Filesystem.NativeMethods.LongToLuid(EnabledPrivilege.LookupLuid()),
+               Luid = Utils.LongToLuid(EnabledPrivilege.LookupLuid()),
 
                // 2 = SePrivilegeEnabled;
                Attributes = (uint) (enable ? 2 : 0)
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Security
                NativeError.ThrowException(lastError);
 
 
-            // If no privilege was changed, we don't want to reset it.
+            // If no privilege was changed, we do not want to reset it.
             if (mOldPrivilege.PrivilegeCount == 0)
                EnabledPrivilege = null;
          }

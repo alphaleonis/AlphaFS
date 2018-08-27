@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Network
    public static partial class Host
    {
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>A <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available, and <paramref name="continueOnException"/> is <c>true</c>.</returns>
+      /// <returns>Returns a <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available, and <paramref name="continueOnException"/> is <c>true</c>.</returns>
       /// <param name="uncPath">The share in the format: \\host\share.</param>
       /// <param name="continueOnException"><c>true</c> to suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Network
 
       
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>A <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available, and <paramref name="continueOnException"/> is <c>true</c>.</returns>
+      /// <returns>Returns a <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available, and <paramref name="continueOnException"/> is <c>true</c>.</returns>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="uncPath">The share in the format: \\host\share.</param>
       /// <param name="continueOnException"><c>true</c> to suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Network
 
       
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>A <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available, and <paramref name="continueOnException"/> is <c>true</c>.</returns>
+      /// <returns>Returns a <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available, and <paramref name="continueOnException"/> is <c>true</c>.</returns>
       /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException"><c>true</c> to suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Network
 
       
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>A <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available, and <paramref name="continueOnException"/> is <c>true</c>.</returns>
+      /// <returns>Returns a <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available, and <paramref name="continueOnException"/> is <c>true</c>.</returns>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
@@ -82,7 +82,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Gets the <see cref="ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
-      /// <returns>A <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available, and <paramref name="continueOnException"/> is <c>true</c>.</returns>
+      /// <returns>Returns a <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available, and <paramref name="continueOnException"/> is <c>true</c>.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
@@ -119,22 +119,22 @@ namespace Alphaleonis.Win32.Network
                   switch (shareLevel)
                   {
                      case ShareInfoLevel.Info1005:
-                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_1005>(0))
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_1005>())
                         {
                            NetFullPath = Path.CombineCore(false, Path.UncPrefix + stripUnc, share)
                         };
 
 
                      case ShareInfoLevel.Info503:
-                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_503>(0));
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_503>());
 
 
                      case ShareInfoLevel.Info2:
-                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_2>(0));
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_2>());
 
 
                      case ShareInfoLevel.Info1:
-                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_1>(0));
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_1>());
                   }
 
                   break;

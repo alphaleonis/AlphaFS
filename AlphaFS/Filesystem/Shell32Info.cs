@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets an <see cref="IntPtr"/> handle to the Shell icon that represents the file.</summary>
       /// <param name="iconAttributes">Icon size <see cref="Shell32.FileAttributes.SmallIcon"/> or <see cref="Shell32.FileAttributes.LargeIcon"/>. Can also be combined with <see cref="Shell32.FileAttributes.AddOverlays"/> and others.</param>
-      /// <returns>An <see cref="IntPtr"/> handle to the Shell icon that represents the file.</returns>
+      /// <returns>Returns an <see cref="IntPtr"/> handle to the Shell icon that represents the file.</returns>
       /// <remarks>Caller is responsible for destroying this handle with DestroyIcon() when no longer needed.</remarks>
       [SecurityCritical]
       public IntPtr GetIcon(Shell32.FileAttributes iconAttributes)
@@ -155,7 +155,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns the path as a string.</summary>
-      /// <returns>The path.</returns>      
+      /// <returns>The path.</returns>
       public override string ToString()
       {
          return FullPath;

@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Enumerates all altername datastreams of the specified file.</summary>
       /// <param name="path">The path to the file to enumerate streams of.</param>
-      /// <returns>An enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>
+      /// <returns>Returns an enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path)
       {

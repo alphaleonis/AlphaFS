@@ -132,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// This value is not supported before Windows 8 and Windows Server 2012
          /// </remarks>
          /// </summary>
-         FILE_ID_INFO = 18,
+         FILE_ID_INFO = 18
 
 
          ///// <summary>Files in the specified directory should be retrieved. Used for directory handles. Use only when calling GetFileInformationByHandleEx.

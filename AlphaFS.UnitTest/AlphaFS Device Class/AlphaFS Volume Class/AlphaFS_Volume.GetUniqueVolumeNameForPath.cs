@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
          var logicalDriveCount = 0;
-
+         
          foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
             // Skip mapped drives and network drives.

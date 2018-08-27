@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
             foreach (var displayName in Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumePathNames(volume))
             {
-               Console.WriteLine("\t\tVolume points to logcal drive: [{0}]", displayName);
+               Console.WriteLine("\t\tVolume points to logical drive: [{0}]", displayName);
                Console.WriteLine();
             }
 

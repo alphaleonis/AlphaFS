@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The instance file size.</summary>
       public long FileSize
       {
-         get { return NativeMethods.ToLong(Win32FindData.nFileSizeHigh, Win32FindData.nFileSizeLow); }
+         get { return Utils.ToLong(Win32FindData.nFileSizeHigh, Win32FindData.nFileSizeLow); }
       }
 
       

@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(notepadFile), Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(notepadFile));
 
 
-            // We can not compare ChangeTime against .NET because it does not exist.
+            // We cannot compare ChangeTime against .NET because it does not exist.
             // Creating a file and renaming it triggers ChangeTime, so test for that.
 
             var file = tempRoot.CreateFile();
