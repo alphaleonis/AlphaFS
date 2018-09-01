@@ -418,15 +418,13 @@ namespace Alphaleonis.Win32.Filesystem
          if (IsDirectory)
          {
             if (!isFolder)
-               //throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture,
                throw new IOException(string.Format(CultureInfo.InvariantCulture,
-                  "({0}) {1}", Win32Errors.ERROR_PATH_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, Path.GetCleanExceptionPath(InputPath))));
+                  "({0}) {1}", Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, Path.GetCleanExceptionPath(InputPath))));
          }
 
          else if (isFolder)
-            //throw new FileNotFoundException(string.Format(CultureInfo.InvariantCulture,
             throw new IOException(string.Format(CultureInfo.InvariantCulture,
-               "({0}) {1}", Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, Path.GetCleanExceptionPath(InputPath))));
+               "({0}) {1}", Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, Path.GetCleanExceptionPath(InputPath))));
       }
 
 
