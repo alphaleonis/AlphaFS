@@ -158,6 +158,7 @@
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_ExistingDirectory.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
+    <Compile Include="Directory Class\Directory.Exists\Directory.Exists_AfterDeletion.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.CopyTimestamps.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.SetTimestamps_SymbolicLink.cs" />
     <Compile Include="File Class\AlphaFS_File_GetSize\AlphaFS_File.GetSize_AllStreams.cs" />
