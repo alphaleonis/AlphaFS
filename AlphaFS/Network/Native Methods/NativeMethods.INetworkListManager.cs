@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Network
    internal static partial class NativeMethods
    {
       /// <summary>The INetworkListManager interface provides a set of methods to perform network list management functions.</summary>
-      [ComImport, Guid("DCB00000-570F-4A9B-8D69-199FDBA5723B"), TypeLibType(0x1040)]
+      [ComImport, Guid("DCB00000-570F-4A9B-8D69-199FDBA5723B")]
       internal interface INetworkListManager
       {
          // Do not change the order of these interface members.

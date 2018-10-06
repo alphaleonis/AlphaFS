@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Network
    internal static partial class NativeMethods
    {
       /// <summary>The INetworkConnection interface represents a single network connection.</summary>
-      [ComImport, TypeLibType(0x1040), Guid("DCB00005-570F-4A9B-8D69-199FDBA5723B")]
+      [ComImport, Guid("DCB00005-570F-4A9B-8D69-199FDBA5723B")]
       internal interface INetworkConnection
       {
          // Do not change the order of these interface members.

@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Network
    {
       /// <summary>The NetworkListManager class provides a set of methods to perform network list management functions.</summary>
       [ComImport, ClassInterface((short) 0), Guid("DCB00C01-570F-4A9B-8D69-199FDBA5723B")]
-      [ComSourceInterfaces("Microsoft.Windows.NetworkList.Internal.INetworkEvents\0Microsoft.Windows.NetworkList.Internal.INetworkConnectionEvents\0Microsoft.Windows.NetworkList.Internal.INetworkListManagerEvents\0"), TypeLibType(2)]
+      [ComSourceInterfaces("Microsoft.Windows.NetworkList.Internal.INetworkEvents\0Microsoft.Windows.NetworkList.Internal.INetworkConnectionEvents\0Microsoft.Windows.NetworkList.Internal.INetworkListManagerEvents\0")]
       internal sealed class NetworkListManager : INetworkListManager
       {
          /// <summary>The GetConnectivity method returns the overall connectivity state of the machine.</summary>

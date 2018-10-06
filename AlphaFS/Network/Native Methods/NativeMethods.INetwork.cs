@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Network
    internal static partial class NativeMethods
    {
       /// <summary>The INetwork interface represents a network on the local machine. It can also represent a collection of network connections with a similar network signature.</summary>
-      [ComImport, TypeLibType(0x1040), Guid("DCB00002-570F-4A9B-8D69-199FDBA5723B")]
+      [ComImport, Guid("DCB00002-570F-4A9B-8D69-199FDBA5723B")]
       internal interface INetwork
       {
          // Do not change the order of these interface members.

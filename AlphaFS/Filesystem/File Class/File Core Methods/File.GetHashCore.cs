@@ -67,12 +67,12 @@ namespace Alphaleonis.Win32.Filesystem
                      hash = hType.ComputeHash(fs);
                   break;
 
-
+#if !NETSTANDARD20
                case HashType.RIPEMD160:
                   using (var hType = RIPEMD160.Create())
                      hash = hType.ComputeHash(fs);
                   break;
-
+#endif
 
                case HashType.SHA1:
                   using (var hType = SHA1.Create())
