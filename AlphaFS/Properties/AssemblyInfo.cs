@@ -19,17 +19,14 @@
  *  THE SOFTWARE. 
  */
 using System.Reflection;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AlphaFS")]
-[assembly: AssemblyDescription("Alphaleonis Extended Win32 File System Support Library for .NET")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCulture("")]
-
+[assembly: NeutralResourcesLanguageAttribute("en-US")]
 [assembly: ComVisible(false)]
 
 [assembly: Guid("6dc8e700-bb73-43fe-9f01-3300a9d61cd7")]
