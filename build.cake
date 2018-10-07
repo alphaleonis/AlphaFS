@@ -94,12 +94,24 @@ Task("Test")
         DotNetCoreTestSettings settings = new DotNetCoreTestSettings()
         {
             NoBuild = true,
-            NoRestore = true
+            NoRestore = true,
+            Logger = "trx"            
         };
         var projects = GetFiles("./tests/**/*.csproj");
         foreach (var project in projects)
         {
             DotNetCoreTest(project.FullPath, settings);
+        }        
+    });
+
+Task("PublishTestResults")
+    .IsDependeeOf("Test")
+    .WithCriteria(() => BuildSystem.IsRunningOnAppVeyor)
+    .Does(() => 
+    {
+        foreach (var trx in GetFiles("./**/*.trx"))
+        {
+            UploadFile($"https://ci.appveyor.com/api/testresults/mstest/{BuildSystem.AppVeyor.Environment.JobId}", trx);                
         }
     });
 
