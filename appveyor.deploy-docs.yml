@@ -1,0 +1,25 @@
+image: Visual Studio 2017
+configuration: Release
+
+environment:
+  access_token:
+    secure: KTYZFVLSKu6njvcMXJlEJ0O6X4WQy10kbVSwaoYPkAlqleS9eEdUcCmgjfy0+fsS
+
+init:
+  - git config --global credential.helper store
+  - ps: Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+
+branches:
+  only:
+    - never-build-branch-automatically-dont-use-this-name
+
+pull_requests:
+  do_not_increment_build_number: true
+
+os: Visual Studio 2017
+
+build_script: 
+  - ps: .\build.ps1 -target DocPublish -verbosity diagnostic
+
+test: off
+deploy: off

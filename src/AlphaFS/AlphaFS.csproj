@@ -1,21 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <Import Project="..\..\build\common.props" />
   <PropertyGroup>
     <TargetFrameworks>net45;net46;net47;netstandard20</TargetFrameworks>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
-    <Authors>Alphaleonis;Yomodo</Authors>
-    <Company>Alphaleonis</Company>
-    <Description>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes. Features highlights: creating hardlinks, accessing hidden volumes, enumeration of volumes, transactional file operations and much more.</Description>
-    <Copyright>Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</Copyright>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageLicenseUrl>https://github.com/alphaleonis/AlphaFS/blob/master/LICENSE.md</PackageLicenseUrl>
-    <PackageProjectUrl>https://alphafs.alphaleonis.com/</PackageProjectUrl>
-    <PackageIconUrl>http://alphaleonis.com/img/AlphaFS-icon.png</PackageIconUrl>
-    <PackageOutputPath>../../artifacts</PackageOutputPath>    
-    <RepositoryUrl>https://github.com/alphaleonis/AlphaFS</RepositoryUrl>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\build\AlphaFS.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>false</DelaySign>
     <IsPackable>true</IsPackable>
     <PackageId>AlphaFS</PackageId>
     <Title>AlphaFS</Title>

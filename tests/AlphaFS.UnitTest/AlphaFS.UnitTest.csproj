@@ -1,16 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <Import Project="..\..\build\common.props" />
   <PropertyGroup>
     <TargetFrameworks>net45;net46;net47</TargetFrameworks>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
-    <Authors>Alphaleonis</Authors>
-    <Company>Alphaleonis</Company>
-    <Description>UnitTests for Alphaleonis Extended Win32 File System Support Library for .NET</Description>
-    <Copyright>Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</Copyright>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\build\AlphaFS.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>false</DelaySign>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
