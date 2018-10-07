@@ -1,4 +1,5 @@
 // TODO: Set build version 
+using System.Xml.Linq;
 #addin nuget:?package=Cake.DocFx
 using System.Net;
 using System.Net.Http.Headers;
@@ -38,8 +39,22 @@ var msBuildSettings = new DotNetCoreMSBuildSettings
 Setup(ctx =>
 {
     if (BuildSystem.AppVeyor.IsRunningOnAppVeyor) 
-    {
-        Information($"AppVeyor Build JobId: {BuildSystem.AppVeyor.Environment.JobId}");
+    {        
+        Information("Updating build number");
+        // Update BuildNumber.
+        var propsFile = File("build/common.props");
+        string major = XmlPeek(propsFile, "//PropertyGroup/Major");
+        string minor = XmlPeek(propsFile, "//PropertyGroup/Minor");
+        string revision = XmlPeek(propsFile, "//PropertyGroup/Revision");
+
+        if (String.IsNullOrEmpty(major) || 
+            String.IsNullOrEmpty(minor) ||
+            String.IsNullOrEmpty(revision))
+        {
+            throw new Exception($"Unable to find Major, Minor and/or Build version in {propsFile}.");
+        }
+        var targetVersion = $"{major}.{minor}.{revision}";
+        BuildSystem.AppVeyor.UpdateBuildVersion($"{targetVersion}.{AppVeyor.Environment.Build.Number}");        
     }
 });
 
@@ -50,16 +65,7 @@ Teardown(ctx =>
 ///////////////////////////////////////////////////////////////////////////////
 // TASKS
 ///////////////////////////////////////////////////////////////////////////////
-
-Task("SetBuildNumber")
-    .WithCriteria(AppVeyor.IsRunningOnAppVeyor)
-    .Does(() => 
-    {
-        Warning("Setting a build number");
-    });
-
 Task("Clean")
-    .IsDependentOn("SetBuildNumber")
     .Does(() =>
     {
         CleanDirectory(ArtifactsDirectory);

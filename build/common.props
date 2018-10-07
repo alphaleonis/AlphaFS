@@ -20,6 +20,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <CurrentDate>$([System.DateTime]::Now.ToString(yyMMdd-HHmm))</CurrentDate>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <LangVersion>7.2</LangVersion>
     
     <Major>2</Major>
@@ -28,9 +32,8 @@
 
     <BuildNumber Condition=" '$(APPVEYOR_BUILD_NUMBER)' != '' ">$(APPVEYOR_BUILD_NUMBER)</BuildNumber>
     <BuildNumber Condition=" '$(BuildNumber)' == '' ">0</BuildNumber>
-
-    <PrereleaseLabel>-develop</PrereleaseLabel>
-    <PrereleaseLabel Condition=" '$(APPVEYOR_BUILD_NUMBER)' != '' "></PrereleaseLabel>
+    
+    <PrereleaseLabel Condition="'$(APPVEYOR_REPO_BRANCH)' != 'master'">-dev-$(CurrentDate)</PrereleaseLabel>
 
     <AssemblyVersion>$(Major).$(Minor).$(Revision).0</AssemblyVersion>
     <AssemblyFileVersion>$(Major).$(Minor).$(Revision).$(BuildNumber)</AssemblyFileVersion>
