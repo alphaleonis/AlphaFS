@@ -3,3 +3,7 @@
 - name: Api Reference
   href: api/
   homepage: api/index.md
+- name: Changelog
+  href: ../CHANGELOG.md
+- name: GitHub
+  href: https://github.com/alphaleonis/AlphaFS

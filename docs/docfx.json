@@ -20,7 +20,7 @@
         "files": [
           "api/**.yml",
           "api/index.md"
-        ]
+        ]        
       },
       {
         "files": [
@@ -29,6 +29,12 @@
           "toc.yml",
           "*.md"
         ]
+      },
+      {
+        "files": [
+          "CHANGELOG.md"
+        ],
+        "cwd": ".."
       }
     ],
     "xrefservice": [
@@ -56,12 +62,12 @@
     "globalMetadata": {
       "_appTitle": "AlphaFS",
       "_appFooter": "<span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>",
-      "_enableSearch": true
+      "_enableSearch": true      
     },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "default",      
+      "default"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",

@@ -1,3 +1,6 @@
+---
+uid: powershell
+---
 ## Getting Started with AlphaFS in PowerShell
 
 * Make sure that AlphaFS.dll is not blocked, due to archive [download](https://github.com/alphaleonis/AlphaFS/releases).
