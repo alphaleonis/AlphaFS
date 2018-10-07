@@ -1,4 +1,3 @@
-// TODO: Set build version 
 using System.Xml.Linq;
 #addin nuget:?package=Cake.DocFx
 using System.Net;
