@@ -102,21 +102,33 @@ Task("Test")
         {
             DotNetCoreTest(project.FullPath, settings);
         }        
+    })
+    .OnError(() => 
+    {
+        UploadTestResults();
     });
+
+void UploadTestResults()
+{
+    if (BuildSystem.IsRunningOnAppVeyor)
+    {
+        foreach (var trx in GetFiles("./**/*.trx"))
+        {
+            UploadFile($"https://ci.appveyor.com/api/testresults/mstest/{BuildSystem.AppVeyor.Environment.JobId}", trx);                
+        }
+    }
+}
 
 Task("PublishTestResults")
     .IsDependentOn("Test")
     .WithCriteria(() => BuildSystem.IsRunningOnAppVeyor)
     .Does(() => 
     {
-        foreach (var trx in GetFiles("./**/*.trx"))
-        {
-            UploadFile($"https://ci.appveyor.com/api/testresults/mstest/{BuildSystem.AppVeyor.Environment.JobId}", trx);                
-        }
+        UploadTestResults();
     });
 
 Task("Pack")
-    .IsDependentOn("PublishTestResults")
+    .IsDependentOn("PublishTestResults")    
     .Does(() => 
     {
         var settings = new DotNetCorePackSettings
