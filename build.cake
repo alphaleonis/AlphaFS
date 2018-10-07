@@ -105,8 +105,7 @@ Task("Test")
     })
     .OnError(error => 
     {
-        UploadTestResults();
-        throw error;
+        UploadTestResults();        
     });
 
 void UploadTestResults()
