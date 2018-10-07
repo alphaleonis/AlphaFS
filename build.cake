@@ -103,9 +103,10 @@ Task("Test")
             DotNetCoreTest(project.FullPath, settings);
         }        
     })
-    .OnError(() => 
+    .OnError(error => 
     {
         UploadTestResults();
+        throw error;
     });
 
 void UploadTestResults()
