@@ -105,7 +105,7 @@ Task("Test")
     });
 
 Task("PublishTestResults")
-    .IsDependeeOf("Test")
+    .IsDependentOn("Test")
     .WithCriteria(() => BuildSystem.IsRunningOnAppVeyor)
     .Does(() => 
     {
@@ -116,7 +116,7 @@ Task("PublishTestResults")
     });
 
 Task("Pack")
-    .IsDependentOn("Test")
+    .IsDependentOn("PublishTestResults")
     .Does(() => 
     {
         var settings = new DotNetCorePackSettings

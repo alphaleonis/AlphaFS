@@ -12,7 +12,6 @@
     <RepositoryUrl>https://github.com/alphaleonis/AlphaFS</RepositoryUrl>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
  </PropertyGroup>
  <PropertyGroup>
     <SignAssembly>true</SignAssembly>
