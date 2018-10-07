@@ -9,8 +9,9 @@
     <Description>UnitTests for Alphaleonis Extended Win32 File System Support Library for .NET</Description>
     <Copyright>Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</Copyright>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\AlphaFS.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\build\AlphaFS.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
@@ -370,7 +371,7 @@
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetVolumeInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\AlphaFS.snk">
+    <None Include="..\..\build\AlphaFS.snk">
       <Link>AlphaFS.snk</Link>
     </None>
   </ItemGroup>
@@ -379,6 +380,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AlphaFS\AlphaFS.csproj" />    
+    <ProjectReference Include="..\..\src\AlphaFS\AlphaFS.csproj" />    
   </ItemGroup>
 </Project>

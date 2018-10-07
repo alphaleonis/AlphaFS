@@ -6,30 +6,14 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{478C6563-C321-4AB5-9D4D-ABFC9C88EBF0}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		AlphaFS.nuspec = AlphaFS.nuspec
-		AlphaFS.testrunconfig = AlphaFS.testrunconfig
-		AlphaFS.vsmdi = AlphaFS.vsmdi
-		BuildRelease.proj = BuildRelease.proj
 		CHANGELOG.md = CHANGELOG.md
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaFS", "AlphaFS\AlphaFS.csproj", "{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaFS", "src\AlphaFS\AlphaFS.csproj", "{0E7FE1D8-9D72-4775-80EC-7828BDFB2BEB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaFS.UnitTest", "AlphaFS.UnitTest\AlphaFS.UnitTest.csproj", "{BC336637-FDD7-4D13-9B24-1A888E85A944}"
-EndProject
-Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "AlphaFS.Doc", "AlphaFS.Doc\AlphaFS.Doc.shfbproj", "{81ED470C-0A64-4B10-B37E-61A06DDC497C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA} = {F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShell", "PowerShell", "{9D8AAD55-4083-454F-BBA9-1AB58D2B5FB9}"
-	ProjectSection(SolutionItems) = preProject
-		PowerShell\Copy-DirectoryWithProgress.ps1 = PowerShell\Copy-DirectoryWithProgress.ps1
-		PowerShell\Copy-FileWithProgress.ps1 = PowerShell\Copy-FileWithProgress.ps1
-		PowerShell\Enumerate-FileSystemEntryInfos.ps1 = PowerShell\Enumerate-FileSystemEntryInfos.ps1
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaFS.UnitTest", "tests\AlphaFS.UnitTest\AlphaFS.UnitTest.csproj", "{718992F4-788E-4560-BBB4-6BAED28BD3FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,22 +21,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Release|Any CPU.ActiveCfg = Release|x86
+		{0E7FE1D8-9D72-4775-80EC-7828BDFB2BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E7FE1D8-9D72-4775-80EC-7828BDFB2BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E7FE1D8-9D72-4775-80EC-7828BDFB2BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E7FE1D8-9D72-4775-80EC-7828BDFB2BEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{718992F4-788E-4560-BBB4-6BAED28BD3FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{718992F4-788E-4560-BBB4-6BAED28BD3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{718992F4-788E-4560-BBB4-6BAED28BD3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{718992F4-788E-4560-BBB4-6BAED28BD3FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{9D8AAD55-4083-454F-BBA9-1AB58D2B5FB9} = {478C6563-C321-4AB5-9D4D-ABFC9C88EBF0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C47DAE2E-05E8-4554-B693-E0AF5BEF37CA}
