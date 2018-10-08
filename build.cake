@@ -165,8 +165,7 @@ Task("DocBuild")
         DocFxMetadata(DocFxFile);
         DocFxBuild(DocFxFile);
     });
-    
-var DocPublishTask = Task("DocPublish")
+    var DocPublishTask = Task("DocPublish")
     .Does(() => 
     {        
         // 'ALPHALEONIS_DEPLOY_BUILD_ID'
@@ -178,19 +177,14 @@ var DocPublishTask = Task("DocPublish")
          
         var docFxArtifactZip = WorkDirectory.CombineWithFilePath("docfx-source.zip");
         var gitCloneDir = MakeAbsolute(WorkDirectory.Combine(Directory("repo")));
-        var gitCloneUrl = $"https://github.com/{GitHubProject}.git";
-        var accessToken = EnvironmentVariable("access_token");
+        var gitCloneUrl = $"git@github.com:{GitHubProject}.git";
         var gitCommitMessage = "Updated documentation";
-            var sourceBuildVersion = EnvironmentVariable("ALPHALEONIS_DEPLOY_BUILD_VERSION", "0.0.0");
+        var sourceBuildVersion = EnvironmentVariable("ALPHALEONIS_DEPLOY_BUILD_VERSION", "0.0.0");
 
         EnsureDirectoryExists(WorkDirectory);
 
         if (!BuildSystem.IsLocalBuild) 
         {
-            if (String.IsNullOrEmpty(accessToken)) {
-                BuildSystem.AppVeyor.AddErrorMessage("No access token for git access was specified. Expecting environment variable named 'access_token'.");                
-                throw new Exception("No access token for git access was specified. Expecting environment variable named 'access_token'.");
-            }
             var apiUrl = "https://ci.appveyor.com/api"; 
             var jobId = EnvironmentVariable<string>("ALPHALEONIS_DEPLOY_JOB_ID", null);
 
@@ -210,7 +204,8 @@ var DocPublishTask = Task("DocPublish")
 
         Information($"Cloning {gitCloneUrl} to {gitCloneDir}");
 
-        GitClone(gitCloneUrl, gitCloneDir, new GitCloneSettings { BranchName = DocFxBranchName, Checkout = true });
+        GitCommand(null, "clone", "-b", DocFxBranchName, "--single-branch", gitCloneUrl, gitCloneDir.FullPath);
+        //GitClone(gitCloneUrl, gitCloneDir, new GitCloneSettings { BranchName = DocFxBranchName, Checkout = true });
         
         var allFilesInGitRepo = GetFiles(gitCloneDir.FullPath + "/**/*").Where(f => !MakeAbsolute(gitCloneDir).GetRelativePath(f).FullPath.StartsWith(".git/")).ToArray();
         
@@ -237,14 +232,16 @@ var DocPublishTask = Task("DocPublish")
         {            
             Verbose("Changes detected, committing.");        
             var commit = GitCommit(gitCloneDir, GitHubCommitName, GitHubCommitEMail, gitCommitMessage);
-            Information("Pushing changes to remote.");
-            GitPush(gitCloneDir, accessToken, "x-oauth-basic", DocFxBranchName);
-            AppVeyor.AddInformationalMessage($"Pushed changes from build {sourceBuildVersion}.");
+            Information("Pushing changes to remote.");            
+            GitCommand(gitCloneDir, "push");
+            if (BuildSystem.AppVeyor.IsRunningOnAppVeyor)
+                AppVeyor.AddInformationalMessage($"Pushed changes from build {sourceBuildVersion}.");
         }
         else
         {
             Information("No changes made to documentation files, nothing to publish.");
-            AppVeyor.AddInformationalMessage("No changes made to documentation files, nothing to publish.");
+            if (BuildSystem.AppVeyor.IsRunningOnAppVeyor)
+                AppVeyor.AddInformationalMessage("No changes made to documentation files, nothing to publish.");
         }
 
         Information($"Cleaning up {gitCloneDir}");
@@ -332,4 +329,35 @@ class ArtifactInfo
     public long Size{ get; set;}
     public DateTime Created { get; set; }
     public string RelativeName => System.IO.Path.GetFileName(FileName);
+}
+
+void GitCommand(DirectoryPath repositoryDir, string command, params string[] args)
+{
+    var gitPath = Context.Tools.Resolve("git.exe");
+    if (gitPath == null)
+        throw new Exception($"Unable to resolve git.exe tool.");
+
+    var argumentBuilder = new ProcessArgumentBuilder();
+    argumentBuilder.Append(command);
+    foreach (var arg in args)
+        argumentBuilder.Append(arg);
+
+    int exitCode = StartProcess(gitPath, new ProcessSettings {
+        WorkingDirectory = repositoryDir, 
+        Arguments = argumentBuilder,
+        RedirectStandardOutput = true,
+        RedirectStandardError = true
+    }, out var stdOut, out var stdErr);
+
+    foreach (var output in stdOut)
+        Information(output);
+
+    // Git apparently writes all messages to stderr... so we just write them as verbose.
+     foreach (var output in stdErr)
+        Verbose(output);
+
+    if (exitCode != 0)
+    {
+        throw new Exception($"Git failed with exit code {exitCode}.");
+    }
 }
