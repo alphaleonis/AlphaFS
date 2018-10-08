@@ -18,6 +18,7 @@ var configuration = Argument("configuration", "Release");
 var ToolsDirectory = Directory("./tools/");
 var ArtifactsDirectory = Directory("./artifacts");
 var SolutionFile = "./AlphaFs.sln";
+var DocFxFile = "./docs/docfx.json";
 var DocFxArtifactsDirectory = ArtifactsDirectory.Path.Combine("docs");
 var WorkDirectory = ToolsDirectory.Path.Combine("_work");
 var GitHubProject = BuildSystem.AppVeyor.IsRunningOnAppVeyor ? BuildSystem.AppVeyor.Environment.Repository.Name : "alphaleonis/AlphaFS";
@@ -153,15 +154,16 @@ Task("Pack")
 
 Task("DocClean")
     .Does(() => 
-    {
+    {        
         CleanDirectory(DocFxArtifactsDirectory, true);
     });
 
 Task("DocBuild")
     .IsDependentOn("DocClean")
     .Does(() => 
-    {
-        DocFxBuild("./docs/docfx.json");
+    {        
+        DocFxMetadata(DocFxFile);
+        DocFxBuild(DocFxFile);
     });
     
 var DocPublishTask = Task("DocPublish")

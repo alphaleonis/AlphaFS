@@ -6,7 +6,8 @@
           "files": [
             "src/**.csproj"
           ],
-          "cwd": ".."
+          "cwd": "..",
+          "TargetFramework": "net47"
         }
       ],
       "dest": "api",
