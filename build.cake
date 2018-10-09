@@ -25,7 +25,7 @@ var GitHubProject = BuildSystem.AppVeyor.IsRunningOnAppVeyor ? BuildSystem.AppVe
 var DocFxBranchName = "gh-pages-lab";
 var DocFxArtifactName = "artifacts/docs.zip";
 var GitHubCommitName = "AppVeyor";
-var GitHubCommitEMail = "alphaleonis@users.noreply.github.com";
+var GitHubCommitEMail = "alphaleonis-build@users.noreply.github.com";
 var AppVeyorApiBaseUrl = "https://ci.appveyor.com/api";
 var TestProjectsPattern = "./tests/**/*.csproj";
 var PackProjectsPattern = "./src/**/*.csproj";
@@ -44,20 +44,30 @@ Setup(ctx =>
     if (BuildSystem.AppVeyor.IsRunningOnAppVeyor) 
     {        
         Information("Updating build number");
-        // Update BuildNumber.
-        var propsFile = File("build/common.props");
-        string major = XmlPeek(propsFile, "//PropertyGroup/Major");
-        string minor = XmlPeek(propsFile, "//PropertyGroup/Minor");
-        string revision = XmlPeek(propsFile, "//PropertyGroup/Revision");
-
-        if (String.IsNullOrEmpty(major) || 
-            String.IsNullOrEmpty(minor) ||
-            String.IsNullOrEmpty(revision))
+        string targetVersion;
+        if (AppVeyor.Environment.Repository.Branch == DocFxBranchName)
         {
-            throw new Exception($"Unable to find Major, Minor and/or Build version in {propsFile}.");
+            targetVersion = EnvironmentVariable<string>("ALPHALEONIS_DEPLOY_BUILD_VERSION", null);
         }
-        var targetVersion = $"{major}.{minor}.{revision}";
-        BuildSystem.AppVeyor.UpdateBuildVersion($"{targetVersion}.{AppVeyor.Environment.Build.Number}");        
+        else
+        {
+            // Update BuildNumber.
+            var propsFile = File("build/common.props");
+            string major = XmlPeek(propsFile, "//PropertyGroup/Major");
+            string minor = XmlPeek(propsFile, "//PropertyGroup/Minor");
+            string revision = XmlPeek(propsFile, "//PropertyGroup/Revision");
+
+            if (String.IsNullOrEmpty(major) || 
+                String.IsNullOrEmpty(minor) ||
+                String.IsNullOrEmpty(revision))
+            {
+                throw new Exception($"Unable to find Major, Minor and/or Build version in {propsFile}.");
+            }
+            targetVersion = $"{major}.{minor}.{revision}";
+        }
+
+        if (targetVersion != null)
+            BuildSystem.AppVeyor.UpdateBuildVersion($"{targetVersion}.{AppVeyor.Environment.Build.Number}");        
     }
 });
 
