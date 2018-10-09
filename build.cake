@@ -22,10 +22,13 @@ var DocFxFile = "./docs/docfx.json";
 var DocFxArtifactsDirectory = ArtifactsDirectory.Path.Combine("docs");
 var WorkDirectory = ToolsDirectory.Path.Combine("_work");
 var GitHubProject = BuildSystem.AppVeyor.IsRunningOnAppVeyor ? BuildSystem.AppVeyor.Environment.Repository.Name : "alphaleonis/AlphaFS";
-var DocFxBranchName = "gh-pages";
+var DocFxBranchName = "gh-pages-lab";
 var DocFxArtifactName = "artifacts/docs.zip";
 var GitHubCommitName = "AppVeyor";
 var GitHubCommitEMail = "alphaleonis@users.noreply.github.com";
+var AppVeyorApiBaseUrl = "https://ci.appveyor.com/api";
+var TestProjectsPattern = "./tests/**/*.csproj";
+var PackProjectsPattern = "./src/**/*.csproj";
 
 var msBuildSettings = new DotNetCoreMSBuildSettings
 {
@@ -103,7 +106,7 @@ Task("Test")
             NoRestore = true,
             Logger = "trx"            
         };
-        var projects = GetFiles("./tests/**/*.csproj");
+        var projects = GetFiles(TestProjectsPattern);
         foreach (var project in projects)
         {
             DotNetCoreTest(project.FullPath, settings);
@@ -120,7 +123,7 @@ void UploadTestResults()
     {
         foreach (var trx in GetFiles("./**/*.trx"))
         {
-            UploadFile($"https://ci.appveyor.com/api/testresults/mstest/{BuildSystem.AppVeyor.Environment.JobId}", trx);                
+            UploadFile($"{AppVeyorApiBaseUrl}/testresults/mstest/{BuildSystem.AppVeyor.Environment.JobId}", trx);                
         }
     }
 }
@@ -145,7 +148,7 @@ Task("Pack")
             NoBuild = true
         };
 
-        var projects = GetFiles("./src/**/*.csproj");
+        var projects = GetFiles(PackProjectsPattern);
         foreach(var project in projects)
         {
             DotNetCorePack(project.FullPath, settings);
@@ -165,17 +168,11 @@ Task("DocBuild")
         DocFxMetadata(DocFxFile);
         DocFxBuild(DocFxFile);
     });
-    var DocPublishTask = Task("DocPublish")
+
+var DocPublishTask = Task("DocPublish")
     .Does(() => 
-    {        
-        // 'ALPHALEONIS_DEPLOY_BUILD_ID'
-        // 'ALPHALEONIS_DEPLOY_SOURCE_PROJECT_ID'
-        // 'ALPHALEONIS_DEPLOY_BUILD_NUMBER'
-        // 'ALPHALEONIS_DEPLOY_BUILD_VERSION'
-        // 'ALPHALEONIS_DEPLOY_JOB_ID'
-        // 'ALPHALEONIS_DEPLOY_PROJECT_SLUG'
-         
-        var docFxArtifactZip = WorkDirectory.CombineWithFilePath("docfx-source.zip");
+    {             
+        var artifactTempZipPath = WorkDirectory.CombineWithFilePath("docfx-artifact.zip");
         var gitCloneDir = MakeAbsolute(WorkDirectory.Combine(Directory("repo")));
         var gitCloneUrl = $"git@github.com:{GitHubProject}.git";
         var gitCommitMessage = "Updated documentation";
@@ -185,14 +182,13 @@ Task("DocBuild")
 
         if (!BuildSystem.IsLocalBuild) 
         {
-            var apiUrl = "https://ci.appveyor.com/api"; 
             var jobId = EnvironmentVariable<string>("ALPHALEONIS_DEPLOY_JOB_ID", null);
 
             if (String.IsNullOrEmpty(jobId))
                 throw new ArgumentException($"Missing environment variable ALPHALEONIS_DEPLOY_JOB_ID");
             
             // Download the artifact from the build server if this is not a local build.
-            DownloadArtifact(apiUrl, jobId, DocFxArtifactName, sourceBuildVersion, docFxArtifactZip);
+            DownloadArtifact(AppVeyorApiBaseUrl, jobId, DocFxArtifactName, sourceBuildVersion, artifactTempZipPath);
         }
         else
         {
@@ -205,7 +201,6 @@ Task("DocBuild")
         Information($"Cloning {gitCloneUrl} to {gitCloneDir}");
 
         GitCommand(null, "clone", "-b", DocFxBranchName, "--single-branch", gitCloneUrl, gitCloneDir.FullPath);
-        //GitClone(gitCloneUrl, gitCloneDir, new GitCloneSettings { BranchName = DocFxBranchName, Checkout = true });
         
         var allFilesInGitRepo = GetFiles(gitCloneDir.FullPath + "/**/*").Where(f => !MakeAbsolute(gitCloneDir).GetRelativePath(f).FullPath.StartsWith(".git/")).ToArray();
         
@@ -217,7 +212,7 @@ Task("DocBuild")
 
         if (!BuildSystem.IsLocalBuild)
         {
-            Unzip(docFxArtifactZip, gitCloneDir);
+            Unzip(artifactTempZipPath, gitCloneDir);
         }
         else
         {
@@ -303,8 +298,7 @@ void DownloadArtifact(string apiUrl, string jobId, string artifactName, string s
     
     Information($"Found matching artifact: {matchingArtifact.FileName}, type={matchingArtifact.Type}, size={matchingArtifact.Size}b");
 
-    var url = apiUrl + $"/buildjobs/{jobId}/artifacts/{WebUtility.UrlEncode(matchingArtifact.FileName)}";      
-    EnsureDirectoryExists("_download");
+    var url = apiUrl + $"/buildjobs/{jobId}/artifacts/{WebUtility.UrlEncode(matchingArtifact.FileName)}";          
     Information($"Downloading artifact {matchingArtifact.FileName} to {targetFile.FullPath}");
     DownloadFile(url, targetFile);
 }
