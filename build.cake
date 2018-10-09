@@ -1,12 +1,10 @@
 using System.Xml.Linq;
 #addin nuget:?package=Cake.DocFx
-using System.Net;
-using System.Net.Http.Headers;
-using System.Net.Http;
-using RestSharp;
 #addin nuget:?package=Cake.Git
 #addin nuget:?package=Cake.Incubator
-#addin nuget:?package=RestSharp
+#l "build/appveyor-util.cake"
+#l "build/common.cake"
+#l "build/git-util.cake"
 #tool "docfx.console"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -80,7 +78,7 @@ Teardown(ctx =>
 ///////////////////////////////////////////////////////////////////////////////
 Task("Clean")
     .Does(() =>
-    {
+    {        
         CleanDirectory(ArtifactsDirectory);
     });
 
@@ -133,7 +131,7 @@ void UploadTestResults()
     {
         foreach (var trx in GetFiles("./**/*.trx"))
         {
-            UploadFile($"{AppVeyorApiBaseUrl}/testresults/mstest/{BuildSystem.AppVeyor.Environment.JobId}", trx);                
+            PublishAppVeyorTestResult(trx, AppVeyorApiBaseUrl);            
         }
     }
 }
@@ -198,7 +196,7 @@ var DocPublishTask = Task("DocPublish")
                 throw new ArgumentException($"Missing environment variable ALPHALEONIS_DEPLOY_JOB_ID");
             
             // Download the artifact from the build server if this is not a local build.
-            DownloadArtifact(AppVeyorApiBaseUrl, jobId, DocFxArtifactName, sourceBuildVersion, artifactTempZipPath);
+            DownloadAppVeyorArtifact(AppVeyorApiBaseUrl, jobId, DocFxArtifactName, sourceBuildVersion, artifactTempZipPath);
         }
         else
         {
@@ -265,103 +263,6 @@ if (BuildSystem.IsLocalBuild)
 
 RunTarget(target);
 
-void DeleteDirectoryIfExists(DirectoryPath path)
-{
-    if (DirectoryExists(path))
-    {
-        DeleteDirectory(path, new DeleteDirectorySettings { Force = true, Recursive = true });
-    }
-}
 
-void CleanDirectory(DirectoryPath path, bool force)
-{
-    if (force && DirectoryExists(path))
-    {
-        Verbose("Removing ReadOnly attributes on all files in directory {0}", path);                
-        foreach (var file in System.IO.Directory.GetFiles(MakeAbsolute(path).FullPath, "*", SearchOption.AllDirectories))
-        {
-            System.IO.File.SetAttributes(file, System.IO.File.GetAttributes(file) & ~FileAttributes.ReadOnly);            
-        }
-    }
 
-    CleanDirectory(path);
-}
 
-void DownloadArtifact(string apiUrl, string jobId, string artifactName, string sourceBuildVersion, FilePath targetFile)
-{            
-    var artifacts = RestInvoke<List<ArtifactInfo>>(apiUrl,  $"buildjobs/{jobId}/artifacts", Method.GET);
-
-    ArtifactInfo matchingArtifact = null;
-    foreach (var artifact in artifacts)
-    {
-        Verbose($"- Found artifact: {artifact.FileName} of type {artifact.Type}");
-        if (artifact.FileName.Equals(artifactName, StringComparison.OrdinalIgnoreCase)) {
-            if (matchingArtifact != null)
-                throw new Exception($"Multiple artifacts matching the name \"{artifactName}\" were found.");
-            else
-                matchingArtifact = artifact;
-        }
-    }
-
-    if (matchingArtifact == null)
-        throw new FileNotFoundException($"Unable to find artifact named \"{artifactName}\" in build {sourceBuildVersion}.");
-    
-    Information($"Found matching artifact: {matchingArtifact.FileName}, type={matchingArtifact.Type}, size={matchingArtifact.Size}b");
-
-    var url = apiUrl + $"/buildjobs/{jobId}/artifacts/{WebUtility.UrlEncode(matchingArtifact.FileName)}";          
-    Information($"Downloading artifact {matchingArtifact.FileName} to {targetFile.FullPath}");
-    DownloadFile(url, targetFile);
-}
-
-T RestInvoke<T>(string baseUrl, string resource, Method method) where T : new()
-{
-    var client = new RestClient(baseUrl);
-    var request = new RestRequest(resource, method);
-    Verbose($"{method} {baseUrl}/{resource}");
-    var result = client.Execute<T>(request);
-    if (result.StatusCode != HttpStatusCode.OK || !result.IsSuccessful)
-    {
-        throw new Exception($"REST call to {baseUrl}/{resource} failed with status {result.StatusCode}. Error message: {result.ErrorMessage}");
-    }
-    return result.Data;    
-}
-
-class ArtifactInfo
-{
-    public string FileName { get; set; }
-    public string Type { get; set; }
-    public long Size{ get; set;}
-    public DateTime Created { get; set; }
-    public string RelativeName => System.IO.Path.GetFileName(FileName);
-}
-
-void GitCommand(DirectoryPath repositoryDir, string command, params string[] args)
-{
-    var gitPath = Context.Tools.Resolve("git.exe");
-    if (gitPath == null)
-        throw new Exception($"Unable to resolve git.exe tool.");
-
-    var argumentBuilder = new ProcessArgumentBuilder();
-    argumentBuilder.Append(command);
-    foreach (var arg in args)
-        argumentBuilder.Append(arg);
-
-    int exitCode = StartProcess(gitPath, new ProcessSettings {
-        WorkingDirectory = repositoryDir, 
-        Arguments = argumentBuilder,
-        RedirectStandardOutput = true,
-        RedirectStandardError = true
-    }, out var stdOut, out var stdErr);
-
-    foreach (var output in stdOut)
-        Information(output);
-
-    // Git apparently writes all messages to stderr... so we just write them as verbose.
-     foreach (var output in stdErr)
-        Verbose(output);
-
-    if (exitCode != 0)
-    {
-        throw new Exception($"Git failed with exit code {exitCode}.");
-    }
-}
