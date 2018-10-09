@@ -45,6 +45,13 @@ Setup(ctx =>
         string targetVersion;
         if (AppVeyor.Environment.Repository.Branch == DocFxBranchName)
         {
+            foreach (var variable in EnvironmentVariables())
+            {
+                if (variable.Key.StartsWithIgnoreCase("ALPHALEONIS"))
+                {
+                    Verbose($"{variable.Key}={variable.Value}");
+                }
+            }
             targetVersion = EnvironmentVariable<string>("ALPHALEONIS_DEPLOY_BUILD_VERSION", null);
         }
         else
