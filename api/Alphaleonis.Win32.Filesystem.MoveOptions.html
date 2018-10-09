@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Enum MoveOptions
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Enum MoveOptions
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Filesystem.MoveOptions">
+  
+  
+  <h1 id="Alphaleonis_Win32_Filesystem_MoveOptions" data-uid="Alphaleonis.Win32.Filesystem.MoveOptions" class="text-break">Enum MoveOptions
+  </h1>
+  <div class="markdown level0 summary"><p>Used by MoveFileXxx.Flags that specify how a file or directory is to be moved.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Filesystem.html">Alphaleonis.Win32.Filesystem</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Filesystem_MoveOptions_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Flags]
+public enum MoveOptions</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_MoveOptions_CopyAllowed">CopyAllowed</td>
+        <td><p>MOVE_FILE_COPY_ALLOWED</p>
+<p>If the file is to be moved to a different volume, the function simulates the move by using the CopyFile and DeleteFile functions.</p>
+<p>This value cannot be used with <a class="xref" href="Alphaleonis.Win32.Filesystem.MoveOptions.html#Alphaleonis_Win32_Filesystem_MoveOptions_DelayUntilReboot">DelayUntilReboot</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_MoveOptions_CreateHardlink">CreateHardlink</td>
+        <td><p>MOVE_FILE_CREATE_HARDLINK</p>
+<p>Reserved for future use.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_MoveOptions_DelayUntilReboot">DelayUntilReboot</td>
+        <td><p>MOVE_FILE_DELAY_UNTIL_REBOOT</p>
+<p>
+The system does not move the file until the operating system is restarted.
+The system moves the file immediately after AUTOCHK is executed, but before creating any paging files.
+</p>
+<p>
+Consequently, this parameter enables the function to delete paging files from previous startups.
+This value can only be used if the process is in the context of a user who belongs to the administrators group or the LocalSystem account.
+</p>
+<p>This value cannot be used with <a class="xref" href="Alphaleonis.Win32.Filesystem.MoveOptions.html#Alphaleonis_Win32_Filesystem_MoveOptions_CopyAllowed">CopyAllowed</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_MoveOptions_FailIfNotTrackable">FailIfNotTrackable</td>
+        <td><p>MOVE_FILE_FAIL_IF_NOT_TRACKABLE</p>
+<p>The function fails if the source file is a link source, but the file cannot be tracked after the move.</p>
+<p>This situation can occur if the destination is a volume formatted with the FAT file system.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_MoveOptions_None">None</td>
+        <td><p>No MoveOptions used, this fails when the file name already exists.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_MoveOptions_ReplaceExisting">ReplaceExisting</td>
+        <td><p>MOVE_FILE_REPLACE_EXISTSING</p>
+<p>If the destination file name already exists, the function replaces its contents with the contents of the source file.</p>
+<p>This value cannot be used if lpNewFileName or lpExistingFileName names a directory.</p>
+<p>This value cannot be used if either source or destination names a directory.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_MoveOptions_WriteThrough">WriteThrough</td>
+        <td><p>MOVE_FILE_WRITE_THROUGH</p>
+<p>The function does not return until the file has actually been moved on the disk.</p>
+<p>
+Setting this value guarantees that a move performed as a copy and delete operation is flushed to disk before the function returns.
+The flush occurs at the end of the copy operation.
+</p>
+<p>This value has no effect if <a class="xref" href="Alphaleonis.Win32.Filesystem.MoveOptions.html#Alphaleonis_Win32_Filesystem_MoveOptions_DelayUntilReboot">DelayUntilReboot</a> is set.</p>
+</td>
+      </tr>
+    </tbody>
+  </thead></thead></table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_MoveOptions.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.MoveOptions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Structures, Enumerations/MoveOptions.cs/#L28" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

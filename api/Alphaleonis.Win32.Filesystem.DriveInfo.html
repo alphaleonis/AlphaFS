@@ -1,0 +1,968 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DriveInfo
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DriveInfo
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo">
+  
+  
+  <h1 id="Alphaleonis_Win32_Filesystem_DriveInfo" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo" class="text-break">Class DriveInfo
+  </h1>
+  <div class="markdown level0 summary"><p>Provides access to information on a local or remote drive.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">DriveInfo</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Filesystem.html">Alphaleonis.Win32.Filesystem</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Serializable]
+[SecurityCritical]
+public sealed class DriveInfo</code></pre>
+  </div>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This class models a drive and provides methods and properties to query for drive information.
+Use DriveInfo to determine what drives are available, and what type of drives they are.
+You can also query to determine the capacity and available free space on the drive.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo__ctor_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.%23ctor(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L60">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo__ctor_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo__ctor_System_String_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.#ctor(System.String)">DriveInfo(String)</h4>
+  <div class="markdown level1 summary"><p>Provides access to information on the specified drive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public DriveInfo(string driveName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">driveName</span></td>
+        <td><p>A valid drive path or drive letter.</p>
+<p>This can be either uppercase or lowercase,</p>
+<p>&apos;a&apos; to &apos;z&apos; or a network share in the format: \\server\share</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_AvailableFreeSpace.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.AvailableFreeSpace%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L91">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_AvailableFreeSpace_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.AvailableFreeSpace*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_AvailableFreeSpace" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.AvailableFreeSpace">AvailableFreeSpace</h4>
+  <div class="markdown level1 summary"><p>Indicates the amount of available free space on a drive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long AvailableFreeSpace { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><p>The amount of free space available on the drive, in bytes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_AvailableFreeSpace_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This property indicates the amount of free space available on the drive. Note that this number may be different from the <a class="xref" href="Alphaleonis.Win32.Filesystem.DriveInfo.html#Alphaleonis_Win32_Filesystem_DriveInfo_TotalFreeSpace">TotalFreeSpace</a> number because this property takes into account disk quotas.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_DiskSpaceInfo.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.DiskSpaceInfo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L192">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_DiskSpaceInfo_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.DiskSpaceInfo*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_DiskSpaceInfo" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.DiskSpaceInfo">DiskSpaceInfo</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] Returns the <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"></see> instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DiskSpaceInfo DiskSpaceInfo { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.DiskSpaceInfo.html">DiskSpaceInfo</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_DosDeviceName.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.DosDeviceName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L203">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_DosDeviceName_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.DosDeviceName*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_DosDeviceName" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.DosDeviceName">DosDeviceName</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] The MS-DOS device name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string DosDeviceName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_DriveFormat.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.DriveFormat%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L102">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_DriveFormat_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.DriveFormat*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_DriveFormat" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.DriveFormat">DriveFormat</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the file system, such as NTFS or FAT32.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string DriveFormat { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_DriveFormat_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Use DriveFormat to determine what formatting a drive uses.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_DriveType.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.DriveType%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L114">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_DriveType_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.DriveType*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_DriveType" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.DriveType">DriveType</h4>
+  <div class="markdown level1 summary"><p>Gets the drive type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DriveType DriveType { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.drivetype">DriveType</a></td>
+        <td><p>One of the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.drivetype">DriveType</a> values.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_DriveType_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The DriveType property indicates whether a drive is any of: CDRom, Fixed, Unknown, Network, NoRootDirectory,
+Ram, Removable, or Unknown. Values are listed in the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.drivetype">DriveType</a> enumeration.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_IsDosDeviceSubstitute.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.IsDosDeviceSubstitute%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L210">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_IsDosDeviceSubstitute_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.IsDosDeviceSubstitute*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_IsDosDeviceSubstitute" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.IsDosDeviceSubstitute">IsDosDeviceSubstitute</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] Indicates if this drive is a SUBST.EXE / DefineDosDevice drive mapping.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDosDeviceSubstitute { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_IsReady.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.IsReady%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L131">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_IsReady_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.IsReady*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_IsReady" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.IsReady">IsReady</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether a drive is ready.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsReady { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><code>true</code> if the drive is ready; otherwise, <code>false</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_IsReady_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>IsReady indicates whether a drive is ready. For example, it indicates whether a CD is in a CD drive or whether
+a removable storage device is ready for read/write operations. If you do not test whether a drive is ready, and
+it is not ready, querying the drive using DriveInfo will raise an IOException.</p>
+<p>Do not rely on IsReady() to avoid catching exceptions from other members such as TotalSize, TotalFreeSpace, and DriveFormat.
+Between the time that your code checks IsReady and then accesses one of the other properties
+(even if the access occurs immediately after the check), a drive may have been disconnected or a disk may have been removed.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_IsUnc.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.IsUnc%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L217">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_IsUnc_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.IsUnc*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_IsUnc" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.IsUnc">IsUnc</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] Indicates if this drive is a UNC path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUnc { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_IsVolume.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.IsVolume%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L230">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_IsVolume_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.IsVolume*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_IsVolume" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.IsVolume">IsVolume</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] Determines whether the specified volume name is a defined volume on the current computer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsVolume { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_Name.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L140">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_Name_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.Name*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_Name" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the drive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The name of the drive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_Name_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This property is the name assigned to the drive, such as C:\ or E:\</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_RootDirectory.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.RootDirectory%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L148">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_RootDirectory_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.RootDirectory*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_RootDirectory" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.RootDirectory">RootDirectory</h4>
+  <div class="markdown level1 summary"><p>Gets the root directory of a drive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DirectoryInfo RootDirectory { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.DirectoryInfo.html">DirectoryInfo</a></td>
+        <td><p>A DirectoryInfo object that contains the root directory of the drive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_TotalFreeSpace.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.TotalFreeSpace%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L156">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_TotalFreeSpace_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.TotalFreeSpace*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_TotalFreeSpace" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.TotalFreeSpace">TotalFreeSpace</h4>
+  <div class="markdown level1 summary"><p>Gets the total amount of free space available on a drive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long TotalFreeSpace { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><p>The total free space available on a drive, in bytes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_TotalFreeSpace_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This property indicates the total amount of free space available on the drive, not just what is available to the current user.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_TotalSize.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.TotalSize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L169">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_TotalSize_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.TotalSize*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_TotalSize" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.TotalSize">TotalSize</h4>
+  <div class="markdown level1 summary"><p>Gets the total size of storage space on a drive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long TotalSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><p>The total size of the drive, in bytes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_TotalSize_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This property indicates the total size of the drive in bytes, not just what is available to the current user.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_VolumeInfo.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.VolumeInfo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L238">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_VolumeInfo_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.VolumeInfo*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_VolumeInfo" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.VolumeInfo">VolumeInfo</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] Contains information about a file-system volume.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VolumeInfo VolumeInfo { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.VolumeInfo.html">VolumeInfo</a></td>
+        <td><p>A VolumeInfo object that contains file-system volume information of the drive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_VolumeLabel.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.VolumeLabel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L185">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_VolumeLabel_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.VolumeLabel*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_VolumeLabel" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.VolumeLabel">VolumeLabel</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the volume label of a drive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string VolumeLabel { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The volume label.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_VolumeLabel_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The label length is determined by the operating system. For example, NTFS allows a volume label
+to be up to 32 characters long. Note that <code>null</code> is a valid VolumeLabel.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_EnumerateDrives_System_Boolean_System_Boolean_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.EnumerateDrives(System.Boolean%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L278">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_EnumerateDrives_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.EnumerateDrives*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_EnumerateDrives_System_Boolean_System_Boolean_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.EnumerateDrives(System.Boolean,System.Boolean)">EnumerateDrives(Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static IEnumerable&lt;DriveInfo&gt; EnumerateDrives(bool fromEnvironment, bool isReady)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">fromEnvironment</span></td>
+        <td><p>Retrieve logical drives as known by the Environment.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isReady</span></td>
+        <td><p>Retrieve only when accessible (IsReady) logical drives.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Alphaleonis.Win32.Filesystem.DriveInfo.html">DriveInfo</a>&gt;</td>
+        <td><p>An IEnumerable of type <a class="xref" href="Alphaleonis.Win32.Filesystem.DriveInfo.html">DriveInfo</a> that represents
+the logical drives on the Computer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_GetDrives.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L253">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_GetDrives_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_GetDrives" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives">GetDrives()</h4>
+  <div class="markdown level1 summary"><p>Retrieves the <a class="xref" href="Alphaleonis.Win32.Filesystem.DriveInfo.html">DriveInfo</a> of all logical drives on the Computer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static DriveInfo[] GetDrives()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.DriveInfo.html">DriveInfo</a>[]</td>
+        <td><p>An array of type <a class="xref" href="Alphaleonis.Win32.Filesystem.DriveInfo.html">DriveInfo</a> that represents the logical drives on the Computer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_GetFreeDriveLetter.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L288">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_GetFreeDriveLetter_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_GetFreeDriveLetter" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter">GetFreeDriveLetter()</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] Gets the first available drive letter on the local system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static char GetFreeDriveLetter()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><p>A drive letter as <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>. When no drive letters are available, an exception is thrown.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_GetFreeDriveLetter_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The letters &quot;A&quot; and &quot;B&quot; are reserved for floppy drives and will never be returned by this function.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_GetFreeDriveLetter_System_Boolean_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L299">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_GetFreeDriveLetter_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_GetFreeDriveLetter_System_Boolean_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter(System.Boolean)">GetFreeDriveLetter(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Gets an available drive letter on the local system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static char GetFreeDriveLetter(bool getLastAvailable)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">getLastAvailable</span></td>
+        <td><p>When <code>true</code> get the last available drive letter. When <code>false</code> gets the first available drive letter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a></td>
+        <td><p>A drive letter as <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.char">Char</a>. When no drive letters are available, an exception is thrown.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_GetFreeDriveLetter_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The letters &quot;A&quot; and &quot;B&quot; are reserved for floppy drives and will never be returned by this function.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></td>
+        <td><p>No drive letters available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo_ToString.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L263">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DriveInfo_ToString_" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.ToString*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DriveInfo_ToString" data-uid="Alphaleonis.Win32.Filesystem.DriveInfo.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns a drive name as a string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The name of the drive.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <h5 id="Alphaleonis_Win32_Filesystem_DriveInfo_ToString_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method returns the Name property.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DriveInfo.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DriveInfo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DriveInfo.cs/#L37" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

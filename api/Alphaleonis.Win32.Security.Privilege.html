@@ -1,0 +1,1674 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Privilege
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Privilege
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Security.Privilege">
+  
+  
+  <h1 id="Alphaleonis_Win32_Security_Privilege" data-uid="Alphaleonis.Win32.Security.Privilege" class="text-break">Class Privilege
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a privilege for an access token. The privileges available on the local machine are available as
+static instances from this class. To create a <a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a> representing a privilege on another system,
+use the constructor specifying a system name together with one of these static instances.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Privilege</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Security.html">Alphaleonis.Win32.Security</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Security_Privilege_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class Privilege : IEquatable&lt;Privilege&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege__ctor_System_String_Alphaleonis_Win32_Security_Privilege_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.%23ctor(System.String%2CAlphaleonis.Win32.Security.Privilege)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L237">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Security_Privilege__ctor_" data-uid="Alphaleonis.Win32.Security.Privilege.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Security_Privilege__ctor_System_String_Alphaleonis_Win32_Security_Privilege_" data-uid="Alphaleonis.Win32.Security.Privilege.#ctor(System.String,Alphaleonis.Win32.Security.Privilege)">Privilege(String, Privilege)</h4>
+  <div class="markdown level1 summary"><p>Create a new <a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a> instance, representing the specified privilege on the specified system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Privilege(string systemName, Privilege privilege)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">systemName</span></td>
+        <td><p>Name of the system.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td><span class="parametername">privilege</span></td>
+        <td><p>The privilege to copy the privilege name from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_AssignPrimaryToken.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.AssignPrimaryToken%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L43">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_AssignPrimaryToken" data-uid="Alphaleonis.Win32.Security.Privilege.AssignPrimaryToken">AssignPrimaryToken</h4>
+  <div class="markdown level1 summary"><p>Required to assign the primary token of a process. User Right: Replace a process-level token.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege AssignPrimaryToken</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Audit.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Audit%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L48">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Audit" data-uid="Alphaleonis.Win32.Security.Privilege.Audit">Audit</h4>
+  <div class="markdown level1 summary"><p>Required to generate audit-log entries. Give this privilege to secure servers. User Right: Generate security audits.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege Audit</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Backup.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Backup%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L53">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Backup" data-uid="Alphaleonis.Win32.Security.Privilege.Backup">Backup</h4>
+  <div class="markdown level1 summary"><p>Required to perform backup operations. This privilege causes the system to grant all read access control to any file, regardless of the access control list (ACL) specified for the file. Any access request other than read is still evaluated with the ACL. User Right: Back up files and directories.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege Backup</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_ChangeNotify.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.ChangeNotify%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L58">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_ChangeNotify" data-uid="Alphaleonis.Win32.Security.Privilege.ChangeNotify">ChangeNotify</h4>
+  <div class="markdown level1 summary"><p>Required to receive notifications of changes to files or directories. This privilege also causes the system to skip all traversal access checks. It is enabled by default for all users. User Right: Bypass traverse checking.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege ChangeNotify</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_CreateGlobal.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.CreateGlobal%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L64">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_CreateGlobal" data-uid="Alphaleonis.Win32.Security.Privilege.CreateGlobal">CreateGlobal</h4>
+  <div class="markdown level1 summary"><p>Required to create named file mapping objects in the global namespace during Terminal Services sessions. This privilege is enabled by default for administrators, services, and the local system account. User Right: Create global objects.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege CreateGlobal</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Security_Privilege_CreateGlobal_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Windows XP/2000:  This privilege is not supported. Note that this value is supported starting with Windows Server 2003, Windows XP SP2, and Windows 2000 SP4.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_CreatePagefile.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.CreatePagefile%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L70">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_CreatePagefile" data-uid="Alphaleonis.Win32.Security.Privilege.CreatePagefile">CreatePagefile</h4>
+  <div class="markdown level1 summary"><p>Required to create a paging file. User Right: Create a pagefile.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege CreatePagefile</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_CreatePermanent.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.CreatePermanent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L75">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_CreatePermanent" data-uid="Alphaleonis.Win32.Security.Privilege.CreatePermanent">CreatePermanent</h4>
+  <div class="markdown level1 summary"><p>Required to create a permanent object. User Right: Create permanent shared objects.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege CreatePermanent</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_CreateSymbolicLink.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L80">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_CreateSymbolicLink" data-uid="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink">CreateSymbolicLink</h4>
+  <div class="markdown level1 summary"><p>Required to create a symbolic link. User Right: Create symbolic links.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege CreateSymbolicLink</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_CreateToken.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.CreateToken%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L85">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_CreateToken" data-uid="Alphaleonis.Win32.Security.Privilege.CreateToken">CreateToken</h4>
+  <div class="markdown level1 summary"><p>Required to create a primary token. User Right: Create a token object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege CreateToken</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Debug.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Debug%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L90">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Debug" data-uid="Alphaleonis.Win32.Security.Privilege.Debug">Debug</h4>
+  <div class="markdown level1 summary"><p>Required to debug and adjust the memory of a process owned by another account. User Right: Debug programs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege Debug</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_EnableDelegation.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.EnableDelegation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L95">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_EnableDelegation" data-uid="Alphaleonis.Win32.Security.Privilege.EnableDelegation">EnableDelegation</h4>
+  <div class="markdown level1 summary"><p>Required to mark user and computer accounts as trusted for delegation. User Right: Enable computer and user accounts to be trusted for delegation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege EnableDelegation</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Impersonate.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Impersonate%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L101">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Impersonate" data-uid="Alphaleonis.Win32.Security.Privilege.Impersonate">Impersonate</h4>
+  <div class="markdown level1 summary"><p>Required to impersonate. User Right: Impersonate a client after authentication.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege Impersonate</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Security_Privilege_Impersonate_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Windows XP/2000:  This privilege is not supported. Note that this value is supported starting with Windows Server 2003, Windows XP SP2, and Windows 2000 SP4.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_IncreaseBasePriority.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.IncreaseBasePriority%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L106">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_IncreaseBasePriority" data-uid="Alphaleonis.Win32.Security.Privilege.IncreaseBasePriority">IncreaseBasePriority</h4>
+  <div class="markdown level1 summary"><p>Required to increase the base priority of a process. User Right: Increase scheduling priority.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege IncreaseBasePriority</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_IncreaseQuota.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.IncreaseQuota%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L111">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_IncreaseQuota" data-uid="Alphaleonis.Win32.Security.Privilege.IncreaseQuota">IncreaseQuota</h4>
+  <div class="markdown level1 summary"><p>Required to increase the quota assigned to a process. User Right: Adjust memory quotas for a process.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege IncreaseQuota</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_IncreaseWorkingSet.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.IncreaseWorkingSet%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L116">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_IncreaseWorkingSet" data-uid="Alphaleonis.Win32.Security.Privilege.IncreaseWorkingSet">IncreaseWorkingSet</h4>
+  <div class="markdown level1 summary"><p>Required to allocate more memory for applications that run in the context of users. User Right: Increase a process working set.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege IncreaseWorkingSet</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_LoadDriver.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.LoadDriver%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L121">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_LoadDriver" data-uid="Alphaleonis.Win32.Security.Privilege.LoadDriver">LoadDriver</h4>
+  <div class="markdown level1 summary"><p>Required to load or unload a device driver. User Right: Load and unload device drivers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege LoadDriver</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_LockMemory.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.LockMemory%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L126">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_LockMemory" data-uid="Alphaleonis.Win32.Security.Privilege.LockMemory">LockMemory</h4>
+  <div class="markdown level1 summary"><p>Required to lock physical pages in memory. User Right: Lock pages in memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege LockMemory</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_MachineAccount.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.MachineAccount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L131">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_MachineAccount" data-uid="Alphaleonis.Win32.Security.Privilege.MachineAccount">MachineAccount</h4>
+  <div class="markdown level1 summary"><p>Required to create a computer account. User Right: Add workstations to domain.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege MachineAccount</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_ManageVolume.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.ManageVolume%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L136">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_ManageVolume" data-uid="Alphaleonis.Win32.Security.Privilege.ManageVolume">ManageVolume</h4>
+  <div class="markdown level1 summary"><p>Required to enable volume management privileges. User Right: Manage the files on a volume.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege ManageVolume</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_ProfileSingleProcess.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.ProfileSingleProcess%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L141">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_ProfileSingleProcess" data-uid="Alphaleonis.Win32.Security.Privilege.ProfileSingleProcess">ProfileSingleProcess</h4>
+  <div class="markdown level1 summary"><p>Required to gather profiling information for a single process. User Right: Profile single process.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege ProfileSingleProcess</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Relabel.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Relabel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L147">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Relabel" data-uid="Alphaleonis.Win32.Security.Privilege.Relabel">Relabel</h4>
+  <div class="markdown level1 summary"><p>Required to modify the mandatory integrity level of an object. User Right: Modify an object label.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege Relabel</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_RemoteShutdown.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.RemoteShutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L152">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_RemoteShutdown" data-uid="Alphaleonis.Win32.Security.Privilege.RemoteShutdown">RemoteShutdown</h4>
+  <div class="markdown level1 summary"><p>Required to shut down a system using a network request. User Right: Force shutdown from a remote system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege RemoteShutdown</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Restore.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Restore%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L157">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Restore" data-uid="Alphaleonis.Win32.Security.Privilege.Restore">Restore</h4>
+  <div class="markdown level1 summary"><p>Required to perform restore operations. This privilege causes the system to grant all write access control to any file, regardless of the ACL specified for the file. Any access request other than write is still evaluated with the ACL. Additionally, this privilege enables you to set any valid user or group SID as the owner of a file. User Right: Restore files and directories.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege Restore</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Security.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Security%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L162">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Security" data-uid="Alphaleonis.Win32.Security.Privilege.Security">Security</h4>
+  <div class="markdown level1 summary"><p>Required to perform a number of security-related functions, such as controlling and viewing audit messages. This privilege identifies its holder as a security operator. User Right: Manage auditing and security log.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege Security</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Shutdown.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Shutdown%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L167">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Shutdown" data-uid="Alphaleonis.Win32.Security.Privilege.Shutdown">Shutdown</h4>
+  <div class="markdown level1 summary"><p>Required to shut down a local system. User Right: Shut down the system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege Shutdown</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_SyncAgent.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.SyncAgent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L172">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_SyncAgent" data-uid="Alphaleonis.Win32.Security.Privilege.SyncAgent">SyncAgent</h4>
+  <div class="markdown level1 summary"><p>Required for a domain controller to use the LDAP directory synchronization services. This privilege enables the holder to read all objects and properties in the directory, regardless of the protection on the objects and properties. By default, it is assigned to the Administrator and LocalSystem accounts on domain controllers. User Right: Synchronize directory service data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege SyncAgent</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_SystemEnvironment.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.SystemEnvironment%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L177">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_SystemEnvironment" data-uid="Alphaleonis.Win32.Security.Privilege.SystemEnvironment">SystemEnvironment</h4>
+  <div class="markdown level1 summary"><p>Required to modify the nonvolatile RAM of systems that use this type of memory to store configuration information. User Right: Modify firmware environment values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege SystemEnvironment</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_SystemProfile.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.SystemProfile%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L182">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_SystemProfile" data-uid="Alphaleonis.Win32.Security.Privilege.SystemProfile">SystemProfile</h4>
+  <div class="markdown level1 summary"><p>Required to gather profiling information for the entire system. User Right: Profile system performance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege SystemProfile</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_SystemTime.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.SystemTime%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L187">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_SystemTime" data-uid="Alphaleonis.Win32.Security.Privilege.SystemTime">SystemTime</h4>
+  <div class="markdown level1 summary"><p>Required to modify the system time. User Right: Change the system time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege SystemTime</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_TakeOwnership.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.TakeOwnership%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L192">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_TakeOwnership" data-uid="Alphaleonis.Win32.Security.Privilege.TakeOwnership">TakeOwnership</h4>
+  <div class="markdown level1 summary"><p>Required to take ownership of an object without being granted discretionary access. This privilege allows the owner value to be set only to those values that the holder may legitimately assign as the owner of an object. User Right: Take ownership of files or other objects.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege TakeOwnership</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Tcb.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Tcb%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L198">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Tcb" data-uid="Alphaleonis.Win32.Security.Privilege.Tcb">Tcb</h4>
+  <div class="markdown level1 summary"><p>This privilege identifies its holder as part of the trusted computer base. Some trusted protected subsystems are granted this privilege. User Right: Act as part of the operating system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege Tcb</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_TimeZone.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.TimeZone%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L203">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_TimeZone" data-uid="Alphaleonis.Win32.Security.Privilege.TimeZone">TimeZone</h4>
+  <div class="markdown level1 summary"><p>Required to adjust the time zone associated with the computer's internal clock. User Right: Change the time zone.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege TimeZone</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_TrustedCredManAccess.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.TrustedCredManAccess%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L209">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_TrustedCredManAccess" data-uid="Alphaleonis.Win32.Security.Privilege.TrustedCredManAccess">TrustedCredManAccess</h4>
+  <div class="markdown level1 summary"><p>Required to access Credential Manager as a trusted caller. User Right: Access Credential Manager as a trusted caller.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege TrustedCredManAccess</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Undock.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Undock%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L214">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Undock" data-uid="Alphaleonis.Win32.Security.Privilege.Undock">Undock</h4>
+  <div class="markdown level1 summary"><p>Required to undock a laptop. User Right: Remove computer from docking station.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege Undock</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_UnsolicitedInput.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.UnsolicitedInput%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L219">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_UnsolicitedInput" data-uid="Alphaleonis.Win32.Security.Privilege.UnsolicitedInput">UnsolicitedInput</h4>
+  <div class="markdown level1 summary"><p>Required to read unsolicited input from a terminal device. User Right: Not applicable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Privilege UnsolicitedInput</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Name.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L266">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Security_Privilege_Name_" data-uid="Alphaleonis.Win32.Security.Privilege.Name*"></a>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Name" data-uid="Alphaleonis.Win32.Security.Privilege.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Gets the system name identifying this privilege.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The system name identifying this privilege.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Equals_Alphaleonis_Win32_Security_Privilege_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Equals(Alphaleonis.Win32.Security.Privilege)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L347">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Security_Privilege_Equals_" data-uid="Alphaleonis.Win32.Security.Privilege.Equals*"></a>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Equals_Alphaleonis_Win32_Security_Privilege_" data-uid="Alphaleonis.Win32.Security.Privilege.Equals(Alphaleonis.Win32.Security.Privilege)">Equals(Privilege)</h4>
+  <div class="markdown level1 summary"><p>Indicates whether the current object is equal to another object of the same type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Privilege other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>An object to compare with this object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><code>true</code> if the current object is equal to the <code data-dev-comment-type="paramref" class="paramref">other</code> parameter; otherwise, <code>false</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_Equals_System_Object_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L359">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Security_Privilege_Equals_" data-uid="Alphaleonis.Win32.Security.Privilege.Equals*"></a>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_Equals_System_Object_" data-uid="Alphaleonis.Win32.Security.Privilege.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Determines whether the specified <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a> is equal to the current <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>The <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a> to compare with the current <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><code>true</code> if the specified <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a> is equal to the current <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>; otherwise, <code>false</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullreferenceexception">NullReferenceException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_GetHashCode.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L329">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Security_Privilege_GetHashCode_" data-uid="Alphaleonis.Win32.Security.Privilege.GetHashCode*"></a>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_GetHashCode" data-uid="Alphaleonis.Win32.Security.Privilege.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Serves as a hash function for a particular type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>A hash code for the current Object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_LookupDisplayName.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.LookupDisplayName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L278">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Security_Privilege_LookupDisplayName_" data-uid="Alphaleonis.Win32.Security.Privilege.LookupDisplayName*"></a>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_LookupDisplayName" data-uid="Alphaleonis.Win32.Security.Privilege.LookupDisplayName">LookupDisplayName()</h4>
+  <div class="markdown level1 summary"><p>Retrieves the display name that represents this privilege.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public string LookupDisplayName()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The display name that represents this privilege.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_LookupLuid.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.LookupLuid%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L310">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Security_Privilege_LookupLuid_" data-uid="Alphaleonis.Win32.Security.Privilege.LookupLuid*"></a>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_LookupLuid" data-uid="Alphaleonis.Win32.Security.Privilege.LookupLuid">LookupLuid()</h4>
+  <div class="markdown level1 summary"><p>Retrieves the locally unique identifier (LUID) used on to represent this privilege (on the system from which it originates).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public long LookupLuid()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><p>the locally unique identifier (LUID) used on to represent this privilege (on the system from which it originates).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_ToString.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L338">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Security_Privilege_ToString_" data-uid="Alphaleonis.Win32.Security.Privilege.ToString*"></a>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_ToString" data-uid="Alphaleonis.Win32.Security.Privilege.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns the system name for this privilege.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a> that represents the current <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <h5 id="Alphaleonis_Win32_Security_Privilege_ToString_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is equivalent to <a class="xref" href="Alphaleonis.Win32.Security.Privilege.html#Alphaleonis_Win32_Security_Privilege_Name">Name</a>.</p>
+</div>
+  <h3 id="operators">Operators
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_op_Equality_Alphaleonis_Win32_Security_Privilege_Alphaleonis_Win32_Security_Privilege_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.op_Equality(Alphaleonis.Win32.Security.Privilege%2CAlphaleonis.Win32.Security.Privilege)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L371">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Security_Privilege_op_Equality_" data-uid="Alphaleonis.Win32.Security.Privilege.op_Equality*"></a>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_op_Equality_Alphaleonis_Win32_Security_Privilege_Alphaleonis_Win32_Security_Privilege_" data-uid="Alphaleonis.Win32.Security.Privilege.op_Equality(Alphaleonis.Win32.Security.Privilege,Alphaleonis.Win32.Security.Privilege)">Equality(Privilege, Privilege)</h4>
+  <div class="markdown level1 summary"><p>Implements the operator ==</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Privilege left, Privilege right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>A.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>B.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>The result of the operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege_op_Inequality_Alphaleonis_Win32_Security_Privilege_Alphaleonis_Win32_Security_Privilege_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege.op_Inequality(Alphaleonis.Win32.Security.Privilege%2CAlphaleonis.Win32.Security.Privilege)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L382">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Security_Privilege_op_Inequality_" data-uid="Alphaleonis.Win32.Security.Privilege.op_Inequality*"></a>
+  <h4 id="Alphaleonis_Win32_Security_Privilege_op_Inequality_Alphaleonis_Win32_Security_Privilege_Alphaleonis_Win32_Security_Privilege_" data-uid="Alphaleonis.Win32.Security.Privilege.op_Inequality(Alphaleonis.Win32.Security.Privilege,Alphaleonis.Win32.Security.Privilege)">Inequality(Privilege, Privilege)</h4>
+  <div class="markdown level1 summary"><p>Implements the operator !=</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Privilege left, Privilege right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>A.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Security.Privilege.html">Privilege</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>B.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>The result of the operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
+  </div>
+  <h3 id="seealso">See Also</h3>
+  <div class="seealso">
+      <div><a class="xref" href="Alphaleonis.Win32.Security.PrivilegeEnabler.html">PrivilegeEnabler</a></div>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Security_Privilege.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Security.Privilege%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Security/Privilege.cs/#L36" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

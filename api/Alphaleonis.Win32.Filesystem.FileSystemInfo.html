@@ -1,0 +1,1338 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class FileSystemInfo
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class FileSystemInfo
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo">
+  
+  
+  <h1 id="Alphaleonis_Win32_Filesystem_FileSystemInfo" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo" class="text-break">Class FileSystemInfo
+  </h1>
+  <div class="markdown level0 summary"><p>Provides the base class for both <a class="xref" href="Alphaleonis.Win32.Filesystem.FileInfo.html">FileInfo</a> and <a class="xref" href="Alphaleonis.Win32.Filesystem.DirectoryInfo.html">DirectoryInfo</a> objects.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.marshalbyrefobject">MarshalByRefObject</a></div>
+    <div class="level2"><span class="xref">FileSystemInfo</span></div>
+      <div class="level3"><a class="xref" href="Alphaleonis.Win32.Filesystem.DirectoryInfo.html">DirectoryInfo</a></div>
+      <div class="level3"><a class="xref" href="Alphaleonis.Win32.Filesystem.FileInfo.html">FileInfo</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.marshalbyrefobject.memberwiseclone#System_MarshalByRefObject_MemberwiseClone_System_Boolean_">MarshalByRefObject.MemberwiseClone(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.marshalbyrefobject.getlifetimeservice#System_MarshalByRefObject_GetLifetimeService">MarshalByRefObject.GetLifetimeService()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.marshalbyrefobject.initializelifetimeservice#System_MarshalByRefObject_InitializeLifetimeService">MarshalByRefObject.InitializeLifetimeService()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.marshalbyrefobject.createobjref#System_MarshalByRefObject_CreateObjRef_System_Type_">MarshalByRefObject.CreateObjRef(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Filesystem.html">Alphaleonis.Win32.Filesystem</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Serializable]
+[ComVisible(true)]
+public abstract class FileSystemInfo : MarshalByRefObject, IEquatable&lt;FileSystemInfo&gt;</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_FullPath.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.FullPath%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L45">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_FullPath" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.FullPath">FullPath</h4>
+  <div class="markdown level1 summary"><p>Represents the fully qualified path of the file or directory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected string FullPath</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_FullPath_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Classes derived from <a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a> can use the FullPath field</p>
+<p>to determine the full path of the object being manipulated.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_OriginalPath.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.OriginalPath%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L49">View Source</a>
+  </span>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_OriginalPath" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.OriginalPath">OriginalPath</h4>
+  <div class="markdown level1 summary"><p>The path originally specified by the user, whether relative or absolute.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected string OriginalPath</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_Attributes.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.Attributes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L79">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Attributes_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Attributes*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Attributes" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Attributes">Attributes</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the attributes for the current file or directory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileAttributes Attributes
+{
+    [SecurityCritical]
+    get;
+    [SecurityCritical]
+    set;
+}</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileattributes">FileAttributes</a></td>
+        <td><p><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileattributes">FileAttributes</a> of the current <a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Attributes_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The value of the CreationTime property is pre-cached</p>
+<p>To get the latest value, call the Refresh method.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filenotfoundexception">FileNotFoundException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.directorynotfoundexception">DirectoryNotFoundException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.ioexception">IOException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_CreationTime.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.CreationTime%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L123">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_CreationTime_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.CreationTime*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_CreationTime" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.CreationTime">CreationTime</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the creation time of the current file or directory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime CreationTime
+{
+    [SecurityCritical]
+    get;
+    [SecurityCritical]
+    set;
+}</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><p>The creation date and time of the current <a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a> object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_CreationTime_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The value of the CreationTime property is pre-cached To get the latest value, call the Refresh method.</p>
+<p>This method may return an inaccurate value, because it uses native functions whose values may not be continuously updated by
+the operating system.</p>
+<p>If the file described in the FileSystemInfo object does not exist, this property will return
+12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</p>
+<p>NTFS-formatted drives may cache file meta-info, such as file creation time, for a short period of time.
+This process is known as file tunneling. As a result, it may be necessary to explicitly set the creation time of a file if you are
+overwriting or replacing an existing file.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.directorynotfoundexception">DirectoryNotFoundException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.ioexception">IOException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_CreationTimeUtc.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.CreationTimeUtc%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L148">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_CreationTimeUtc_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.CreationTimeUtc*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_CreationTimeUtc" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.CreationTimeUtc">CreationTimeUtc</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the creation time, in coordinated universal time (UTC), of the current file or directory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[ComVisible(false)]
+public DateTime CreationTimeUtc
+{
+    [SecurityCritical]
+    get;
+    [SecurityCritical]
+    set;
+}</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><p>The creation date and time in UTC format of the current <a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a> object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_CreationTimeUtc_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The value of the CreationTimeUtc property is pre-cached
+To get the latest value, call the Refresh method.</p>
+<p>This method may return an inaccurate value, because it uses native functions
+whose values may not be continuously updated by the operating system.</p>
+<p>To get the latest value, call the Refresh method.</p>
+<p>If the file described in the FileSystemInfo object does not exist, this property will return
+12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC).</p>
+<p>NTFS-formatted drives may cache file meta-info, such as file creation time, for a short period of time.
+This process is known as file tunneling. As a result, it may be necessary to explicitly set the creation time
+of a file if you are overwriting or replacing an existing file.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.directorynotfoundexception">DirectoryNotFoundException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.ioexception">IOException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_DisplayPath.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.DisplayPath%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L352">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_DisplayPath_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.DisplayPath*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_DisplayPath" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.DisplayPath">DisplayPath</h4>
+  <div class="markdown level1 summary"><p>Returns the path as a string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected string DisplayPath { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_EntryInfo.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.EntryInfo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L358">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_EntryInfo_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.EntryInfo*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_EntryInfo" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.EntryInfo">EntryInfo</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] Gets the instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemEntryInfo.html">FileSystemEntryInfo</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileSystemEntryInfo EntryInfo
+{
+    [SecurityCritical]
+    get;
+}</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemEntryInfo.html">FileSystemEntryInfo</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_Exists.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.Exists%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L187">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Exists_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Exists*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Exists" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Exists">Exists</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the file or directory exists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract bool Exists { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><code>true</code> if the file or directory exists; otherwise, <code>false</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Exists_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The <a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html#Alphaleonis_Win32_Filesystem_FileSystemInfo_Exists">Exists</a> property returns <code>false</code> if any error occurs while trying to determine if the
+specified file or directory exists.</p>
+<p>This can occur in situations that raise exceptions such as passing a directory- or file name with invalid characters or too
+many characters,</p>
+<p>a failing or missing disk, or if the caller does not have permission to read the file or directory.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_Extension.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.Extension%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L196">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Extension_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Extension*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Extension" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Extension">Extension</h4>
+  <div class="markdown level1 summary"><p>Gets the string representing the extension part of the file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Extension { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string containing the <a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a> extension.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Extension_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The Extension property returns the <a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a> extension, including the period (.).
+For example, for a file c:\NewFile.txt, this property returns &quot;.txt&quot;.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_FullName.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.FullName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L204">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_FullName_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.FullName*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_FullName" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.FullName">FullName</h4>
+  <div class="markdown level1 summary"><p>Gets the full path of the directory or file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual string FullName
+{
+    [SecurityCritical]
+    get;
+}</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string containing the full path.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_IsDirectory.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.IsDirectory%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L390">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_IsDirectory_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.IsDirectory*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_IsDirectory" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.IsDirectory">IsDirectory</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] The initial &quot;IsDirectory&quot; indicator that was passed to the constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool IsDirectory { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_LastAccessTime.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.LastAccessTime%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L222">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastAccessTime_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.LastAccessTime*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastAccessTime" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.LastAccessTime">LastAccessTime</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the time the current file or directory was last accessed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime LastAccessTime
+{
+    [SecurityCritical]
+    get;
+    [SecurityCritical]
+    set;
+}</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><p>The time that the current file or directory was last accessed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastAccessTime_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The value of the LastAccessTime property is pre-cached
+To get the latest value, call the Refresh method.</p>
+<p>This method may return an inaccurate value, because it uses native functions
+whose values may not be continuously updated by the operating system.</p>
+<p>If the file described in the FileSystemInfo object does not exist, this property will return
+12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.ioexception">IOException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_LastAccessTimeUtc.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.LastAccessTimeUtc%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L242">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastAccessTimeUtc_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.LastAccessTimeUtc*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastAccessTimeUtc" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.LastAccessTimeUtc">LastAccessTimeUtc</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the time, in coordinated universal time (UTC), that the current file or directory was last accessed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[ComVisible(false)]
+public DateTime LastAccessTimeUtc
+{
+    [SecurityCritical]
+    get;
+    [SecurityCritical]
+    set;
+}</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><p>The UTC time that the current file or directory was last accessed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastAccessTimeUtc_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The value of the LastAccessTimeUtc property is pre-cached.
+To get the latest value, call the Refresh method.</p>
+<p>This method may return an inaccurate value, because it uses native functions
+whose values may not be continuously updated by the operating system.</p>
+<p>If the file described in the FileSystemInfo object does not exist, this property will return
+12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.ioexception">IOException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_LastWriteTime.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.LastWriteTime%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L284">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastWriteTime_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.LastWriteTime*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastWriteTime" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.LastWriteTime">LastWriteTime</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the time when the current file or directory was last written to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime LastWriteTime { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><p>The time the current file was last written.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastWriteTime_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The value of the LastWriteTime property is pre-cached.
+To get the latest value, call the Refresh method.</p>
+<p>This method may return an inaccurate value, because it uses native functions
+whose values may not be continuously updated by the operating system.</p>
+<p>If the file described in the FileSystemInfo object does not exist, this property will return
+12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.ioexception">IOException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_LastWriteTimeUtc.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.LastWriteTimeUtc%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L301">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastWriteTimeUtc_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.LastWriteTimeUtc*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastWriteTimeUtc" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.LastWriteTimeUtc">LastWriteTimeUtc</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the time, in coordinated universal time (UTC), when the current file or directory was last written to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[ComVisible(false)]
+public DateTime LastWriteTimeUtc
+{
+    [SecurityCritical]
+    get;
+    [SecurityCritical]
+    set;
+}</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><p>The UTC time when the current file was last written to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LastWriteTimeUtc_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The value of the LastWriteTimeUtc property is pre-cached. To get the latest value, call the Refresh method.</p>
+<p>This method may return an inaccurate value, because it uses native functions whose values may not be continuously updated by
+the operating system.</p>
+<p>If the file described in the FileSystemInfo object does not exist, this property will return 12:00 midnight, January 1, 1601
+A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_LongFullName.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.LongFullName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L394">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LongFullName_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.LongFullName*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_LongFullName" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.LongFullName">LongFullName</h4>
+  <div class="markdown level1 summary"><p>The full path of the file system object in Unicode (LongPath) format.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected string LongFullName { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_Name.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L344">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Name_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Name*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Name" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Name">Name</h4>
+  <div class="markdown level1 summary"><p>For files, gets the name of the file. For directories, gets the name of the last directory in the hierarchy if a hierarchy exists.</p>
+<p>Otherwise, the Name property gets the name of the directory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract string Name { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string that is the name of the parent directory, the name of the last directory in the hierarchy,</p>
+<p>or the name of a file, including the file name extension.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Name_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>For a directory, Name returns only the name of the parent directory, such as Dir, not c:\Dir.</p>
+<p>For a subdirectory, Name returns only the name of the subdirectory, such as Sub1, not c:\Dir\Sub1.</p>
+<p>For a file, Name returns only the file name and file name extension, such as MyFile.txt, not c:\Dir\Myfile.txt.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_Transaction.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.Transaction%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L398">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Transaction_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Transaction*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Transaction" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Transaction">Transaction</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] Represents the KernelTransaction that was passed to the constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected KernelTransaction Transaction { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.KernelTransaction.html">KernelTransaction</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_Delete.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.Delete%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L410">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Delete_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Delete*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Delete" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Delete">Delete()</h4>
+  <div class="markdown level1 summary"><p>Deletes a file or directory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public abstract void Delete()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_Equals_Alphaleonis_Win32_Filesystem_FileSystemInfo_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.Equals(Alphaleonis.Win32.Filesystem.FileSystemInfo)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L455">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Equals_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Equals*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Equals_Alphaleonis_Win32_Filesystem_FileSystemInfo_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Equals(Alphaleonis.Win32.Filesystem.FileSystemInfo)">Equals(FileSystemInfo)</h4>
+  <div class="markdown level1 summary"><p>Determines whether the specified Object is equal to the current Object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(FileSystemInfo other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Another <a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a> instance to compare to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><code>true</code> if the specified Object is equal to the current Object; otherwise, <code>false</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_Equals_System_Object_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L469">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Equals_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Equals*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Equals_System_Object_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Determines whether the specified Object is equal to the current Object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>Another object to compare to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><code>true</code> if the specified Object is equal to the current Object; otherwise, <code>false</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_GetHashCode.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L446">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_GetHashCode_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.GetHashCode*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_GetHashCode" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Serves as a hash function for a particular type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>A hash code for the current Object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_Refresh.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.Refresh%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L422">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Refresh_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Refresh*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Refresh" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.Refresh">Refresh()</h4>
+  <div class="markdown level1 summary"><p>Refreshes the state of the object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public void Refresh()</code></pre>
+  </div>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_Refresh_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>FileSystemInfo.Refresh() takes a snapshot of the file from the current file system.</p>
+<p>Refresh cannot correct the underlying file system even if the file system returns incorrect or outdated information.</p>
+<p>This can happen on platforms such as Windows 98.</p>
+<p>Calls must be made to Refresh() before attempting to get the attribute information, or the information will be
+outdated.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_RefreshEntryInfo.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.RefreshEntryInfo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L523">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_RefreshEntryInfo_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.RefreshEntryInfo*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_RefreshEntryInfo" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.RefreshEntryInfo">RefreshEntryInfo()</h4>
+  <div class="markdown level1 summary"><p>[AlphaFS] Refreshes the state of the <a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemEntryInfo.html">FileSystemEntryInfo</a> EntryInfo property.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+protected void RefreshEntryInfo()</code></pre>
+  </div>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_RefreshEntryInfo_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>FileSystemInfo.RefreshEntryInfo() takes a snapshot of the file from the current file system.</p>
+<p>Refresh cannot correct the underlying file system even if the file system returns incorrect or outdated information.</p>
+<p>This can happen on platforms such as Windows 98.</p>
+<p>Calls must be made to Refresh() before attempting to get the attribute information, or the information will be outdated.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_ToString.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L437">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_ToString_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.ToString*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_ToString" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns a string that represents the current object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>A string that represents this instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
+  <h5 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_ToString_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>ToString is the major formatting method in the .NET Framework. It converts an object to its string representation so that it is
+suitable for display.</p>
+</div>
+  <h3 id="operators">Operators
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_op_Equality_Alphaleonis_Win32_Filesystem_FileSystemInfo_Alphaleonis_Win32_Filesystem_FileSystemInfo_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.op_Equality(Alphaleonis.Win32.Filesystem.FileSystemInfo%2CAlphaleonis.Win32.Filesystem.FileSystemInfo)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L481">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_op_Equality_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.op_Equality*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_op_Equality_Alphaleonis_Win32_Filesystem_FileSystemInfo_Alphaleonis_Win32_Filesystem_FileSystemInfo_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.op_Equality(Alphaleonis.Win32.Filesystem.FileSystemInfo,Alphaleonis.Win32.Filesystem.FileSystemInfo)">Equality(FileSystemInfo, FileSystemInfo)</h4>
+  <div class="markdown level1 summary"><p>Implements the operator ==</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(FileSystemInfo left, FileSystemInfo right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>A.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>B.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>The result of the operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo_op_Inequality_Alphaleonis_Win32_Filesystem_FileSystemInfo_Alphaleonis_Win32_Filesystem_FileSystemInfo_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo.op_Inequality(Alphaleonis.Win32.Filesystem.FileSystemInfo%2CAlphaleonis.Win32.Filesystem.FileSystemInfo)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L492">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_FileSystemInfo_op_Inequality_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.op_Inequality*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_FileSystemInfo_op_Inequality_Alphaleonis_Win32_Filesystem_FileSystemInfo_Alphaleonis_Win32_Filesystem_FileSystemInfo_" data-uid="Alphaleonis.Win32.Filesystem.FileSystemInfo.op_Inequality(Alphaleonis.Win32.Filesystem.FileSystemInfo,Alphaleonis.Win32.Filesystem.FileSystemInfo)">Inequality(FileSystemInfo, FileSystemInfo)</h4>
+  <div class="markdown level1 summary"><p>Implements the operator !=</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(FileSystemInfo left, FileSystemInfo right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>A.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>B.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>The result of the operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_FileSystemInfo.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.FileSystemInfo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/FileSystemInfo.cs/#L31" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

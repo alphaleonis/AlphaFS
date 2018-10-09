@@ -1,0 +1,1982 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class BackupFileStream
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class BackupFileStream
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream">
+  
+  
+  <h1 id="Alphaleonis_Win32_Filesystem_BackupFileStream" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream" class="text-break">Class BackupFileStream
+  </h1>
+  <div class="markdown level0 summary"><p>The <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> provides access to data associated with a specific file or directory, including security information and alternative data streams, for backup and restore operations.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.marshalbyrefobject">MarshalByRefObject</a></div>
+    <div class="level2"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></div>
+    <div class="level3"><span class="xref">BackupFileStream</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.null">Stream.Null</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.copytoasync#System_IO_Stream_CopyToAsync_System_IO_Stream_">Stream.CopyToAsync(Stream)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.copytoasync#System_IO_Stream_CopyToAsync_System_IO_Stream_System_Int32_">Stream.CopyToAsync(Stream, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.copytoasync#System_IO_Stream_CopyToAsync_System_IO_Stream_System_Int32_System_Threading_CancellationToken_">Stream.CopyToAsync(Stream, Int32, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.copyto#System_IO_Stream_CopyTo_System_IO_Stream_">Stream.CopyTo(Stream)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.copyto#System_IO_Stream_CopyTo_System_IO_Stream_System_Int32_">Stream.CopyTo(Stream, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.close#System_IO_Stream_Close">Stream.Close()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.dispose#System_IO_Stream_Dispose">Stream.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.flushasync#System_IO_Stream_FlushAsync">Stream.FlushAsync()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.flushasync#System_IO_Stream_FlushAsync_System_Threading_CancellationToken_">Stream.FlushAsync(CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.createwaithandle#System_IO_Stream_CreateWaitHandle">Stream.CreateWaitHandle()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.beginread#System_IO_Stream_BeginRead_System_Byte___System_Int32_System_Int32_System_AsyncCallback_System_Object_">Stream.BeginRead(Byte[], Int32, Int32, AsyncCallback, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.endread#System_IO_Stream_EndRead_System_IAsyncResult_">Stream.EndRead(IAsyncResult)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.readasync#System_IO_Stream_ReadAsync_System_Byte___System_Int32_System_Int32_">Stream.ReadAsync(Byte[], Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.readasync#System_IO_Stream_ReadAsync_System_Byte___System_Int32_System_Int32_System_Threading_CancellationToken_">Stream.ReadAsync(Byte[], Int32, Int32, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.beginwrite#System_IO_Stream_BeginWrite_System_Byte___System_Int32_System_Int32_System_AsyncCallback_System_Object_">Stream.BeginWrite(Byte[], Int32, Int32, AsyncCallback, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.endwrite#System_IO_Stream_EndWrite_System_IAsyncResult_">Stream.EndWrite(IAsyncResult)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.writeasync#System_IO_Stream_WriteAsync_System_Byte___System_Int32_System_Int32_">Stream.WriteAsync(Byte[], Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.writeasync#System_IO_Stream_WriteAsync_System_Byte___System_Int32_System_Int32_System_Threading_CancellationToken_">Stream.WriteAsync(Byte[], Int32, Int32, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.readbyte#System_IO_Stream_ReadByte">Stream.ReadByte()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.writebyte#System_IO_Stream_WriteByte_System_Byte_">Stream.WriteByte(Byte)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.synchronized#System_IO_Stream_Synchronized_System_IO_Stream_">Stream.Synchronized(Stream)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.objectinvariant#System_IO_Stream_ObjectInvariant">Stream.ObjectInvariant()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.cantimeout#System_IO_Stream_CanTimeout">Stream.CanTimeout</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.readtimeout#System_IO_Stream_ReadTimeout">Stream.ReadTimeout</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.writetimeout#System_IO_Stream_WriteTimeout">Stream.WriteTimeout</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.marshalbyrefobject.memberwiseclone#System_MarshalByRefObject_MemberwiseClone_System_Boolean_">MarshalByRefObject.MemberwiseClone(Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.marshalbyrefobject.getlifetimeservice#System_MarshalByRefObject_GetLifetimeService">MarshalByRefObject.GetLifetimeService()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.marshalbyrefobject.initializelifetimeservice#System_MarshalByRefObject_InitializeLifetimeService">MarshalByRefObject.InitializeLifetimeService()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.marshalbyrefobject.createobjref#System_MarshalByRefObject_CreateObjRef_System_Type_">MarshalByRefObject.CreateObjRef(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Filesystem.html">Alphaleonis.Win32.Filesystem</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class BackupFileStream : Stream, IDisposable</code></pre>
+  </div>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This class uses the <a href="http://msdn.microsoft.com/en-us/library/aa362509(VS.85).aspx">BackupRead</a>,
+<a href="http://msdn.microsoft.com/en-us/library/aa362510(VS.85).aspx">BackupSeek</a> and
+<a href="http://msdn.microsoft.com/en-us/library/aa362511(VS.85).aspx">BackupWrite</a> functions from the Win32 API to provide access to the file or directory.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(Alphaleonis.Win32.Filesystem.KernelTransaction%2CSystem.String%2CSystem.IO.FileMode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L120">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(Alphaleonis.Win32.Filesystem.KernelTransaction,System.String,System.IO.FileMode)">BackupFileStream(KernelTransaction, String, FileMode)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class with the specified path and creation mode.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(KernelTransaction transaction, string path, FileMode mode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.KernelTransaction.html">KernelTransaction</a></td>
+        <td><span class="parametername">transaction</span></td>
+        <td><p>The transaction.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A relative or absolute path for the file that the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a> constant that determines how to open or create the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The file will be opened for exclusive access for both reading and writing.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(Alphaleonis.Win32.Filesystem.KernelTransaction%2CSystem.String%2CSystem.IO.FileMode%2CSystem.Security.AccessControl.FileSystemRights)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L133">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(Alphaleonis.Win32.Filesystem.KernelTransaction,System.String,System.IO.FileMode,System.Security.AccessControl.FileSystemRights)">BackupFileStream(KernelTransaction, String, FileMode, FileSystemRights)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class with the specified path, creation mode and access rights.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.KernelTransaction.html">KernelTransaction</a></td>
+        <td><span class="parametername">transaction</span></td>
+        <td><p>The transaction.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A relative or absolute path for the file that the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a> constant that determines how to open or create the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a></td>
+        <td><span class="parametername">access</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a> constant that determines the access rights to use when creating access and audit rules for the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The file will be opened for exclusive access.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(Alphaleonis.Win32.Filesystem.KernelTransaction%2CSystem.String%2CSystem.IO.FileMode%2CSystem.Security.AccessControl.FileSystemRights%2CSystem.IO.FileShare)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L146">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(Alphaleonis.Win32.Filesystem.KernelTransaction,System.String,System.IO.FileMode,System.Security.AccessControl.FileSystemRights,System.IO.FileShare)">BackupFileStream(KernelTransaction, String, FileMode, FileSystemRights, FileShare)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class with the specified path, creation mode, access rights and sharing permission.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.KernelTransaction.html">KernelTransaction</a></td>
+        <td><span class="parametername">transaction</span></td>
+        <td><p>The transaction.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A relative or absolute path for the file that the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a> constant that determines how to open or create the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a></td>
+        <td><span class="parametername">access</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a> constant that determines the access rights to use when creating access and audit rules for the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a></td>
+        <td><span class="parametername">share</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a> constant that determines how the file will be shared by processes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(Alphaleonis.Win32.Filesystem.KernelTransaction%2CSystem.String%2CSystem.IO.FileMode%2CSystem.Security.AccessControl.FileSystemRights%2CSystem.IO.FileShare%2CAlphaleonis.Win32.Filesystem.ExtendedFileAttributes)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L160">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(Alphaleonis.Win32.Filesystem.KernelTransaction,System.String,System.IO.FileMode,System.Security.AccessControl.FileSystemRights,System.IO.FileShare,Alphaleonis.Win32.Filesystem.ExtendedFileAttributes)">BackupFileStream(KernelTransaction, String, FileMode, FileSystemRights, FileShare, ExtendedFileAttributes)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class with the specified path, creation mode, access rights and sharing permission, and additional file attributes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.KernelTransaction.html">KernelTransaction</a></td>
+        <td><span class="parametername">transaction</span></td>
+        <td><p>The transaction.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A relative or absolute path for the file that the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a> constant that determines how to open or create the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a></td>
+        <td><span class="parametername">access</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a> constant that determines the access rights to use when creating access and audit rules for the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a></td>
+        <td><span class="parametername">share</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a> constant that determines how the file will be shared by processes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html">ExtendedFileAttributes</a></td>
+        <td><span class="parametername">attributes</span></td>
+        <td><p>A <a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html">ExtendedFileAttributes</a> constant that specifies additional file attributes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_System_Security_AccessControl_FileSecurity_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(Alphaleonis.Win32.Filesystem.KernelTransaction%2CSystem.String%2CSystem.IO.FileMode%2CSystem.Security.AccessControl.FileSystemRights%2CSystem.IO.FileShare%2CAlphaleonis.Win32.Filesystem.ExtendedFileAttributes%2CSystem.Security.AccessControl.FileSecurity)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L175">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Alphaleonis_Win32_Filesystem_KernelTransaction_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_System_Security_AccessControl_FileSecurity_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(Alphaleonis.Win32.Filesystem.KernelTransaction,System.String,System.IO.FileMode,System.Security.AccessControl.FileSystemRights,System.IO.FileShare,Alphaleonis.Win32.Filesystem.ExtendedFileAttributes,System.Security.AccessControl.FileSecurity)">BackupFileStream(KernelTransaction, String, FileMode, FileSystemRights, FileShare, ExtendedFileAttributes, FileSecurity)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class with the specified path, creation mode, access rights and sharing permission, additional file attributes, access control and audit security.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.KernelTransaction.html">KernelTransaction</a></td>
+        <td><span class="parametername">transaction</span></td>
+        <td><p>The transaction.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A relative or absolute path for the file that the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a> constant that determines how to open or create the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a></td>
+        <td><span class="parametername">access</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a> constant that determines the access rights to use when creating access and audit rules for the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a></td>
+        <td><span class="parametername">share</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a> constant that determines how the file will be shared by processes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html">ExtendedFileAttributes</a></td>
+        <td><span class="parametername">attributes</span></td>
+        <td><p>A <a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html">ExtendedFileAttributes</a> constant that specifies additional file attributes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesecurity">FileSecurity</a></td>
+        <td><span class="parametername">security</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesecurity">FileSecurity</a> constant that determines the access control and audit security for the file. This parameter This parameter may be <code>null</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Microsoft_Win32_SafeHandles_SafeFileHandle_System_Security_AccessControl_FileSystemRights_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(Microsoft.Win32.SafeHandles.SafeFileHandle%2CSystem.Security.AccessControl.FileSystemRights)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L185">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_Microsoft_Win32_SafeHandles_SafeFileHandle_System_Security_AccessControl_FileSystemRights_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(Microsoft.Win32.SafeHandles.SafeFileHandle,System.Security.AccessControl.FileSystemRights)">BackupFileStream(SafeFileHandle, FileSystemRights)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class for the specified file handle, with the specified read/write permission.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(SafeFileHandle handle, FileSystemRights access)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/microsoft.win32.safehandles.safefilehandle">SafeFileHandle</a></td>
+        <td><span class="parametername">handle</span></td>
+        <td><p>A file handle for the file that this <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a></td>
+        <td><span class="parametername">access</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a> constant that gets the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html#Alphaleonis_Win32_Filesystem_BackupFileStream_CanRead">CanRead</a> and <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html#Alphaleonis_Win32_Filesystem_BackupFileStream_CanWrite">CanWrite</a> properties of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(System.String%2CSystem.IO.FileMode)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L57">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(System.String,System.IO.FileMode)">BackupFileStream(String, FileMode)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class with the specified path and creation mode.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(string path, FileMode mode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A relative or absolute path for the file that the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a> constant that determines how to open or create the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The file will be opened for exclusive access for both reading and writing.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(System.String%2CSystem.IO.FileMode%2CSystem.Security.AccessControl.FileSystemRights)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L69">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(System.String,System.IO.FileMode,System.Security.AccessControl.FileSystemRights)">BackupFileStream(String, FileMode, FileSystemRights)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class with the specified path, creation mode and access rights.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(string path, FileMode mode, FileSystemRights access)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A relative or absolute path for the file that the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a> constant that determines how to open or create the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a></td>
+        <td><span class="parametername">access</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a> constant that determines the access rights to use when creating access and audit rules for the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The file will be opened for exclusive access.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(System.String%2CSystem.IO.FileMode%2CSystem.Security.AccessControl.FileSystemRights%2CSystem.IO.FileShare)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L81">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(System.String,System.IO.FileMode,System.Security.AccessControl.FileSystemRights,System.IO.FileShare)">BackupFileStream(String, FileMode, FileSystemRights, FileShare)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class with the specified path, creation mode, access rights and sharing permission.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A relative or absolute path for the file that the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a> constant that determines how to open or create the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a></td>
+        <td><span class="parametername">access</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a> constant that determines the access rights to use when creating access and audit rules for the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a></td>
+        <td><span class="parametername">share</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a> constant that determines how the file will be shared by processes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(System.String%2CSystem.IO.FileMode%2CSystem.Security.AccessControl.FileSystemRights%2CSystem.IO.FileShare%2CAlphaleonis.Win32.Filesystem.ExtendedFileAttributes)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L94">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(System.String,System.IO.FileMode,System.Security.AccessControl.FileSystemRights,System.IO.FileShare,Alphaleonis.Win32.Filesystem.ExtendedFileAttributes)">BackupFileStream(String, FileMode, FileSystemRights, FileShare, ExtendedFileAttributes)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class with the specified path, creation mode, access rights and sharing permission, and additional file attributes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A relative or absolute path for the file that the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a> constant that determines how to open or create the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a></td>
+        <td><span class="parametername">access</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a> constant that determines the access rights to use when creating access and audit rules for the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a></td>
+        <td><span class="parametername">share</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a> constant that determines how the file will be shared by processes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html">ExtendedFileAttributes</a></td>
+        <td><span class="parametername">attributes</span></td>
+        <td><p>A <a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html">ExtendedFileAttributes</a> constant that specifies additional file attributes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_System_Security_AccessControl_FileSecurity_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.%23ctor(System.String%2CSystem.IO.FileMode%2CSystem.Security.AccessControl.FileSystemRights%2CSystem.IO.FileShare%2CAlphaleonis.Win32.Filesystem.ExtendedFileAttributes%2CSystem.Security.AccessControl.FileSecurity)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L108">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream__ctor_System_String_System_IO_FileMode_System_Security_AccessControl_FileSystemRights_System_IO_FileShare_Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_System_Security_AccessControl_FileSecurity_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.#ctor(System.String,System.IO.FileMode,System.Security.AccessControl.FileSystemRights,System.IO.FileShare,Alphaleonis.Win32.Filesystem.ExtendedFileAttributes,System.Security.AccessControl.FileSecurity)">BackupFileStream(String, FileMode, FileSystemRights, FileShare, ExtendedFileAttributes, FileSecurity)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class with the specified path, creation mode, access rights and sharing permission, additional file attributes, access control and audit security.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A relative or absolute path for the file that the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object will encapsulate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filemode">FileMode</a> constant that determines how to open or create the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a></td>
+        <td><span class="parametername">access</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights">FileSystemRights</a> constant that determines the access rights to use when creating access and audit rules for the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a></td>
+        <td><span class="parametername">share</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare">FileShare</a> constant that determines how the file will be shared by processes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html">ExtendedFileAttributes</a></td>
+        <td><span class="parametername">attributes</span></td>
+        <td><p>A <a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html">ExtendedFileAttributes</a> constant that specifies additional file attributes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesecurity">FileSecurity</a></td>
+        <td><span class="parametername">security</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesecurity">FileSecurity</a> constant that determines the access control and audit security for the file. This parameter This parameter may be <code>null</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_CanRead.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.CanRead%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L243">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_CanRead_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.CanRead*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_CanRead" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.CanRead">CanRead</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current stream supports reading.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool CanRead { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><code>true</code> if the stream supports reading, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.canread#System_IO_Stream_CanRead">Stream.CanRead</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_CanSeek.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.CanSeek%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L250">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_CanSeek_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.CanSeek*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_CanSeek" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.CanSeek">CanSeek</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current stream supports seeking.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool CanSeek { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>This method always returns <code>false</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.canseek#System_IO_Stream_CanSeek">Stream.CanSeek</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_CanWrite.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.CanWrite%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L257">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_CanWrite_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.CanWrite*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_CanWrite" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.CanWrite">CanWrite</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the current stream supports writing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool CanWrite { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><code>true</code> if the stream supports writing, <code>false</code> otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.canwrite#System_IO_Stream_CanWrite">Stream.CanWrite</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Length.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Length%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L201">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Length_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Length*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Length" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Length">Length</h4>
+  <div class="markdown level1 summary"><p>When overridden in a derived class, gets the length in bytes of the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override long Length { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><p>This method always throws an exception.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.length#System_IO_Stream_Length">Stream.Length</a></div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Position.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Position%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L210">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Position_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Position*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Position" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Position">Position</h4>
+  <div class="markdown level1 summary"><p>When overridden in a derived class, gets or sets the position within the current stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override long Position { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><p>This method always throws an exception.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.position#System_IO_Stream_Position">Stream.Position</a></div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Dispose(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L624">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Dispose_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Dispose*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Dispose_System_Boolean_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Dispose(System.Boolean)">Dispose(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Releases the unmanaged resources used by the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a> and optionally releases the managed resources.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Dispose(bool disposing)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">disposing</span></td>
+        <td><p><code>true</code> to release both managed and unmanaged resources; <code>false</code> to release only unmanaged resources.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.dispose#System_IO_Stream_Dispose_System_Boolean_">Stream.Dispose(Boolean)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Finalize.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Finalize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L616">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Finalize_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Finalize*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Finalize" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Finalize">Finalize()</h4>
+  <div class="markdown level1 summary"><p>Releases unmanaged resources and performs other cleanup operations before the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> is reclaimed by garbage collection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Finalize()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Flush.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Flush%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L417">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Flush_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Flush*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Flush" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Flush">Flush()</h4>
+  <div class="markdown level1 summary"><p>Clears all buffers for this stream and causes any buffered data to be written to the underlying device.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Flush()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.flush#System_IO_Stream_Flush">Stream.Flush()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_GetAccessControl.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.GetAccessControl%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L462">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_GetAccessControl_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.GetAccessControl*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_GetAccessControl" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.GetAccessControl">GetAccessControl()</h4>
+  <div class="markdown level1 summary"><p>Gets a <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesecurity">FileSecurity</a> object that encapsulates the access control list (ACL) entries for the file described by the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public FileSecurity GetAccessControl()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesecurity">FileSecurity</a></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesecurity">FileSecurity</a> object that encapsulates the access control list (ACL) entries for the file described by the current
+<a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.ioexception">IOException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Lock_System_Int64_System_Int64_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Lock(System.Int64%2CSystem.Int64)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L521">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Lock_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Lock*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Lock_System_Int64_System_Int64_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Lock(System.Int64,System.Int64)">Lock(Int64, Int64)</h4>
+  <div class="markdown level1 summary"><p>Prevents other processes from changing the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> while permitting read access.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public void Lock(long position, long length)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>The beginning of the range to lock. The value of this parameter must be equal to or greater than zero (0).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>The range to be locked.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Read_System_Byte___System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Read(System.Byte%5B%5D%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L291">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Read_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Read*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Read_System_Byte___System_Int32_System_Int32_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Read(System.Byte[],System.Int32,System.Int32)">Read(Byte[], Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int Read(byte[] buffer, int offset, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">buffer</span></td>
+        <td><p>An array of bytes. When this method returns, the buffer contains the specified byte array with the values between
+<code data-dev-comment-type="paramref" class="paramref">offset</code> and (<code data-dev-comment-type="paramref" class="paramref">offset</code> + <code data-dev-comment-type="paramref" class="paramref">count</code> - 1) replaced by the bytes read from the
+current source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">offset</span></td>
+        <td><p>The zero-based byte offset in <code data-dev-comment-type="paramref" class="paramref">buffer</code> at which to begin storing the data read from the current stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The maximum number of bytes to be read from the current stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The total number of bytes read into the buffer. This can be less than the number of bytes requested if that many bytes are not
+currently available, or zero (0) if the end of the stream has been reached.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.read#System_IO_Stream_Read_System_Byte___System_Int32_System_Int32_">Stream.Read(Byte[], Int32, Int32)</a></div>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Read_System_Byte___System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method will not backup the access-control list (ACL) data for the file or directory.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Read_System_Byte___System_Int32_System_Int32_System_Boolean_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Read(System.Byte%5B%5D%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L312">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Read_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Read*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Read_System_Byte___System_Int32_System_Int32_System_Boolean_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Read(System.Byte[],System.Int32,System.Int32,System.Boolean)">Read(Byte[], Int32, Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>When overridden in a derived class, reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public int Read(byte[] buffer, int offset, int count, bool processSecurity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">buffer</span></td>
+        <td><p>An array of bytes. When this method returns, the buffer contains the specified byte array with the values
+between <code data-dev-comment-type="paramref" class="paramref">offset</code> and (<code data-dev-comment-type="paramref" class="paramref">offset</code> + <code data-dev-comment-type="paramref" class="paramref">count</code> - 1) replaced by the bytes read from the current source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">offset</span></td>
+        <td><p>The zero-based byte offset in <code data-dev-comment-type="paramref" class="paramref">buffer</code> at which to begin storing the data read from the current stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The maximum number of bytes to be read from the current stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">processSecurity</span></td>
+        <td><p>Indicates whether the function will backup the access-control list (ACL) data for the file or directory.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><p>The total number of bytes read into the buffer. This can be less than the number of bytes requested if that many bytes are not
+currently available, or zero (0) if the end of the stream has been reached.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_ReadStreamInfo.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.ReadStreamInfo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L569">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_ReadStreamInfo_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.ReadStreamInfo*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_ReadStreamInfo" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.ReadStreamInfo">ReadStreamInfo()</h4>
+  <div class="markdown level1 summary"><p>Reads a stream header from the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public BackupStreamInfo ReadStreamInfo()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.BackupStreamInfo.html">BackupStreamInfo</a></td>
+        <td><p>The stream header read from the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a>, or <code>null</code> if the end-of-file
+was reached before the required number of bytes of a header could be read.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream_ReadStreamInfo_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The stream must be positioned at where an actual header starts for the returned object to represent valid
+information.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.ioexception">IOException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Seek_System_Int64_System_IO_SeekOrigin_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Seek(System.Int64%2CSystem.IO.SeekOrigin)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L223">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Seek_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Seek*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Seek_System_Int64_System_IO_SeekOrigin_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Seek(System.Int64,System.IO.SeekOrigin)">Seek(Int64, SeekOrigin)</h4>
+  <div class="markdown level1 summary"><p>When overridden in a derived class, sets the position within the current stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override long Seek(long offset, SeekOrigin origin)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><span class="parametername">offset</span></td>
+        <td><p>A byte offset relative to the <code data-dev-comment-type="paramref" class="paramref">origin</code> parameter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.seekorigin">SeekOrigin</a></td>
+        <td><span class="parametername">origin</span></td>
+        <td><p>A value of type <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.seekorigin">SeekOrigin</a> indicating the reference point used to obtain the new position.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><p>The new position within the current stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.seek#System_IO_Stream_Seek_System_Int64_System_IO_SeekOrigin_">Stream.Seek(Int64, SeekOrigin)</a></div>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Seek_System_Int64_System_IO_SeekOrigin__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p><div class="NOTE"><h5>note</h5><p><p>This stream does not support seeking using this method, and calling this method will always throw <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a>. See <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html#Alphaleonis_Win32_Filesystem_BackupFileStream_Skip_System_Int64_">Skip(Int64)</a> for an alternative way of seeking forward.</p></p></div></p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_SetAccessControl_System_Security_AccessControl_ObjectSecurity_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.SetAccessControl(System.Security.AccessControl.ObjectSecurity)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L509">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_SetAccessControl_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.SetAccessControl*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_SetAccessControl_System_Security_AccessControl_ObjectSecurity_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.SetAccessControl(System.Security.AccessControl.ObjectSecurity)">SetAccessControl(ObjectSecurity)</h4>
+  <div class="markdown level1 summary"><p>Applies access control list (ACL) entries described by a <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesecurity">FileSecurity</a> object to the file described by the current <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public void SetAccessControl(ObjectSecurity fileSecurity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.objectsecurity">ObjectSecurity</a></td>
+        <td><span class="parametername">fileSecurity</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesecurity">FileSecurity</a> object that describes an ACL entry to apply to the current file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_SetLength_System_Int64_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.SetLength(System.Int64)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L233">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_SetLength_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.SetLength*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_SetLength_System_Int64_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.SetLength(System.Int64)">SetLength(Int64)</h4>
+  <div class="markdown level1 summary"><p>When overridden in a derived class, sets the length of the current stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void SetLength(long value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>The desired length of the current stream in bytes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.setlength#System_IO_Stream_SetLength_System_Int64_">Stream.SetLength(Int64)</a></div>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream_SetLength_System_Int64__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method is not supported by the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> class, and calling it will always generate a <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a>.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Skip_System_Int64_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Skip(System.Int64)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L438">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Skip_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Skip*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Skip_System_Int64_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Skip(System.Int64)">Skip(Int64)</h4>
+  <div class="markdown level1 summary"><p>Skips ahead the specified number of bytes from the current stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public long Skip(long bytes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><span class="parametername">bytes</span></td>
+        <td><p>The number of bytes to skip.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><p>The number of bytes actually skipped.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Skip_System_Int64__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method represents the Win32 API implementation of <a href="http://msdn.microsoft.com/en-us/library/aa362509(VS.85).aspx">BackupSeek</a>.</p>
+<p>
+Applications use the <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html#Alphaleonis_Win32_Filesystem_BackupFileStream_Skip_System_Int64_">Skip(Int64)</a> method to skip portions of a data stream that cause errors. This function does not 
+seek across stream headers. For example, this function cannot be used to skip the stream name. If an application 
+attempts to seek past the end of a substream, the function fails, the return value indicates the actual number of bytes 
+the function seeks, and the file position is placed at the start of the next stream header.
+</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Unlock_System_Int64_System_Int64_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Unlock(System.Int64%2CSystem.Int64)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L545">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Unlock_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Unlock*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Unlock_System_Int64_System_Int64_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Unlock(System.Int64,System.Int64)">Unlock(Int64, Int64)</h4>
+  <div class="markdown level1 summary"><p>Allows access by other processes to all or part of a file that was previously locked.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public void Unlock(long position, long length)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>The beginning of the range to unlock.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><span class="parametername">length</span></td>
+        <td><p>The range to be unlocked.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Write_System_Byte___System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Write(System.Byte%5B%5D%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L365">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Write_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Write*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Write_System_Byte___System_Int32_System_Int32_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Write(System.Byte[],System.Int32,System.Int32)">Write(Byte[], Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Writes a sequence of bytes to the current stream and advances the current position within this stream by the number of bytes written.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Write(byte[] buffer, int offset, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">buffer</span></td>
+        <td><p>An array of bytes. This method copies <code data-dev-comment-type="paramref" class="paramref">count</code> bytes from <code data-dev-comment-type="paramref" class="paramref">buffer</code> to the current stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">offset</span></td>
+        <td><p>The zero-based byte offset in <code data-dev-comment-type="paramref" class="paramref">buffer</code> at which to begin copying bytes to the current stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The number of bytes to be written to the current stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream.write#System_IO_Stream_Write_System_Byte___System_Int32_System_Int32_">Stream.Write(Byte[], Int32, Int32)</a></div>
+  <h5 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Write_System_Byte___System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method will not process the access-control list (ACL) data for the file or directory.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream_Write_System_Byte___System_Int32_System_Int32_System_Boolean_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream.Write(System.Byte%5B%5D%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L384">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_BackupFileStream_Write_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Write*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_BackupFileStream_Write_System_Byte___System_Int32_System_Int32_System_Boolean_" data-uid="Alphaleonis.Win32.Filesystem.BackupFileStream.Write(System.Byte[],System.Int32,System.Int32,System.Boolean)">Write(Byte[], Int32, Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>When overridden in a derived class, writes a sequence of bytes to the current stream and advances the current position within this stream by the number of bytes written.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public void Write(byte[] buffer, int offset, int count, bool processSecurity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">buffer</span></td>
+        <td><p>An array of bytes. This method copies <code data-dev-comment-type="paramref" class="paramref">count</code> bytes from <code data-dev-comment-type="paramref" class="paramref">buffer</code> to the current stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">offset</span></td>
+        <td><p>The zero-based byte offset in <code data-dev-comment-type="paramref" class="paramref">buffer</code> at which to begin copying bytes to the current stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The number of bytes to be written to the current stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">processSecurity</span></td>
+        <td><p>Specifies whether the function will restore the access-control list (ACL) data for the file or directory.
+If this is <code>true</code> you need to specify <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights#System_Security_AccessControl_FileSystemRights_TakeOwnership">TakeOwnership</a> and <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemrights#System_Security_AccessControl_FileSystemRights_ChangePermissions">ChangePermissions</a> access when
+opening the file or directory handle. If the handle does not have those access rights, the operating system denies
+access to the ACL data, and ACL data restoration will not occur.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.notsupportedexception">NotSupportedException</a></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.objectdisposedexception">ObjectDisposedException</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_BackupFileStream.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.BackupFileStream%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Link Stream/BackupFileStream.cs/#L41" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,7 +1,0 @@
-.DS_Store
-.sass-cache
-_site
-Gemfile.lock
-Bin/
-Obj/
-src/AlphaVSS.sdf

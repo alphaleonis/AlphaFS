@@ -1,0 +1,556 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Changelog | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Changelog | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="changelog">Changelog</h1>
+
+<h2 id="version-23--2018-xx-xx">Version 2.3  (2018-XX-XX)</h2>
+<h3 id="new-features">New Features</h3>
+<ul>
+<li>Issue #451: Add overloaded method for <code>File.GetSize</code> to retrieve the size of all streams.</li>
+<li>Issue #454: Add method <code>Directory.GetSize</code> to return the size of all alternate data streams of the specified directory and its files.</li>
+<li>Issue #464: Add overloaded methods for <code>Directory.Copy/Move</code> supporting <code>DirectoryEnumerationFilters</code>.</li>
+<li>Issue #465: Add overloaded methods for <code>File.Copy/Move</code> supporting retry.</li>
+<li>Issue #466: Add properties <code>ErrorRetry</code> and <code>ErrorRetryTimeout</code> to <code>DirectoryEnumerationFilters</code> class.</li>
+<li>Issue #467: Add property <code>CopyOptions.CopyTimestamp</code>.</li>
+</ul>
+<h3 id="improvements">Improvements</h3>
+<ul>
+<li>Issue #426: Correct casing of enum <code>STREAM_ATTRIBUTES</code></li>
+<li>Issue #459: Modify method <code>Directory.CreateDirectoryCore</code> to return <code>null</code> as well as <code>DirectoryInfo</code> instance.</li>
+<li>Issue #461: Remove text <code>:$DATA</code> from <code>AlternateDataStream.FullPath</code> property.</li>
+<li>Issue #462: Add <code>IEquatable&lt;T&gt;</code> to applicable info classes.</li>
+<li>Issue #463: Add <code>[Serializable]</code> attribute to applicable info classes.</li>
+<li>Issue #470: Change AlphaFS implementations of method <code>DirectoryInfo.Create</code> to return <code>DirectoryInfo</code> instance instead of void.</li>
+<li>Issue #471: Add overloaded method <code>Directory.CountFileSystemObjects</code> supporting <code>DirectoryEnumerationFilters</code>.</li>
+<li>Issue #472: Add method <code>DirectoryInfo.ExistsJunction</code>.</li>
+<li>Issue #473: Change AlphaFS implementations of method <code>File.Copy</code> to return <code>CopyMoveResult</code> instance instead of <code>void</code>.</li>
+<li>Issue #475: Prevent <code>File.SetFsoDateTimeCore</code> from throwing <code>UnauthorizedAccessException</code>.</li>
+<li>Issue #477: Move method <code>Path.GetMappedConnectionName</code> to <code>Host</code> class.</li>
+<li>Issue #478: Move method <code>Path.GetMappedUncName</code> to <code>Host</code> class.</li>
+<li>Added missing overloaded methods regarding timestamps and symbolic links.</li>
+<li>Marked <code>Directory.Copy</code>/<code>DirectoryInfo.Copy</code> methods using parameters <code>overwrite</code> and <code>preserveDates</code> as obsolete. Use one of the <code>CopyOptions</code>.</li>
+<li>Fixed a <code>Directory.Move</code> unit test creating endless drive mappings on error.</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>Issue #426: Correct casing of enum <code>STREAM_ATTRIBUTES</code></li>
+<li>Issue #461: Remove text <code>:$DATA</code> from <code>AlternateDataStream.FullPath</code> property.</li>
+<li>Issue #477: Move method <code>Path.GetMappedConnectionName</code> to <code>Host</code> class.</li>
+<li>Issue #478: Move method <code>Path.GetMappedUncName</code> to <code>Host</code> class.</li>
+</ul>
+<h2 id="version-226--2018-08-18">Version 2.2.6  (2018-08-18)</h2>
+<h3 id="bugs-fixed">Bugs Fixed</h3>
+<ul>
+<li>Issue #488: <code>Path.CheckInvalidPathChars</code> in <code>Path.Helpers.cs</code> should be case insensitive  (Thx GuyTe)</li>
+<li>Issue #489: <code>File.Copy</code> fails with <code>DirectoryNotFoundException</code> on long path  (Thx CyberSinh)</li>
+</ul>
+<h3 id="improvements-1">Improvements</h3>
+<ul>
+<li>Issue #487: Ensure replace is done case-insensitive  (Thx Genbox)</li>
+</ul>
+<h2 id="version-225--2018-07-27">Version 2.2.5  (2018-07-27)</h2>
+<h3 id="bugs-fixed-1">Bugs Fixed</h3>
+<ul>
+<li>Issue #479: <code>File.Move</code> on a file opened with <code>FileShare.Delete</code> succeeds but throws <code>IOException</code>.  (Thx oguimbal)</li>
+<li>Issue #480: <code>Directory.Delete(, true, true)</code> occasionally throws <code>DirectoryNotEmptyException</code>.</li>
+</ul>
+<h2 id="version-224--2018-07-12">Version 2.2.4  (2018-07-12)</h2>
+<h3 id="bugs-fixed-2">Bugs Fixed</h3>
+<ul>
+<li>Issue #468: Method <code>Directory.CopyTimestamps</code> should throw <code>DirectoryNotFoundException</code>.</li>
+<li>Issue #469: Method <code>Directory.GetFileIdInfo</code> should throw <code>DirectoryNotFoundException</code>.</li>
+<li>Issue #474: Method <code>Directory.EnumerateAlternateDataStreams</code> should throw <code>DirectoryNotFoundException</code>.</li>
+<li>Issue #476: Method <code>Directory.GetChangeTime</code> should throw <code>DirectoryNotFoundException</code>.</li>
+</ul>
+<h2 id="version-223--2018-06-14">Version 2.2.3  (2018-06-14)</h2>
+<h3 id="bugs-fixed-3">Bugs Fixed</h3>
+<ul>
+<li>Issue #456: Methods <code>Directory/File.Copy</code> throw <code>DeviceNotReadyException</code> when using <code>GLOBALROOT</code> source path.  (Thx VladimirK69)</li>
+<li>Issue #457: <code>FileInfo.Exists</code> is <code>true</code> when instance is created from a directory path.</li>
+<li>Issue #458: <code>Directory.Copy</code> sometimes does not create the file's parent folder, throwing <code>System.IO.DirectoryNotFoundException</code>.</li>
+</ul>
+<h3 id="improvements-2">Improvements</h3>
+<ul>
+<li>Added unit tests for GLOBALROOT source path so that it can never happen again!</li>
+</ul>
+<h2 id="version-222--2018-06-05">Version 2.2.2  (2018-06-05)</h2>
+<h3 id="bugs-fixed-4">Bugs Fixed</h3>
+<ul>
+<li>Issue #434: <code>Directory.Move</code> operation worked in v2.0.1, but now fails in v.2.2.1  (Thx warrenlbrown)</li>
+<li>Issue #436: <code>Directory.GetFiles()</code> with relative path  (Thx stellarbear)</li>
+<li>Issue #437: Fixed <code>PathTooLongException</code> for boundary case of directory name length in <code>Path.NormalizePath</code>  (Thx okrushelnitsky)</li>
+<li>Issue #441: <code>InvalidOperationException</code> on <code>Directory.EnumerateFileSystemEntries()</code> (Thx CyberSinh)</li>
+<li>Issue #444: Exception when moving or renaming a folder after updating from 2.1.3 to 2.2.1  (Thx mlaily)</li>
+</ul>
+<h3 id="improvements-3">Improvements</h3>
+<ul>
+<li>Issue #149: Split unit-tests.</li>
+<li>Fixed all Sandcastle Help File Builder warnings.</li>
+<li>Because of bug fixes, the correct source-/destination folder is now shown in exceptions thrown from Directory/File.Copy/Move methods, instead of always showing the source folder path.</li>
+<li>Improved some unit tests that would fail when a removable drive is already removed but there's still a cached reference.</li>
+</ul>
+<h2 id="version-221--2018-04-05">Version 2.2.1  (2018-04-05)</h2>
+<h3 id="bugs-fixed-5">Bugs Fixed</h3>
+<ul>
+<li>Issue #433: Directory.ExistsDriveOrFolderOrFile fails on global root path, so a simple file copy from a shadow copy fails with &quot;device GLOBALROOT not ready&quot; (Thx CyberSinh)</li>
+</ul>
+<h2 id="version-22--2018-03-25">Version 2.2  (2018-03-25)</h2>
+<h3 id="bugs-fixed-6">Bugs Fixed</h3>
+<ul>
+<li>Issue #268: There are multiple warnings when building the documentation.</li>
+<li>Issue #286: Property <code>FileSystemEntryInfo.AlternateFileName</code> is always an empty string.</li>
+<li>Issue #292: <code>CopyOptions.CopySymbolicLink</code> not working in 2.1.2  (Thx v2kiran)</li>
+<li>Issue #325: <code>DeleteEmptySubdirectories</code> (with <code>recursive=true</code>) throws <code>System.IO.DirectoryNotFoundException</code>  (Thx kryvoplias)</li>
+<li>Issue #328: Several instances of <code>ArgumentException.ParamName</code> not set/used correctly  (Thx elgonzo)</li>
+<li>Issue #330: Correct the parameter order for Privilege class constructors using the <code>ArgumentNullException</code>.</li>
+<li>Issue #339: <code>Directory/File.Encrypt/Decrypt</code> should restore read-only attribute.</li>
+<li>Issue #340: <code>DirectoryReadOnlyException</code> inherits from <code>System.IO.IOException</code>, wrong?</li>
+<li>Issue #344: <code>Directory.Copy</code> throws <code>UnauthorizedAccessException</code> &quot;The target file is a directory, not a file&quot;, while it is a file.</li>
+<li>Issue #349: <code>File.GetFileSystemEntryInfoCore</code> should throw <code>Directory/FileNotFoundException</code>, depending on <code>isFolder</code> argument.</li>
+<li>Issue #369: <code>Directory.EnumerateFileSystemEntryInfos</code> does not return subdirectories with spaces as name.  (Thx Lupinho)</li>
+<li>Issue #371: Fix <code>.gitignore</code> to accommodate new directory structure in AlphaFS.UnitTest project.  (Thx damiarnold)</li>
+<li>Issue #372: <code>SetFsoDateTimeCore</code> should always use <code>BackupSemantics</code>.  (Thx damiarnold)</li>
+<li>Issue #374: Initializing <code>DriveInfo</code> instance with only a letter throws <code>System.ArgumentException</code>.</li>
+<li>Issue #375: What is the expected result of <code>Path.LocalToUnc()</code> ?  (Thx damiarnold)</li>
+<li>Issue #376: <code>Path.LocalToUnc(path, true)</code> does not return UNC path in long path form.  (Thx damiarnold)</li>
+<li>Issue #379: <code>Path.LocalToUnc()</code> isn't handling trailing directory separators for mapped drives.  (Thx damiarnold)</li>
+<li>Issue #381: Change property <code>ByHandleFileInfo.VolumeSerialNumber</code> from <code>int</code> to <code>long</code>.</li>
+<li>Issue #386: <code>Network.Host.EnumerateDrives()</code> returns invalid data.</li>
+<li>Issue #400: <code>Directory.CopyDeleteCore</code> creates destination folder when source folder does not exist.</li>
+<li>Issue #412: Method <code>Volume.GetVolumeDeviceName</code> returns wrong result.</li>
+<li>Issue #417: Using a file opened in append mode will fail after a gc occurs  (Thx elgonzo)</li>
+<li>Issue #417: <code>File.OpenRead</code> method overloads do not use <code>FileShare.Read</code>  (Thx elgonzo)</li>
+<li>Issue #427: <code>System.IO.FileSystemInfo.Refresh()</code> is public; but AlphaFS <code>FileSystemInfo.Refresh()</code> is protected  (Thx elgonzo)</li>
+</ul>
+<h3 id="new-features-1">New Features</h3>
+<ul>
+<li>Issue #212: Provide a way to retrieve errors when you choose to <code>ContinueOnException</code></li>
+<li>Issue #314: Added Feature: <code>Directory.GetFileSystemEntryInfo</code>  (Thx besoft)</li>
+<li>Issue #322: Search files/folders using multiple filters. (Thx besoft)</li>
+<li>Issue #336: Implement methods for <code>Directory</code> class: <code>CreateJunction</code>, <code>DeleteJunction</code> and <code>ExistsJunction</code>.</li>
+<li>Issue #338: Add convenience method <code>Directory.IsEmpty</code></li>
+<li>Issue #342: Add instance method: <code>FileInfo.IsLocked()</code></li>
+<li>Issue #343: Add method <code>File.GetProcessForFileLock</code></li>
+<li>Issue #347: Implement method <code>Directory.CreateSymbolicLink</code></li>
+<li>Issue #348: Implement method <code>Directory.GetLinkTargetInfo</code></li>
+<li>Issue #351: Enable copying of Directory symbolic links.</li>
+<li>Issue #353: Modify method <code>Directory.GetFileSystemEntryInfo</code> to return <code>FileSystemEntryInfo</code> structure for directories supporting also root directories, e.g., <code>C:\</code>  (Thx besoft)</li>
+<li>Issue #354: Add methods <code>File.GetFileId</code> and <code>Directory.GetFileId</code> to return a unique file identifier.  (Thx besoft)</li>
+<li>Issue #370: Relative path from a full path  (Thx QbProg)</li>
+<li>Issue #373: Improve method <code>Directory.CreateDirectory</code> to allow creating a folder consisting only of spaces.</li>
+<li>Issue #414: Add additional <code>Network.Host</code> methods.</li>
+<li>Issue #415: Added <code>ProcessContext</code> static class to determine the context of the current process.</li>
+<li>Issue #422: Add <code>Copy-FileWithProgress.ps1</code> demonstrating file copy with progress report.</li>
+<li>Issue #423: Add <code>Copy-DirectoryWithProgress.ps1</code> demonstrating directory copy with progress report.</li>
+</ul>
+<h3 id="improvements-4">Improvements</h3>
+<ul>
+<li>Issue #273: Improve methods <code>Directory/File.CopyMoveCore</code>: Make code recursive-aware, skip additional path checks and validations.</li>
+<li>Issue #274: Improve methods <code>Directory/File.CopyMoveCore</code>: Improve detection of same volume.</li>
+<li>Issue #275: Improve methods <code>Directory/File.CopyMoveCore</code>: Eliminate recursion.</li>
+<li>Issue #277: <code>Directory.DeleteDirectoryCore()</code>: Eliminate recursion.</li>
+<li>Issue #278: <code>Directory.DeleteEmptySubdirectoriesCore()</code>: Eliminate recursion.</li>
+<li>Issue #303: <code>Path.Constants.cs</code>: Don't use <code>CurrentCulture</code>  (Thx HugoRoss)</li>
+<li>Issue #306: Include <code>ShareInfoLevel.Info502</code> and set as a fallback in <code>GetShareInfoCore()</code>  (Thx damiarnold)</li>
+<li>Issue #326: Add parameter <code>bool preserveDates</code> and created overloaded <code>Directory.Copy</code> methods to support this.</li>
+<li>Issue #331: Rename method <code>File/Directory.TransferTimestamps</code> to <code>CopyTimestamps</code>.</li>
+<li>Issue #335: Add overloaded methods to <code>File/Directory.TransferTimestamps</code> to apply to ReparsePoint.</li>
+<li>Issue #341: Improve usage of method <code>NativeError.ThrowException</code> and <code>Marshal.GetLastWin32Error</code></li>
+<li>Issue #345: <code>AlreadyExistsException</code> should only throw message from 1 error.</li>
+<li>Issue #350: Add overloaded methods <code>Directory.GetFileSystemEntryInfo</code></li>
+<li>Issue #352: Ignore <code>NonInterpretedPathPrefix</code> in methods: <code>Path.GetFullPathCore</code> and <code>Path.GetLongPathCore</code>  (Thx besoft)</li>
+<li>Issue #355: Methods throwing an <code>IOException</code> due to error code 17 (<code>ERROR_NOT_SAME_DEVICE</code>) now throw a specific exception (<code>NotSameDeviceException</code>)</li>
+<li>Issue #357: Added new Windows 10 property: <code>DirectAccess</code> (Win32 <code>FILE_DAX_VOLUME</code>) to <code>VolumeInfo</code> class.</li>
+<li>Issue #360: Add overloaded <code>Directory.EnumerateDirectories</code> methods that support <code>DirectoryEnumerationFilters</code>.  (Thx SignFinder)</li>
+<li>Issue #364: Avoid unnecessary allocations from Random construction in FileSystemInfo  (Thx danmosemsft)</li>
+<li>Issue #377: Rename enum member: <code>OperatingSystem.EnumOsName.WindowsServer</code> to: <code>OperatingSystem.EnumOsName.WindowsServer2016</code></li>
+<li>Issue #378: <code>DiskSpaceInfo</code> should respect <code>CultureInfo.CurrentCulture</code> for number formatting.</li>
+<li>Issue #385: Correct applied fileSystemRights operator in method <code>File.Create()</code>.</li>
+<li>Issue #387: Replace <code>handle.IsInvalid</code> checks with a call to method <code>NativeMethods.IsValidHandle()</code>.</li>
+<li>Issue #388: Change method <code>Network.Host.EnumerateDrives()</code> return type from <code>string</code> to <code>DriveInfo</code>.</li>
+<li>Issue #394: Improve percentage output of properties <code>DiskSpaceInfo</code>- <code>AvailableFreeSpacePercent</code> and <code>UsedSpacePercent</code></li>
+<li>Issue #401: CreateDirectory <code>ERROR_ACCESS_DENIED</code> reports parent folder.</li>
+<li>Issue #402: Remove long path prefix from <code>NativeError.ThrowException</code> messages with paths.</li>
+<li>Issue #408: Add <code>FileSystemEntryInfo.Extension</code> string property.</li>
+<li>Issue #416: Rename property <code>DeviceInfo.Class</code> to <code>DeviceInfo.DeviceClass</code></li>
+</ul>
+<h3 id="breaking-changes-1">Breaking Changes</h3>
+<ul>
+<li>Issue #331: Rename method <code>File/Directory.TransferTimestamps</code> to <code>CopyTimestamps</code>. Currently non-breaking, the old methods are still there.</li>
+<li>Issue #340: <code>DirectoryReadOnlyException</code> inherits from <code>System.IO.IOException</code>, wrong?</li>
+<li>Issue #350: Add overloaded methods <code>Directory.GetFileSystemEntryInfo</code>. Current code to retrieve a directory using <code>File.GetFileSystemEntryInfo</code> will now fail. Use <code>Directory.GetFileSystemEntryInfo</code> instead.</li>
+<li>Issue #377: Rename enum member: <code>OperatingSystem.EnumOsName.WindowsServer</code> to: <code>OperatingSystem.EnumOsName.WindowsServer2016</code></li>
+<li>Issue #381: Change property <code>ByHandleFileInfo.VolumeSerialNumber</code> from <code>int</code> to <code>long</code>.</li>
+<li>Issue #388: Change method <code>Network.Host.EnumerateDrives()</code> return type from <code>string</code> to <code>DriveInfo</code>.</li>
+<li>Issue #391: Mark AlphaFS enumerating methods that use both <code>searchPattern</code> and <code>DirectoryEnumerationFilters</code> as obsolete.</li>
+<li>Issue #416: Rename property <code>DeviceInfo.Class</code> to <code>DeviceInfo.DeviceClass</code></li>
+</ul>
+<h2 id="version-213-2017-06-05">Version 2.1.3 (2017-06-05)</h2>
+<h3 id="bugs-fixed-7">Bugs Fixed</h3>
+<ul>
+<li>Issue #288: <code>Directory.Exists</code> on root drive problem has come back with recent updates  (Thx warrenlbrown)</li>
+<li>Issue #289: <code>Alphaleonis.Win32.Network.Host.GetShareInfo</code> doesn't work since 2.1.0  (Thx Schoolmonkey/damiarnold)</li>
+<li>Issue #296: Folder rename (casing) throws IOException with HResult <code>ERROR_SAME_DRIVE</code>  (Thx doormalena)</li>
+<li>Issue #297: Incorrect domain returned from <code>Host.EnumerateDomainDfsRoot</code> when specifying domain  (Thx damiarnold)</li>
+<li>Issue #299: <code>FileInfo.MoveTo</code> and <code>DirectoryInfo.MoveTo</code> throw <code>ArgumentNullException</code> on empty destination path  (Thx doormalena)</li>
+<li>Issue #312: <code>Volume.EnumerateVolumes</code> skips first volume  (Thx springy76)</li>
+<li>Issue #313: <code>GetHostShareFromPath()</code> fails with spaces in share name  (Thx damiarnold)</li>
+<li>Issue #320: Minor changes in comments in <code>Win32Errors.cs</code> to eliminate compiler warnings.  (Thx besoft)</li>
+<li>Issue #321: <code>DirectoryInfo.CopyToMoveToCore()</code> calls <code>Path.GetExtendedLengthPathCore()</code> without <code>Transaction</code> parameter.</li>
+</ul>
+<h2 id="version-212-2016-10-30">Version 2.1.2 (2016-10-30)</h2>
+<h3 id="bugs-fixed-8">Bugs Fixed</h3>
+<ul>
+<li>Issue #270: Method <code>File.GetFileSystemEntryInfoCore</code> uses wildcard ? (questionmark) instead of * (asterisk)</li>
+<li>Issue #276: <code>Directory.DeleteDirectory()</code>: Method can get stuck in infinite loop.</li>
+<li>Issue #279: The unit tests for CRC32/64 are failing.</li>
+</ul>
+<h2 id="version-21--2016-09-29">Version 2.1  (2016-09-29)</h2>
+<h3 id="new-featuresenhancements">New Features/Enhancements</h3>
+<ul>
+<li>Issue #3: Added methods for backing up and restoring encrypted files:
+<ul>
+<li><code>File.ImportEncryptedFileRaw</code></li>
+<li><code>File.ExportEncryptedFileRaw</code></li>
+<li><code>Directory.ImportEncryptedDirectoryRaw</code></li>
+<li><code>Directory.ExportEncryptedDirectoryRaw</code></li>
+</ul>
+</li>
+<li>Issue #2  : Unit tests for methods: <code>File.OpenRead()</code>, <code>File.OpenText()</code> and <code>File.Replace()</code> are missing.</li>
+<li>Issue #101: The release now also contains a build targetting .NET 4.5.2.</li>
+<li>Issue #109: Add overloaded methods for <code>Host.EnumerateShares()</code>.</li>
+<li>Issue #112: Add <code>CreationTimeUtc</code>, <code>LastAccessTimeUtc</code> and <code>LastWriteTimeUtc</code> to &quot;Info&quot; classes.</li>
+<li>Issue #119: Fix <code>Path.IsLocalPath()</code> issues.</li>
+<li>Issue #125: AlphaFS is now CLSCompliant.</li>
+<li>Issue #127: Modify method <code>Volume.QueryDosDevice()</code> so that is doesn't rely on <code>Path.IsLocalPath()</code> anymore.</li>
+<li>Issue #130: Modify method <code>Path.LocalToUnc()</code> so that is doesn't rely on <code>Path.IsLocalPath()</code> anymore.</li>
+<li>Issue #131: Modify method <code>Path.GetPathRoot()</code> to handle UNC paths in long path format.</li>
+<li>Issue #132: Modify method <code>VolumeInfo()</code> constructor to better handle input paths.</li>
+<li>Issue #133: Add missing unit test <code>Host.GetHostShareFromPath()</code>.</li>
+<li>Issue #134: Improved upon <code>FindFileSystemEntryInfo.FindFirstFile()</code> when throwing <code>Directory-/FileNotFoundException()</code>.</li>
+<li>Issue #138: Modify <code>GetShareInfo()</code> to use <code>SafeGlobalMemoryBufferHandle</code> instead of <code>IntPtr</code>.</li>
+<li>Issue #139: Modify <code>GetDfsInfoInternal()</code> to use <code>SafeGlobalMemoryBufferHandle</code> instead of <code>IntPtr</code>.</li>
+<li>Issue #141: Remove obsolete Resources (resx) string messages.</li>
+<li>Issue #142: Move literal strings to Resources (resx).</li>
+<li>Issue #144: Add <code>DirectoryInfo.EnumerateXxx()</code> methods with support for <code>DirectoryEnumerationOptions</code> enum.</li>
+<li>Issue #151: Add <code>Directory.EnumerateXxx()</code> methods with support for <code>DirectoryEnumerationOptions</code>- and <code>PathFormat</code> enum.</li>
+<li>Issue #154: Modify private method <code>FindFileSystemEntryInfo.FindFirstFile()</code> to report the full path on Exception.</li>
+<li>Issue #146: Add method <code>DirectoryInfo.EnumerateAlternateDataStreams()</code>.</li>
+<li>Issue #147: Add overloaded methods to set Reparse Point Timestamp.  (Thx rstarkov)</li>
+<li>Issue #150: Enhancement: <code>File.IsLocked()</code></li>
+<li>Issue #158: Add SuppressUnmanagedCodeSecurity attribute to [DllImport] tag.</li>
+<li>Issue #184: <code>File.CreateSymbolicLink()</code> should throw <code>PlatformNotSupportedException()</code> if OS &lt; Vista.</li>
+<li>Issue #186: Replace WIN32 API <code>NativeMethods.GetVersionEx()</code> with <code>NativeMethods.RtlGetVersion()</code>.</li>
+<li>Issue #188: Make <code>ShareInfo</code> class property setters private: <code>ShareType</code>, <code>ResourceType</code>.</li>
+<li>Issue #189: Improve method <code>Utils.UnitSizeToText()</code>.</li>
+<li>Issue #190: Add overloaded methods for <code>File/Directory.Get/SetAccessControl()</code> that accept <code>SafeFileHandle</code>.</li>
+<li>Issue #191: Make class <code>BackupFileStream</code> sealed.</li>
+<li>Issue #192: Add <code>null</code>-checks to <code>SafeHandle.IsInvalid</code> usage.</li>
+<li>Issue #193: Use unicode version of WIN32 API <code>OpenEncryptedFileRaw()</code>.</li>
+<li>Issue #194: Add bitshift for Marshal.GetHRForException(ex) usage.</li>
+<li>Issue #195: Add useful FileAttributes as properties to <code>FileSystemEntryInfo</code> class.</li>
+<li>Issue #199: Change <code>FindFileSystemEntryInfo.FindFirstFile()</code> to show actual path instead of inputpath on access error.</li>
+<li>Issue #214: Howto <code>Get-Filehash</code>.</li>
+<li>Issue #235: Implement unicode versions of methods: CM_Connect_Machine and CM_Get_Device_ID_Ex.</li>
+<li>Issue #239: Enable long path support for <code>File.CreateSymbolicLink()</code> source parameter.</li>
+<li>Issue #240: Add <code>KeepDotOrSpace</code> to <code>GetFullPathOptions</code> enum.</li>
+<li>Issue #241: Add method <code>Path.GetFullPath()</code> overload that supports <code>GetFullPathOptions</code> enum.</li>
+<li>Issue #245: Implement CRC-32/64 (Thanks to Damien Guard for implementing his code).</li>
+<li>Issue #247: Add method <code>FileInfo.GetHash()</code>.</li>
+<li>Issue #251: Implement unicode versions of <code>Directory.GetCurrentDirectory()</code> and <code>Directory.SetCurrentDirectory()</code>.</li>
+<li>Issue #266: Add PowerShell script: <code>Enumerate-FileSystemEntryInfos.ps1</code></li>
+</ul>
+<h3 id="bugs-fixed-9">Bugs Fixed</h3>
+<ul>
+<li>Issue #50 : <code>Path.GetLongPath()</code> does not prefix on &quot;C:&quot;, should it?</li>
+<li>Issue #60 : Remove all use of &quot;Problematic&quot; methods such as <code>DangerousAddRef</code> and <code>DangerousGetHandle()</code>.</li>
+<li>Issue #160: <code>File.CreateSymbolicLink()</code> creates shortcut with no target.  (Thx martin-john-green)</li>
+<li>Issue #162: <code>File.AppendAllLines()</code> concatenates content into one line.  (Thx pavelhritonenko)</li>
+<li>Issue #166: <code>File.Exists</code> &amp; <code>Directory.Exists</code> fail when path has leading space(s).</li>
+<li>Issue #168: Error on <code>File.Open()</code> with access-mode Append?</li>
+<li>Issue #169: <code>DirectoryInfo .ToString()</code> returns path with <code>\\UNC</code> prefix.</li>
+<li>Issue #176: At <code>DirectoryInfo.GetFileSystemInfos()</code>, Long path prefix of GLOBALROOT path is missing.  (Thx diontools)</li>
+<li>Issue #179: <code>Path.GetFileName()</code> with an empty string throws an exception.  (Thx brutaldev)</li>
+<li>Issue #180: Network connects methods hangs in Windows service when credentials fail.  (Thx brutaldev)</li>
+<li>Issue #181: <code>File.OpenWrite()</code> should create file if it doesn't exist.  (Thomas Levesque)</li>
+<li>Issue #183: Add <code>SafeFileHandle</code> null check for BackupFileStream.Dispose.  (Thx diontools)</li>
+<li>Issue #185: Correct pinvoke signatures of <code>CreateSymbolicLink()</code> and <code>CreateSymbolicLinkTransacted()</code> functions.</li>
+<li>Issue #196: Replace usage of <code>ExtendedFileAttributes.None</code> with <code>ExtendedFileAttributes.Normal</code>.</li>
+<li>Issue #197: Fix: Prevent normalization of GlobalRootPrefix paths.</li>
+<li>Issue #198: <code>Path.GetRegularPathCore()</code> should not normalize <code>\\?\Volume</code> prefix.</li>
+<li>Issue #201: Some exceptions contain an incorrect <code>HRESULT</code> (Thomas Levesque)</li>
+<li>Issue #203: <code>Directory.GetDirectories()</code> and <code>Directory.GetFiles()</code> return absolute paths when given relative argument.</li>
+<li>Issue #204: Giving empty string to <code>Directory.GetFileName()</code> and related methods throws exception.</li>
+<li>Issue #206: <code>File.GetLastWriteTime()</code> throws exception for non-existing path.</li>
+<li>Issue #217: <code>File.Replace()</code> raises an exception.</li>
+<li>Issue #218: <code>Volume.GetVolumeInfo()</code> fails for global root paths.</li>
+<li>Issue #219: Mismatching Implementation to <code>System.IO.Path.GetDirectoryName()</code>.</li>
+<li>Issue #226: <code>DirectoryInfo</code> using searchoption.</li>
+<li>Issue #232: Enable null for destinationBackupFileName for <code>File.Replace()</code> and <code>FileInfo.Replace()</code>.</li>
+<li>Issue #234: <code>Path.CheckInvalidPathChars</code> breaks <code>IsPathRooted</code> for whitespace strings.</li>
+<li>Issue #242: <code>File.Open(file, System.IO.FileMode.Append)</code> does not append.</li>
+<li>Issue #244: <code>File.Copy(src, dst, true)</code> does not respect <code>FILE_ATTRIBUTE_READONLY</code>.</li>
+<li>Issue #246: Using <code>Directory.EnumerateFileSystemEntries()</code> recursively with a relative path may fail.</li>
+<li>Issue #248: <code>Directory.Move()</code> throws <code>FileNotFoundException</code> instead of <code>DirectoryNotFoundException</code> when source folder doesn't exist.</li>
+<li>Issue #249: Change <code>File.GetHashCore()</code> <code>.ToString(&quot;X2&quot;)</code> to <code>.ToString(&quot;X2&quot;, CultureInfo.InvariantCulture)</code>.</li>
+<li>Issue #252: Correct <code>FileSystemEntryInfos.FullPath</code> property when input path is a dot (current directory).</li>
+<li>Issue #253: Apply <code>Dispose()</code> to method <code>File.GetHashCore()</code>.</li>
+<li>Issue #254: Change <code>File.GetHashCore()</code> output from <code>.ToLowerInvariant()</code> to <code>.ToUpperInvariant()</code>.</li>
+<li>Issue #255: Creating Folder with Empty name. (ardestan)</li>
+<li>Issue #256: <code>Directory.Move()</code> not working over volumes with <code>MoveOptions.CopyAllowed</code>.  (Thx frontier777)</li>
+<li>Issue #263: <code>Directory.GetDirectories()</code> Method <code>(String, String, SearchOption)</code> with pattern &quot;* &quot;  (Thx ardestan)</li>
+</ul>
+<h3 id="breaking-changes-2">Breaking Changes</h3>
+<ul>
+<li>Issue #113: Change names of time related properties on <code>FileSystemEntryInfo</code> to conform with <code>FileInfo/DirectoryInfo</code>.</li>
+<li>Issue #126: Suffix the name of all methods working with TxF with &quot;Transacted&quot;.</li>
+<li>Issue #128: Remove <code>Path.IsLocalPath()</code> in favour of <code>Path.IsUncPath()</code>.</li>
+<li>Issue #140: Replace internal <code>DFS_INFO_4</code> structure with <code>DFS_INFO_9</code>.</li>
+<li>Issue #184: <code>File.CreateSymbolicLink()</code> should throw <code>PlatformNotSupportedException()</code> if OS &lt; Vista.</li>
+<li>Issue #250: Change <code>FileSystemEntryInfo.ToString()</code> to show full path instead of <code>ReparsePointTag</code>.</li>
+</ul>
+<h2 id="version-201--2015-02-07">Version 2.0.1  (2015-02-07)</h2>
+<h3 id="bugs-fixed-10">Bugs Fixed</h3>
+<ul>
+<li>Issue #104: <code>VolumeInfo.Refresh()</code> fails with <code>System.IO.IOException</code>: (234)&quot;.</li>
+<li>Issue #108: <code>Volume.Refresh()</code> should throw <code>DeviceNotReadyException</code>.</li>
+<li>Issue #110: <code>Directory.GetDirectoryRoot()</code> should throw <code>System.ArgumentException</code>.</li>
+<li>Issue #117: Fix <code>Path.GetFullPath()</code> issues.</li>
+<li>Issue #123: When <code>Directory.Encrypt/Decrypt()</code> is non-recursive, only process the folder.</li>
+<li>Issue #124: Unit tests for long/short path are failing.</li>
+</ul>
+<h2 id="version-20--2015-01-16">Version 2.0  (2015-01-16)</h2>
+<ul>
+<li>New: The public key of AlphaFS.dll has changed, delay-signing is no longer used.</li>
+<li>New: Unit Tests, also act as code samples.</li>
+<li>New: Numerous bugfixes, optimizations and (AlphaFS) overloaded methods implementations.</li>
+<li>New: Complete implementation of .NET 4.5 File(Info) and Directory(Info) classes.</li>
+<li>New: Complete implementation of .NET 4.5 DriveInfo() class and with UNC support.</li>
+<li>New: Complete implementation of .NET 4.5 Path() class.</li>
+<li>New: Implemented Unicode aka &quot;Long Path&quot; handling for all Win32 API functions that support it.</li>
+<li>New: Added support for NuGet.</li>
+<li>New: Added support for building against .NET 4.0, 4.5, and 4.5.1 in addition to 3.5.</li>
+<li>New: Supports networking by enumerating hosts and shares (SMB/DFS) and connect/disconnect to/from network resources (AlphaFS.Network.Host() class).</li>
+<li>New: Supports working with NTFS ADS (Alternate Data Streams) on files and folders (AlphaFS.Filesystem.AlternateDataStreamInfo() class).</li>
+<li>New: Supports enumerating connected PnP devices (AlphaFS.Filesystem.Device() / AlphaFS.Filesystem.DeviceInfo() classes).</li>
+<li>New: Supports extracting icons from files and folders (AlphaFS.Filesystem.Shell32Info() class).</li>
+<li>New: Supports PathFormat parameter for numerous methods to control path normalization. This speeds up things internally (less string processing and GetFullPath() calls) and also enables working with files and folders with a trailing dot or space:
+<ul>
+<li><code>RelativePath</code> (slow): (default) Path will be checked and resolved to an absolute path. Unicode prefix is applied.</li>
+<li><code>FullPath</code>  (fast): Path is an absolute path. Unicode prefix is applied.</li>
+<li><code>LongFullPath</code>  (fastest): Path is already an absolute path with Unicode prefix. Use as is.</li>
+</ul>
+</li>
+<li>Mod: Enabled KernelTransaction parameter for all Win32 API functions that support it.</li>
+<li>Mod: Added public read only properties to class FileSystemInfo(). Available for: DirectoryInfo() / FileInfo():
+<ul>
+<li>EntryInfo	 : Instance of the FileSystemEntryInfo() class.</li>
+<li>Transaction  : Represents the KernelTransaction that was passed to the constructor.</li>
+</ul>
+</li>
+<li>Mod: Added more entries to enum ReparsePointTag.</li>
+<li>Mod: Removed method Directory.CountFiles() and added method Directory.CountFileSystemObjects().</li>
+<li>Mod: Removed method Directory.GetFullFileSystemEntries() and added method Directory.EnumerateFileSystemEntryInfos().
+<ul>
+<li>Note: This new method currently does not support DirectoryEnumerationExceptionHandler, this will probably be added in a future release.</li>
+</ul>
+</li>
+<li>Mod: Renamed method Directory.GetFileIdBothDirectoryInfo() to Directory.EnumerateFileIdBothDirectoryInfo().</li>
+<li>Mod: Method Directory.CreateDirectory() signature change: Using template directory. Ability for NTFS-compressed folders added.</li>
+<li>Mod: Method Directory.GetProperties() signature change.</li>
+<li>Mod: Renamed method File.GetFileInformationByHandle() to File.GetFileInfoByHandle().</li>
+<li>Mod: Removed overloaded method File.GetFileInformationByHandle(FileStream).h</li>
+<li>Mod: Removed overloaded AlphaFS methods File.Move() using MoveFileOptions and CopyProgressRoutine, and added method File.Move().</li>
+<li>Mod: Renamed method Volume.GetDeviceForVolumeName() to Volume.GetVolumeDeviceName().</li>
+<li>Mod: Renamed method Volume.GetDisplayNameForVolume() to Volume.GetVolumeDisplayName().</li>
+<li>Mod: Renamed method Volume.GetVolumeInformation() to Volume.GetVolumeInfo().</li>
+<li>Mod: Renamed method Volume.GetVolumeMountPoints() to Volume.EnumerateVolumeMountPoints().</li>
+<li>Mod: Renamed method Volume.GetVolumePathNamesForVolume() to Volume.EnumerateVolumePathNames().</li>
+<li>Mod: Renamed method Volume.GetVolumes() to Volume.EnumerateVolumes().</li>
+<li>Mod: Method Volume.DefineDosDevice() signature change.</li>
+<li>Mod: Method Volume.QueryDosDevice() signature change.</li>
+<li>Mod: Method Volume.QueryAllDosDevices() signature change.</li>
+<li>Mod: Removed method Volume.GetLogicalDrives() in favor of method Directory.GetLogicalDrives().</li>
+<li>Mod: Class VolumeInfo() constructor signature change.</li>
+<li>Mod: Class VolumeInfo() properties updated/changed.</li>
+<li>Mod: Added method Volume.Refresh().</li>
+<li>Mod: Changed struct DiskSpaceInfo() to class.</li>
+<li>Mod: Class DiskSpaceInfo() constructor signature change.</li>
+<li>Mod: Class DiskSpaceInfo() properties added.</li>
+<li>Mod: Added method DiskSpaceInfo.Refresh().</li>
+<li>Mod: Refactored Path() class.</li>
+<li>Mod: Improved upon the correct (.NET) exceptions thrown. Added AlphaFS specific: DirectoryReadOnlyException and FileReadOnlyException.</li>
+<li>Removed classes PathInfoXxx().</li>
+<li>Removed method Path.IsValidPath(), was part of PathInfo() class.</li>
+<li>Removed IllegalPathException.</li>
+<li>Removed enum DriveType in favor of System.IO.DriveType enum.</li>
+<li>Removed enum FileAccess in favor of System.IO.FileAccess enum.</li>
+<li>Removed enum FileAttributes in favor of System.IO.FileAttributes enum.</li>
+<li>Removed enum FileMode in favor of System.IO.FileMode enum.</li>
+<li>Removed enum FileOptions in favor of System.IO.FileOptions enum.</li>
+<li>Removed enum FileShare in favor of System.IO.FileShare enum.</li>
+<li>Removed enum FileSystemRights in favor of System.Security.AccessControl.FileSystemRights enum.</li>
+<li>Removed enum FileType, obsolete.</li>
+<li>Removed enum EnumerationExceptionDecision, obsolete.</li>
+<li>Removed enum IoControlCode.cs, obsolete.</li>
+<li>Renamed enum CopyProgressResult to CopyMoveProgressResult.</li>
+<li>Renamed enum MoveFileOptions to MoveOptions.</li>
+<li>Renamed class DeviceIo to Device.</li>
+<li>Renamed delegate CopyProgressResult to CopyMoveProgressResult.</li>
+</ul>
+<h2 id="version-15--2014-05-20">Version 1.5  (2014-05-20)</h2>
+<ul>
+<li>New: Various file system objects enumeration methods in Directory class.</li>
+<li>Numerous bugfixes and optimizations</li>
+<li>New: more unit tests</li>
+<li>New: VS 2010 help file format, aka Help Viewer 1, dumped MS HELP 2 format</li>
+</ul>
+<h2 id="version-10">Version 1.0</h2>
+<ul>
+<li>New: Directory.GetFileIdBothDirectoryInfo, which provides access to the GetFileInformationByHandleEx Win32 API
+function with the FileInformationClass set to FileIdBothDirectoryInfo.</li>
+<li>New: Directory.CountFiles</li>
+<li>Mod: Additional overloads for File.Open method.</li>
+<li>Mod: FileAttributes.Invalid flag removed.</li>
+<li>New: Directory.GetProperties method for retrieving aggregated information about files in a directory.</li>
+<li>New: File.GetFileInformationByHandle added providing information about file index and link count.</li>
+<li>New: KernelTransaction can now be created from a System.Transaction to participate in the ambient transaction</li>
+<li>New: File.GetHardlinks providing an enumeration about all hardlinks pointing to the same file.</li>
+<li>Mod: Many improvements and bug-fixes to Path/PathInfo path-parsing.</li>
+<li>Mod: More functions for manipulating timestamps on files and directories.</li>
+<li>Mod: Directory.GetFullFileSystemEntries added to provide more convenient usage of the FileSystemEnumerator.</li>
+<li>Mod: ... and many more minor changes and fixes.</li>
+</ul>
+<h2 id="version-07-alpha">Version 0.7 alpha</h2>
+<ul>
+<li>New: DirectoryInfo and FileInfo classes added</li>
+<li>New: PathInfo.GetLongFullPath() and Path.GetLongFullPath() methods added</li>
+<li>Mod: Path and PathInfo got many bugfixes, and some new functionality was added.</li>
+<li>Mod: AlphaFS now targets the .NET Framework 2.0 instead of 3.5 previously.</li>
+<li>Mod: KernelTransaction can now be created from, and participate in a System.Transactions.Transaction.</li>
+<li>New: BackupFileStream added, in support of the BackupWrite(), BackupRead() and BackupSeek() functions from the Win32 API.</li>
+<li>Mod: Inheritance structure for several classes was modified, mainly to add MarshalByRefObject to the relevant classes.</li>
+<li>Mod: FileSystemEntryInfo was changed to a reference type (class) instead of the previous value type (struct).</li>
+<li>Mod: PathInfo now accepts more types of internal paths, such as \?\GLOBALROOT\Device\HarddiskVolumeShadowCopy5\ etc.</li>
+<li>... and many minor changes and fixes, not mentioned here.</li>
+</ul>
+<h2 id="version-031">Version 0.3.1</h2>
+<ul>
+<li>New: Added support for hardlinks and symbolic links in File.</li>
+<li>New: Added Directory.EnableEncryption() and Directory.DisableEncryption()</li>
+<li>New: Added File.GetCompressedSize()</li>
+<li>Mod: Applied CLSCompliant(false) to the assembly</li>
+<li>Mod: Improved error reporting, and cleanup of internal class NativeError.</li>
+</ul>
+<h2 id="version-030">Version 0.3.0</h2>
+<ul>
+<li>Initial release</li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/CHANGELOG.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,322 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Introduction | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Introduction | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="introduction">Introduction</h1>
+
+<h3 id="long-paths">Long Paths</h3>
+<p>AlphaFS automatically enables long path support for its methods.
+This means you never have to fiddle again with long path prefixes such as : <code>\\?\</code> or <code>\\?\UNC\</code></p>
+<p>Most AlphaFS methods support long paths, please look here to see <a class="xref" href="methods-without-long-path-support.html">methods without long path support</a>.</p>
+<p>AlphaFS provides a namespace: <a class="xref" href="../api/Alphaleonis.Win32.Filesystem.html">Alphaleonis.Win32.Filesystem</a> containing a number of classes. Most notable are replications of the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.path">Path</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.file">File</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileinfo">FileInfo</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.directory">Directory</a> and <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.directoryinfo">DirectoryInfo</a> from the <code>System.IO</code> namespace.</p>
+<p>So if you only use these <code>System.IO</code> classes, it is just a matter of replacing:
+<code>using System.IO</code>
+with
+<code>using Alphaleonis.Win32.Filesystem</code>
+which makes AlphaFS a <strong>true</strong> drop-in replacement.</p>
+<h3 id="examples">Examples</h3>
+<pre><code>// Will all be handled as a long path by AlphaFS.
+Alphaleonis.Win32.Filesystem.File.Delete(&quot;C:\Data\test.txt&quot;);
+Alphaleonis.Win32.Filesystem.File.Delete(&quot;\\?\C:\Data\test.txt&quot;);
+Alphaleonis.Win32.Filesystem.File.Delete(&quot;\\host\c$\Data\test.txt&quot;);
+Alphaleonis.Win32.Filesystem.File.Delete(&quot;\\?\UNC\host\c$\Data\test.txt&quot;);
+</code></pre>
+<h3 id="powershell">PowerShell</h3>
+<p>To enable AlphaFS from PowerShell, an: <code>Import-Dll -Name 'C:\Path-to-AlphaFS.dll'</code> is needed first.
+AlphaFS methods can be accessed in the following manner:</p>
+<pre><code>PS C:\&gt; [Alphaleonis.Win32.Filesystem.File]::Delete('C:\Data\test.txt')
+PS C:\&gt; [Alphaleonis.Win32.Filesystem.File]::Delete('\\?\UNC\host\c$\Data\test.txt')
+</code></pre>
+<p>For more information see the <a class="xref" href="powershell/intro.html">section on PowerShell</a></p>
+<h3 id="minimize-get-fullpath-and-path-validation">Minimize Get FullPath and Path Validation</h3>
+<p>When a method is executed, the given path to the file or directory is first resolved to get the full path.
+After that, numerous checks are applied to make sure that the supplied path is a valid path that can be used by the method.
+Of course this all happens in the blink of an eye and you will never notice any delays. You can however reduce these checks and thus increase the overall speed of your script or application.</p>
+<p>If you are going to apply multiple actions on a file or directory, (create, get attributes, copy, delete, ...)
+you can either create a <a class="xref" href="../api/Alphaleonis.Win32.Filesystem.FileInfo.html">FileInfo</a> or <a class="xref" href="../api/Alphaleonis.Win32.Filesystem.DirectoryInfo.html">DirectoryInfo</a> object and use this instance to do most of the processing, or you can make use of the <a class="xref" href="../api/Alphaleonis.Win32.Filesystem.PathFormat.html">PathFormat</a> parameter.</p>
+<p>Some methods support the <a class="xref" href="../api/Alphaleonis.Win32.Filesystem.PathFormat.html">PathFormat</a> parameter. To see if a method supports the <a class="xref" href="../api/Alphaleonis.Win32.Filesystem.PathFormat.html">PathFormat</a>, simply do this:</p>
+<pre><code>PS C:\&gt; [Alphaleonis.Win32.Filesystem.File]::Delete
+
+OverloadDefinitions
+-------------------
+static void Delete(string path)
+static void Delete(string path, bool ignoreReadOnly, Alphaleonis.Win32.Filesystem.PathFormat pathFormat)
+static void Delete(string path, bool ignoreReadOnly)
+</code></pre>
+<p>We see that the second overload supports the <a class="xref" href="../api/Alphaleonis.Win32.Filesystem.PathFormat.html">PathFormat</a> parameter, now let's use it. First, we create a long path string and store it in a variabele:</p>
+<pre><code>PS C:\&gt; $longPath = [Alphaleonis.Win32.Filesystem.Path]::GetLongPath('\\host\c$\Data\test.txt')`
+PS C:\&gt; $longPath
+\\?\UNC\host\c$\Data\test.txt
+</code></pre>
+<p>Second, we supply the long path variable to the AlphaFS method:</p>
+<pre><code>PS C:\&gt; [Alphaleonis.Win32.Filesystem.File]::Delete($longPath, $True, [Alphaleonis.Win32.Filesystem.PathFormat]::LongFullPath)
+</code></pre>
+<p>And that's it! AlphaFS sees the <code>LongFullPath</code> parameter and automatically skips full path resolving and
+path validation checks. Note that these have already been applied when using the <code>Alphaleonis.Win32.Filesystem.Path.GetLongPath()</code> method.</p>
+<h3 id="prefer-directoryenumeratexxx-methods-instead-of-directorygetxxx-methods">Prefer Directory.EnumerateXxx() methods instead of Directory.GetXxx() methods</h3>
+<p>The <code>EnumerateDirectories()</code> and <code>GetDirectories()</code> methods differ as follows: When you use <code>EnumerateDirectories()</code>, you can start enumerating the collection of names
+before the whole collection is returned; when you use <code>GetDirectories()</code>, you must wait for the whole array of names to be returned before you can access the array.</p>
+<p>So, the big real-life difference: <code>GetXxx()</code> methods will fill up your memory with the entire array!
+Therefore, when you are working with many files and directories, <code>EnumerateXxx()</code> can be more efficient.</p>
+<h3 id="kernel-transaction-manager">Kernel Transaction Manager</h3>
+<p>&quot;The <a href="https://msdn.microsoft.com/en-us/library/mt481588(v=vs.110).aspx">Kernel Transaction Manager</a> (KTM) enables the development of applications that use transactions. The transaction engine itself is within the kernel, but transactions can be developed for kernel- or user-mode transactions, and within a single host or among distributed hosts.&quot;</p>
+<p>Example of using Transactions (TxF)</p>
+<pre><code>using (var ts = new System.Transactions.TransactionScope(System.Transactions.TransactionScopeOption.RequiresNew))
+{
+    // KernelTransaction is in AlphaFS.
+    var kt = new KernelTransaction(System.Transactions.Transaction.Current);
+
+    // Append &quot;hello&quot; to text file named &quot;text.txt&quot;
+    Alphaleonis.Win32.Filesystem.File.WriteAllText(kt, &quot;text.txt&quot;, &quot;hello&quot;);
+
+    // No text appended because exception will be thrown.
+    throw new Exception(&quot;oops&quot;);
+
+    ts.Complete();
+}
+</code></pre>
+<h3 id="filesystementryinfo">FileSystemEntryInfo</h3>
+<p>AlphaFS fully supports the .NET <code>DirectoryInfo</code> and <code>FileInfo</code>, and some more.</p>
+<pre><code>Instance: [System.IO.DirectoryInfo]
+
+#001	Attributes        = [Directory]
+#002	CreationTime      = [30-5-2017 18:07:28]
+#003	CreationTimeUtc   = [30-5-2017 16:07:28]
+#004	Exists            = [True]
+#005	Extension         = [.rh5]
+#006	FullName          = [\\SERVER\C$\Temp\DirectoryInfo_InitializeInstance_ExistingDirectory-e43eb9\teljluhv.rh5]
+#007	LastAccessTime    = [30-5-2017 18:07:28]
+#008	LastAccessTimeUtc = [30-5-2017 16:07:28]
+#009	LastWriteTime     = [30-5-2017 18:07:28]
+#010	LastWriteTimeUtc  = [30-5-2017 16:07:28]
+#011	Name              = [teljluhv.rh5]
+#012	Parent            = [DirectoryInfo_InitializeInstance_ExistingDirectory-e43eb9]
+#013	Root              = [\\SERVER\C$]
+
+
+Instance: [Alphaleonis.Win32.Filesystem.DirectoryInfo]
+
+#001	Attributes        = [Directory]
+#002	CreationTime      = [30-5-2017 18:07:28]
+#003	CreationTimeUtc   = [30-5-2017 16:07:28]
+#004	EntryInfo         = [\\SERVER\C$\Temp\DirectoryInfo_InitializeInstance_ExistingDirectory-e43eb9\teljluhv.rh5]
+#005	Exists            = [True]
+#006	Extension         = [.rh5]
+#007	FullName          = [\\SERVER\C$\Temp\DirectoryInfo_InitializeInstance_ExistingDirectory-e43eb9\teljluhv.rh5]
+#008	LastAccessTime    = [30-5-2017 18:07:28]
+#009	LastAccessTimeUtc = [30-5-2017 16:07:28]
+#010	LastWriteTime     = [30-5-2017 18:07:28]
+#011	LastWriteTimeUtc  = [30-5-2017 16:07:28]
+#012	Name              = [teljluhv.rh5]
+#013	Parent            = [DirectoryInfo_InitializeInstance_ExistingDirectory-e43eb9]
+#014	Root 
+
+    
+
+Instance: [System.IO.FileInfo]
+
+#001	Attributes        = [-1]
+#002	CreationTime      = [1-1-1601 01:00:00]
+#003	CreationTimeUtc   = [1-1-1601 00:00:00]
+#004	Directory         = [\\SERVER\C$\Temp\FileInfo_InitializeInstance_NonExistingFile-401668]
+#005	DirectoryName     = [\\SERVER\C$\Temp\FileInfo_InitializeInstance_NonExistingFile-401668]
+#006	Exists            = [False]
+#007	Extension         = [.txt]
+#008	FullName          = [\\SERVER\C$\Temp\FileInfo_InitializeInstance_NonExistingFile-401668\mf0b4cbh.om5.txt]
+#009	IsReadOnly        = [True]
+#010	LastAccessTime    = [1-1-1601 01:00:00]
+#011	LastAccessTimeUtc = [1-1-1601 00:00:00]
+#012	LastWriteTime     = [1-1-1601 01:00:00]
+#013	LastWriteTimeUtc  = [1-1-1601 00:00:00]
+#014	Length            = [Property accessor 'Length' on object 'System.IO.FileInfo' threw the following exception:'Could not find file '\\SERVER\C$\Temp\FileInfo_InitializeInstance_NonExistingFile-401668\mf0b4cbh.om5.txt'.']
+#015	Name              = [mf0b4cbh.om5.txt]
+
+
+Instance: [Alphaleonis.Win32.Filesystem.FileInfo]
+
+#001	Attributes        = [-1]
+#002	CreationTime      = [1-1-1601 01:00:00]
+#003	CreationTimeUtc   = [1-1-1601 00:00:00]
+#004	Directory         = [\\SERVER\C$\Temp\FileInfo_InitializeInstance_NonExistingFile-401668]
+#005	DirectoryName     = [\\SERVER\C$\Temp\FileInfo_InitializeInstance_NonExistingFile-401668]
+#006	EntryInfo         = [null]
+#007	Exists            = [False]
+#008	Extension         = [.txt]
+#009	FullName          = [\\SERVER\C$\Temp\FileInfo_InitializeInstance_NonExistingFile-401668\mf0b4cbh.om5.txt]
+#010	IsReadOnly        = [True]
+#011	LastAccessTime    = [1-1-1601 01:00:00]
+#012	LastAccessTimeUtc = [1-1-1601 00:00:00]
+#013	LastWriteTime     = [1-1-1601 01:00:00]
+#014	LastWriteTimeUtc  = [1-1-1601 00:00:00]
+#015	Length            = [Property accessor 'Length' on object 'Alphaleonis.Win32.Filesystem.FileInfo' threw the following exception:'(2) The system cannot find the file specified: [\\?\UNC\SERVER\C$\Temp\FileInfo_InitializeInstance_NonExistingFile-401668\mf0b4cbh.om5.txt]']
+#016	Name              = [mf0b4cbh.om5.txt]
+</code></pre>
+<p>Both <code>DirectoryInfo</code> and <code>FileInfo</code> contain the <code>EntryInfo</code> property containing
+lots of other useful information:</p>
+<pre><code>Instance: [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo]
+
+#001	AlternateFileName = []
+#002	Attributes        = [Directory]
+#003	CreationTime      = [22-8-2013 15:36:16]
+#004	CreationTimeUtc   = [22-8-2013 13:36:16]
+#005	FileName          = [Windows]
+#006	FileSize          = [0]
+#007	FullPath          = [C:\Windows]
+#008	IsCompressed      = [False]
+#009	IsDirectory       = [True]
+#010	IsEncrypted       = [False]
+#011	IsHidden          = [False]
+#012	IsMountPoint      = [False]
+#013	IsOffline         = [False]
+#014	IsReadOnly        = [False]
+#015	IsReparsePoint    = [False]
+#016	IsSymbolicLink    = [False]
+#017	LastAccessTime    = [30-5-2017 15:54:40]
+#018	LastAccessTimeUtc = [30-5-2017 13:54:40]
+#019	LastWriteTime     = [30-5-2017 15:54:40]
+#020	LastWriteTimeUtc  = [30-5-2017 13:54:40]
+#021	LongFullPath      = [\\?\C:\Windows]
+#022	ReparsePointTag   = [None]
+
+
+Instance: [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo]
+
+#001	AlternateFileName = []
+#002	Attributes        = [Archive]
+#003	CreationTime      = [22-8-2013 13:00:13]
+#004	CreationTimeUtc   = [22-8-2013 11:00:13]
+#005	FileName          = [notepad.exe]
+#006	FileSize          = [217600]
+#007	FullPath          = [\\SERVER\C$\Windows\System32\notepad.exe]
+#008	IsCompressed      = [False]
+#009	IsDirectory       = [False]
+#010	IsEncrypted       = [False]
+#011	IsHidden          = [False]
+#012	IsMountPoint      = [False]
+#013	IsOffline         = [False]
+#014	IsReadOnly        = [False]
+#015	IsReparsePoint    = [False]
+#016	IsSymbolicLink    = [False]
+#017	LastAccessTime    = [22-8-2013 13:00:13]
+#018	LastAccessTimeUtc = [22-8-2013 11:00:13]
+#019	LastWriteTime     = [22-8-2013 13:00:12]
+#020	LastWriteTimeUtc  = [22-8-2013 11:00:12]
+#021	LongFullPath      = [\\?\UNC\SERVER\C$\Windows\System32\notepad.exe]
+#022	ReparsePointTag   = [None]
+</code></pre>
+<p>Most properties are lazy loading and cached. Call the <code>directoryInfo.RefreshEntryInfo()</code> or <code>fileInfo.RefreshEntryInfo()</code> instance method to update the information.</p>
+<p>At your disposal there are two more static methods you can use to obtain a <code>FileSystemEntryInfo</code> instance to a file or folder: <code>File.GetFileSystemEntryInfo()</code> and <code>Directory.EnumerateFileSystemEntries()</code>.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/docs/articles/intro.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

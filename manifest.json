@@ -1,0 +1,1446 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/projects/alphafs/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      },
+      "is_incremental": false
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "../CHANGELOG.md",
+      "output": {
+        ".html": {
+          "relative_path": "CHANGELOG.html",
+          "hash": "qFtdMoQJtUVzDeLfAWuCiQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.AlreadyExistsException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.AlreadyExistsException.html",
+          "hash": "y/eBVsb4QLDrXunX6ut/1Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.AlternateDataStreamInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.AlternateDataStreamInfo.html",
+          "hash": "GnXg9D2jjQkv/qU/h3Yf0A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.BackupFileStream.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.BackupFileStream.html",
+          "hash": "jDYc9V/ZbiyG6tVCohSaCA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.BackupStreamInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.BackupStreamInfo.html",
+          "hash": "KqYnXdIVXT0UVNy9JtpfHg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.ByHandleFileInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.ByHandleFileInfo.html",
+          "hash": "M+ZcnLNv1xRGzELjIFb4Xg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.CopyMoveProgressCallbackReason.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.CopyMoveProgressCallbackReason.html",
+          "hash": "igecJ4PZ+02JgbY0ibRjGg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.CopyMoveProgressResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.CopyMoveProgressResult.html",
+          "hash": "E5HB3JH4chv6GTFheFgHxw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.CopyMoveProgressRoutine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.CopyMoveProgressRoutine.html",
+          "hash": "OOkZ02EP/hcnQjQvzkakfA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.CopyMoveResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.CopyMoveResult.html",
+          "hash": "sDYiartXTtCTLI9DKnMPEQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.CopyOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.CopyOptions.html",
+          "hash": "WgPJZLpes7K9UCLvba/BAQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Device.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Device.html",
+          "hash": "lqbSYUXDgHG6D9k+gl2ifg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DeviceGuid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DeviceGuid.html",
+          "hash": "yvynBe7nWPcPU1qyEkg9rw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DeviceInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DeviceInfo.html",
+          "hash": "H+FqbLSGJ61RtXuNyettWA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DeviceNotReadyException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DeviceNotReadyException.html",
+          "hash": "Q2hOGK+SV/xwYZNctPiqJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Directory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Directory.html",
+          "hash": "X0CJReB7ojc5LnL/rrkRuw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters.html",
+          "hash": "TI+Y/ZwTfWKfXR8Ls5sKtQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.html",
+          "hash": "jp9/WfTb+xWR6T+XhWWC5g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DirectoryInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DirectoryInfo.html",
+          "hash": "++AnTGGB3f+yg6R/5u9sdA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException.html",
+          "hash": "BWYD1ArTSQFo5jDxwneXSQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DirectoryReadOnlyException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DirectoryReadOnlyException.html",
+          "hash": "naf5Et5iHkJ4DN2IUB5/bg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DiskSpaceInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DiskSpaceInfo.html",
+          "hash": "nGlD/dfz3/iOOgXlBssddg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DosDeviceAttributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DosDeviceAttributes.html",
+          "hash": "zTgpHvMxZ3v7EwH2IWyaXA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.DriveInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.DriveInfo.html",
+          "hash": "OhLB6GldECJ3LTUhBHRTjg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.ErrorHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.ErrorHandler.html",
+          "hash": "N3lXKtzbjcP2NFndNVCqow=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html",
+          "hash": "w9a1YLpY9PQ+HuKK2tw0DA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.File.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.File.html",
+          "hash": "CXQrycMLAwBXf6CADyUxcA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.FileEncryptionStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.FileEncryptionStatus.html",
+          "hash": "skb3XNMXoB6/BVoFFgUkxQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.FileIdBothDirectoryInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.FileIdBothDirectoryInfo.html",
+          "hash": "P1HkYsY84oUlU8WkgJEpYw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.FileIdInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.FileIdInfo.html",
+          "hash": "qshMEpxzGVpZrFbOPXse+g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.FileInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.FileInfo.html",
+          "hash": "Otz78ym15SQVGNOLm01oDQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.FileReadOnlyException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.FileReadOnlyException.html",
+          "hash": "auranjsja/R+ZD41MvKhBg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.FileSystemEntryInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.FileSystemEntryInfo.html",
+          "hash": "0OZqSuwexJqvCkc15BR2uA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.FileSystemInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.FileSystemInfo.html",
+          "hash": "1iOlRHC4qoMxA0Vq/ntpqg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.FinalPathFormats.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.FinalPathFormats.html",
+          "hash": "wsg60cvyRqhfy3/Ag36dlQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.GetFullPathOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.GetFullPathOptions.html",
+          "hash": "7Oc4Lz4zJ9BgPSMDycZoYQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.InvalidTransactionException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.InvalidTransactionException.html",
+          "hash": "e84MbqBhVZahQ7auwA5FcA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.KernelTransaction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.KernelTransaction.html",
+          "hash": "sOfAnmoRYWI0wbvrljZRrw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.LinkTargetInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.LinkTargetInfo.html",
+          "hash": "ua1j7lN17hNBxtDIkxenjw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.MoveOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.MoveOptions.html",
+          "hash": "mShUaYUV/r08pP9NFzC/cg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.NotAReparsePointException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.NotAReparsePointException.html",
+          "hash": "h90dlxTSBzt9LMoFeT9JVQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.NotSameDeviceException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.NotSameDeviceException.html",
+          "hash": "V8EIFB2P/6QVxzhk/uvz8Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Path.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Path.html",
+          "hash": "DGUm9ApHrOOzx8n8qJTvIg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.PathFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.PathFormat.html",
+          "hash": "jwt8DTVqWc+BXespA5S6Xw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.ReparsePointTag.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.ReparsePointTag.html",
+          "hash": "rlWdIS0Mx/iG+PsiPEODxg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.SafeFindFileHandle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.SafeFindFileHandle.html",
+          "hash": "2pKFG5I9RMYvz/ckP/XciQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.SafeFindVolumeHandle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.SafeFindVolumeHandle.html",
+          "hash": "ixe7srZMlbA56UEpivFYQw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.AssociationAttributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.AssociationAttributes.html",
+          "hash": "JkJDHlZjMNA9C8maDEj+Sw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.AssociationString.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.AssociationString.html",
+          "hash": "6gn2YVqmbgTIM398QwV0wA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.FileAttributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.FileAttributes.html",
+          "hash": "Hf3tyDyXkMK7nD5wVPUWdA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.FileInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html",
+          "hash": "s1MYWEBgcZmN5SY5qQk3hA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.GetAttributesOf.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.GetAttributesOf.html",
+          "hash": "j59Pru9Ytfu4lMf5QNB1+g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.UrlType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.UrlType.html",
+          "hash": "qxy0DMyRYDYv0Jc/6AnDCA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32.html",
+          "hash": "aomZxZMd8DSMcpAA5vFqkA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32Info.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Shell32Info.html",
+          "hash": "VX8AjlrXrvFTyqFKPAZrxg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.StreamAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.StreamAttribute.html",
+          "hash": "mqWJRFFg2zeAXNhzekXEQQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.StreamId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.StreamId.html",
+          "hash": "3Y2K2p83RurZUwpwktk0CQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.html",
+          "hash": "71/M1HrorW00GqtcNuUgXQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.SymbolicLinkTargetInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.SymbolicLinkTargetInfo.html",
+          "hash": "wywX1oVd3pcvfOaP2GnYlQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.SymbolicLinkType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.SymbolicLinkType.html",
+          "hash": "V6YJu/ZorXMR5QX+g/Q6BA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.TransactionAlreadyAbortedException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.TransactionAlreadyAbortedException.html",
+          "hash": "/zfzf+9FPW8FzBUnL40LgA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.TransactionAlreadyCommittedException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.TransactionAlreadyCommittedException.html",
+          "hash": "nhgo4z94bGy7lYQhnuPc0A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.TransactionException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.TransactionException.html",
+          "hash": "RBoHBvY1GFv2+Pxspr2bxA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.TransactionalConflictException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.TransactionalConflictException.html",
+          "hash": "8fNbgYjgfYFFjLLjs51x7g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.UnrecognizedReparsePointException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.UnrecognizedReparsePointException.html",
+          "hash": "qzv8zI/SdyiEFYuTfvIY9Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.UnsupportedRemoteTransactionException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.UnsupportedRemoteTransactionException.html",
+          "hash": "nElmhsTq2kBlMflSVikIQA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.Volume.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.Volume.html",
+          "hash": "D+RH7SzMKlQqGePWpLOWfQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.VolumeInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.VolumeInfo.html",
+          "hash": "MLWEeZrVAuqM6dsWVPQ5Vg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Filesystem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Filesystem.html",
+          "hash": "v7nmTFRIkzf2bFZcQlwSeg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.AccessPermissions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.AccessPermissions.html",
+          "hash": "PtrCsXEgWi2b+p8Kv1U+uQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.ConnectivityStates.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.ConnectivityStates.html",
+          "hash": "SoXY99rCNmoSwT4VJNSMBQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.DfsInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.DfsInfo.html",
+          "hash": "CkTlHKB7DA8lJpt83rqdEA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.DfsPropertyFlags.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.DfsPropertyFlags.html",
+          "hash": "NVRFfacbwO1pAj9HiwvW+A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.DfsStorageInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.DfsStorageInfo.html",
+          "hash": "y3d5+8cW0XD/EgBPwy2W6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.DfsStorageStates.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.DfsStorageStates.html",
+          "hash": "GKPmlYHraxnPamuQvkQmEQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.DfsTargetPriorityClass.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.DfsTargetPriorityClass.html",
+          "hash": "NnH8D6Ixvm00Dy3Rm9rhHA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.DfsVolumeStates.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.DfsVolumeStates.html",
+          "hash": "iTlq6av7qeQFmNAWKNweZg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.DomainType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.DomainType.html",
+          "hash": "W0GuyPt93qFuNcefnwpaVQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.DriveConnection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.DriveConnection.html",
+          "hash": "2fBA6KOF/zrmNJVRwAC7Xg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.Host.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.Host.html",
+          "hash": "FKSxrQw5jPZF9+kCLtjygw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.NetworkCategory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.NetworkCategory.html",
+          "hash": "4X0N6eqd9C8owVe7/biCkw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.NetworkConnectionInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.NetworkConnectionInfo.html",
+          "hash": "B2r8GA+hTWQl/jMzoTRbug=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.NetworkConnectivityLevels.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.NetworkConnectivityLevels.html",
+          "hash": "phUe9oA21Swios0nrV0aDg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.NetworkInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.NetworkInfo.html",
+          "hash": "1Y3waDKfYr1DT9o7tzPsCQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.OpenConnectionInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.OpenConnectionInfo.html",
+          "hash": "kYYitTGrZKKQUEg/vjTnaA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.OpenResourceInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.OpenResourceInfo.html",
+          "hash": "m+lQf75ft1ipwHXbsFRd+g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.ServerStatisticsInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.ServerStatisticsInfo.html",
+          "hash": "HzRQXin1R0JJIxCtDieX8A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.SessionInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.SessionInfo.html",
+          "hash": "x6m3eT/IB/z7kIyisPXhqA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.SessionInfoLevel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.SessionInfoLevel.html",
+          "hash": "W73QjOnuf14mHO7eVuJ/Vw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.ShareInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.ShareInfo.html",
+          "hash": "oMab0h0q03WXi7ZFAU+mow=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.ShareInfoLevel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.ShareInfoLevel.html",
+          "hash": "TH/BTSYS2mX+L8z5vkbP3g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.ShareResourceTypes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.ShareResourceTypes.html",
+          "hash": "zmdIvj09PaPxHLii5nDoRQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.ShareType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.ShareType.html",
+          "hash": "D3CItg2mOhpr5DJuxK5Y3A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.WorkstationStatisticsInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.WorkstationStatisticsInfo.html",
+          "hash": "4wuRhNFt2fHI7jMF96xQbQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Network.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Network.html",
+          "hash": "X5M0W1ZJC95LHFFVXNk9GQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.OperatingSystem.EnumOsName.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.OperatingSystem.EnumOsName.html",
+          "hash": "XYCD0GZ0L+Ip1QGLls8UlQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.OperatingSystem.EnumProcessorArchitecture.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.OperatingSystem.EnumProcessorArchitecture.html",
+          "hash": "DcDfUEvArsTqwEBCda3Xfg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.OperatingSystem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.OperatingSystem.html",
+          "hash": "TfzgWllRg112YZy37CbdEQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.SafeTokenHandle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.SafeTokenHandle.html",
+          "hash": "Xet/gekCpAtbYb4FggyhGQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Security.HashType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Security.HashType.html",
+          "hash": "ZtgHrgS7l/uynhXFwHcmEQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Security.Privilege.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Security.Privilege.html",
+          "hash": "4JbIC/er4cuUVjYqhrcceg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Security.PrivilegeEnabler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Security.PrivilegeEnabler.html",
+          "hash": "olpQgGohkmoEHBES76MkPw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Security.ProcessContext.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Security.ProcessContext.html",
+          "hash": "GQYGnKR/q6Q0kM7Z5UpncQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.Security.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.Security.html",
+          "hash": "U3Ce1g0YJ0RLUrXrTq/P1g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Alphaleonis.Win32.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Alphaleonis.Win32.html",
+          "hash": "aSpLVSOYpMtmrXoEZ9rVMQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "b/zPO2tambKGxR6eILGJKA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "T5E+S6Pqicp0acclt0JBVA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/differences.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/differences.html",
+          "hash": "Fawk8Dn/V4oouu+9zakITQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/exceptions.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/exceptions.html",
+          "hash": "C/E4+Hr+YlqqkLlmmzJ+TQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "DwKuWTLjyuOsglLAmR9BKQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/methods-without-long-path-support.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/methods-without-long-path-support.html",
+          "hash": "Jg1LF4tKB+eTJ5GWPi+1LA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/powershell/examples.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/powershell/examples.html",
+          "hash": "SWFfsHP6dCcnncA5SQB6zQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/powershell/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/powershell/intro.html",
+          "hash": "Zj53Op13NKk0ZQR7ic832Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "wVBJBkhmS6+49BogFa7k9w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "dmgbmL5dzNgpN0k+xQ/qTw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "wdX8AnBzbb3UfY07WBhyXQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build"
+      },
+      "processors": {
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build"
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build"
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build"
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: should not trace intermediate info.",
+        "incrementalPhase": "postProcessing"
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

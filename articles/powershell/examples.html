@@ -1,0 +1,518 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>PowerShell Examples | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="PowerShell Examples | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h2 id="powershell-examples">PowerShell Examples</h2>
+
+<p>This section contains various examples of how to perfom some common tasks in PowerShell using AlphaFS.</p>
+<h3 id="show-static-methods-from-directory-class">Show static methods from Directory class.</h3>
+<pre><code>PS C:\&gt; [Alphaleonis.Win32.Filesystem.Directory] | gm -Static -MemberType Method
+
+TypeName: Alphaleonis.Win32.Filesystem.Directory
+
+Name                             MemberType Definition
+----                             ---------- ----------
+Compress                         Method     static void Compress(string path, Alphaleonis.Win32.Filesystem.Directory...
+Copy                             Method     static void Copy(string sourcePath, string destinationPath), static void...
+CountFileSystemObjects           Method     static long CountFileSystemObjects(string path, Alphaleonis.Win32.Filesy...
+CreateDirectory                  Method     static Alphaleonis.Win32.Filesystem.DirectoryInfo CreateDirectory(string...
+...
+</code></pre>
+<h3 id="get-all-overloaded-methods-of-a-particular-method">Get all overloaded methods of a particular method</h3>
+<pre><code>PS C:\&gt; [Alphaleonis.Win32.Filesystem.Directory]::Copy
+
+OverloadDefinitions
+-------------------
+static void Copy(string sourcePath, string destinationPath)
+static void Copy(string sourcePath, string destinationPath, Alphaleonis.Win32.Filesystem.PathFormat pathFormat)
+static void Copy(string sourcePath, string destinationPath, bool overwrite)
+static void Copy(string sourcePath, string destinationPath, bool overwrite, Alphaleonis.Win32.Filesystem.PathFormat pathFormat)
+static void Copy(string sourcePath, string destinationPath, Alphaleonis.Win32.Filesystem.CopyOptions copyOptions)
+static void Copy(string sourcePath, string destinationPath, Alphaleonis.Win32.Filesystem.CopyOptions copyOptions, Alphaleonis.Win32.Filesystem.PathFormat pathFormat)
+...
+</code></pre>
+<h3 id="alphafs-references">AlphaFS References</h3>
+<pre><code># Call the CreateDirectory() method from the Directory class.
+PS C:\&gt; [Alphaleonis.Win32.Filesystem.Directory]::CreateDirectory('C:\MyFolder')
+
+# If you prefer a shorter reference, assign the TypeName to a PowerShell variable.
+PS C:\&gt; $AlphaFSDir = [Alphaleonis.Win32.Filesystem.Directory]
+
+# And then use the short form.
+# Create a compressed directory.
+PS C:\&gt; $AlphaFSDir::CreateDirectory('C:\MyCompressedFolder', $True)
+</code></pre>
+<h3 id="emulate-get-childitem-to-overcome-path-too-long">Emulate Get-ChildItem to overcome &quot;Path Too Long&quot;</h3>
+<pre><code># How people learn about &quot;Path Too Long&quot;.
+PS C:\&gt; Get-ChildItem -Recurse -Path $folderPath
+
+# How salvation is offered.
+PS C:\&gt; [Alphaleonis.Win32.Filesystem.Directory]::EnumerateFileSystemEntries($folderPath, '*', [System.IO.SearchOption]::AllDirectories)
+</code></pre>
+<h3 id="get-a-filesystementryinfo-object-of-a-file">Get a FileSystemEntryInfo object of a file</h3>
+<p>This is the most powerful method to retrieve file or folder information!</p>
+<pre><code># Get a FileSystemEntryInfo object of a file.
+PS C:\&gt; $fsei = [Alphaleonis.Win32.Filesystem.File]::GetFileSystemEntryInfo($Env:WinDir + '\notepad.exe')
+
+PS C:\&gt; $fsei.GetType()
+
+IsPublic IsSerial Name                                     BaseType
+-------- -------- ----                                     --------
+True     True     FileSystemEntryInfo                      System.Object
+
+
+PS C:\&gt; $fsei
+
+AlternateFileName   = []
+Attributes          = [Archive]
+CreationTime        = [22-8-2013 13:00:13]
+CreationTimeUtc     = [22-8-2013 11:00:13]
+Extension           = [.exe]
+FileName            = [notepad.exe]
+FileSize            = [217600]
+FullPath            = [C:\Windows\System32\notepad.exe]
+IsArchive           = [True]
+IsCompressed        = [False]
+IsDevice            = [False]
+IsDirectory         = [False]
+IsEncrypted         = [False]
+IsHidden            = [False]
+IsMountPoint        = [False]
+IsNormal            = [False]
+IsNotContentIndexed = [False]
+IsOffline           = [False]
+IsReadOnly          = [False]
+IsReparsePoint      = [False]
+IsSparseFile        = [False]
+IsSymbolicLink      = [False]
+IsSystem            = [False]
+IsTemporary         = [False]
+LastAccessTime      = [22-8-2013 13:00:13]
+LastAccessTimeUtc   = [22-8-2013 11:00:13]
+LastWriteTime       = [22-8-2013 13:00:12]
+LastWriteTimeUtc    = [22-8-2013 11:00:12]
+LongFullPath        = [\\?\C:\Windows\System32\notepad.exe]
+ReparsePointTag     = [None]
+</code></pre>
+<h3 id="get-a-filesystementryinfo-object-of-a-directory">Get a FileSystemEntryInfo object of a directory</h3>
+<pre><code># Get a FileSystemEntryInfo object of a directory.
+PS C:\&gt; $fsei = [Alphaleonis.Win32.Filesystem.File]::GetFileSystemEntryInfo($Env:WinDir)
+PS C:\&gt; $fsei
+
+AlternateFileName   = []
+Attributes          = [Directory]
+CreationTime        = [22-8-2013 15:36:16]
+CreationTimeUtc     = [22-8-2013 13:36:16]
+Extension           = []
+FileName            = [Windows]
+FileSize            = [0]
+FullPath            = [C:\Windows]
+IsArchive           = [False]
+IsCompressed        = [False]
+IsDevice            = [False]
+IsDirectory         = [True]
+IsEncrypted         = [False]
+IsHidden            = [False]
+IsMountPoint        = [False]
+IsNormal            = [False]
+IsNotContentIndexed = [False]
+IsOffline           = [False]
+IsReadOnly          = [False]
+IsReparsePoint      = [False]
+IsSparseFile        = [False]
+IsSymbolicLink      = [False]
+IsSystem            = [False]
+IsTemporary         = [False]
+LastAccessTime      = [12-1-2018 15:54:39]
+LastAccessTimeUtc   = [12-1-2018 14:54:39]
+LastWriteTime       = [12-1-2018 15:54:39]
+LastWriteTimeUtc    = [12-1-2018 14:54:39]
+LongFullPath        = [\\?\C:\Windows]
+ReparsePointTag     = [None]
+</code></pre>
+<h3 id="get-a-directoryinfo-object-of-a-directory">Get a DirectoryInfo object of a directory</h3>
+<pre><code># Get a DirectoryInfo object of a directory.
+PS C:\&gt; $dirInfo = New-Object -TypeName Alphaleonis.Win32.Filesystem.DirectoryInfo($Env:WinDir)
+
+PS C:\&gt; $dirInfo.GetType()
+
+IsPublic IsSerial Name                                     BaseType
+-------- -------- ----                                     --------
+True     True     DirectoryInfo                            Alphaleonis.Win32.Filesystem.FileSystemInfo
+
+
+PS C:\&gt; $dirInfo
+
+Exists            : True
+Name              : WINDOWS
+Parent            :
+Root              : C:\
+Attributes        : Directory
+CreationTime      : 22-8-2013 15:36:15
+CreationTimeUtc   : 22-8-2013 13:36:15
+Extension         :
+FullName          : C:\WINDOWS
+LastAccessTime    : 28-12-2014 00:54:51
+LastAccessTimeUtc : 27-12-2014 23:54:51
+LastWriteTime     : 28-12-2014 00:54:51
+LastWriteTimeUtc  : 27-12-2014 23:54:51
+EntryInfo         : None
+Transaction       :
+</code></pre>
+<h3 id="enumerate-files-and-directories">Enumerate files and directories</h3>
+<pre><code> # Get all root folders from the Windows folder, starting with an 'a'
+ PS C:\&gt; [Alphaleonis.Win32.Filesystem.Directory]::EnumerateDirectories($Env:WinDir, 'a*')
+
+ C:\Windows\addins
+ C:\Windows\ADFS
+ C:\Windows\AppCompat
+ C:\Windows\apppatch
+ C:\Windows\AppReadiness
+ C:\Windows\assembly
+
+
+ # Get all files and folders from a network share.
+ PS C:\&gt; $AlphaFSDir::EnumerateFileSystemEntries('\\server\share', '*', [System.IO.SearchOption]::AllDirectories)
+</code></pre>
+<p>For overall performance improvement, use the <code>Directory.EnumerateXxx()</code> versions as much as possible
+and avoid using <code>Directory.GetFileSystemEntries/GetDirectories/GetFiles</code> functions.
+When you are working with many files and/or directories, the <code>Directory.EnumerateXxx()</code> methods
+can be more efficient.</p>
+<h3 id="copy-a-directory-recursively">Copy a directory recursively</h3>
+<pre><code> # Set copy options.
+ PS C:\&gt; $copyOptions = [Alphaleonis.Win32.Filesystem.CopyOptions]::FailIfExists
+
+ # Set source and destination directories.
+ PS C:\&gt; $source = 'C:\sourceDir'
+ PS C:\&gt; $destination = 'C:\destinationDir'
+
+ # Copy directory recursively.
+ PS C:\&gt; [Alphaleonis.Win32.Filesystem.Directory]::Copy($source, $destination, $copyOptions)
+</code></pre>
+<p><strong>Copy directory recursively using a DirectoryInfo instance</strong>:</p>
+<pre><code> PS C:\&gt; $dirInfo.CopyTo($destination)
+ PS C:\&gt; $dirInfo.CopyTo($destination, $copyOptions)
+</code></pre>
+<p><strong>Example Copy() Exception (missing source directory)</strong>:</p>
+<pre><code> Exception calling &quot;Copy&quot; with &quot;3&quot; argument(s): &quot;(3) The system cannot find the path specified: [\\?\C:\sourceDir]&quot;
+ At line:1 char:2
+ +  [Alphaleonis.Win32.Filesystem.Directory]::Copy($source, $destination, $copyOpt ...
+ + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+     + FullyQualifiedErrorId : DirectoryNotFoundException
+</code></pre>
+<h3 id="copy-a-file">Copy a file</h3>
+<pre><code> # Copy file.
+ PS C:\&gt; [Alphaleonis.Win32.Filesystem.File]::Copy('C:\Folder\oldFile.txt', 'D:\Folder\newFile.txt')
+</code></pre>
+<h3 id="remove-file-with-a-trailing-space-in-the-file-name">Remove file with a trailing space in the file name</h3>
+<pre><code> # Remove file, use path as is.
+ # .NET does not allow for a file name to end with a space or a dot.
+ # Use the [Alphaleonis.Win32.Filesystem.PathFormat]::FullPath parameter to bypass this.
+
+ PS C:\&gt; [Alphaleonis.Win32.Filesystem.File]::Delete('C:\Temp\file ', [Alphaleonis.Win32.Filesystem.PathFormat]::FullPath)
+</code></pre>
+<h3 id="enumerate-shares-from-a-host">Enumerate shares from a host</h3>
+<pre><code> PS C:\&gt; [Alphaleonis.Win32.Network.Host]::EnumerateShares($Env:COMPUTERNAME, $True)
+
+ CurrentUses        : 0
+ DirectoryInfo      : \\SERVER001\ADMIN$
+ NetFullPath        : \\SERVER001\ADMIN$
+ MaxUses            : 4294967295
+ NetName            : ADMIN$
+ Password           :
+ Path               : C:\WINDOWS
+ Permissions        : None
+ Remark             : Remote Admin
+ SecurityDescriptor : 0
+ ServerName         : SERVER001
+ ShareType          : Special
+ ResourceType       : None
+ ShareLevel         : Info503
+
+ ...
+</code></pre>
+<h3 id="example-operating-system-information">Example: Operating System information</h3>
+<pre><code> PS C:\&gt; [Alphaleonis.Win32.OperatingSystem]::IsServer
+ False
+
+ PS C:\&gt; [Alphaleonis.Win32.OperatingSystem]::IsWow64Process
+ False
+
+ PS C:\&gt; [Alphaleonis.Win32.OperatingSystem]::OSVersion
+ Major  Minor  Build  Revision
+ -----  -----  -----  --------
+ 6      3      9600   0
+
+ PS C:\&gt; [Alphaleonis.Win32.OperatingSystem]::ProcessorArchitecture
+ X64
+
+ PS C:\&gt; [Alphaleonis.Win32.OperatingSystem]::ServicePackVersion
+ Major  Minor  Build  Revision
+ -----  -----  -----  --------
+ 0      0      -1     -1
+
+ PS C:\&gt; [Alphaleonis.Win32.OperatingSystem]::VersionName
+ Windows81
+
+ PS C:\&gt; [Alphaleonis.Win32.OperatingSystem]::IsAtLeast([Alphaleonis.Win32.OperatingSystem+EnumOsName]::WindowsServer2003)
+ True
+</code></pre>
+<h3 id="driveinfo">DriveInfo</h3>
+<pre><code># System.IO DriveInfo()
+PS C:\&gt; [System.IO.DriveInfo]('C')
+
+Name               : C:\
+DriveType          : Fixed
+DriveFormat        : NTFS
+IsReady            : True
+AvailableFreeSpace : 681759399936
+TotalFreeSpace     : 681759399936
+TotalSize          : 749786361856
+RootDirectory      : C:\
+VolumeLabel        : Windows8
+
+
+# AlphaFS DriveInfo()
+PS C:\&gt; $driveInfo = [Alphaleonis.Win32.Filesystem.DriveInfo]('C')
+PS C:\&gt; $driveInfo
+
+AvailableFreeSpace    = [22910414848]
+DiskSpaceInfo         = [C:\]
+DosDeviceName         = [C:]
+DriveFormat           = [NTFS]
+DriveType             = [Fixed]
+IsDosDeviceSubstitute = [False]
+IsReady               = [True]
+IsUnc                 = [False]
+IsVolume              = [True]
+Name                  = [C:\]
+RootDirectory         = [C:\]
+TotalFreeSpace        = [22910414848]
+TotalSize             = [96079966208]
+VolumeInfo            = [\\?\Volume{657d4f85-1da2-478a-946a-318c99706878}\]
+VolumeLabel           = [System]
+
+PS C:\&gt; $driveInfo.DiskSpaceInfo
+
+AvailableFreeSpacePercent  = [23.85%]
+AvailableFreeSpaceUnitSize = [21.34 GB]
+BytesPerSector             = [512]
+ClusterSize                = [4096]
+DriveName                  = [C:\]
+FreeBytesAvailable         = [22910414848]
+NumberOfFreeClusters       = [5593363]
+SectorsPerCluster          = [8]
+TotalNumberOfBytes         = [96079966208]
+TotalNumberOfClusters      = [23457023]
+TotalNumberOfFreeBytes     = [22910414848]
+TotalSizeUnitSize          = [89.48 GB]
+UsedSpacePercent           = [76.15%]
+UsedSpaceUnitSize          = [68.14 GB]
+
+PS C:\&gt; $driveInfo.VolumeInfo
+
+CasePreservedNames         = [True]
+CaseSensitiveSearch        = [True]
+Compression                = [True]
+DirectAccess               = [False]
+FileSystemName             = [NTFS]
+FullPath                   = [C:\]
+Guid                       = [\\?\Volume{657d4f85-1da2-478a-946a-318c99706878}\]
+MaximumComponentLength     = [255]
+Name                       = [System]
+NamedStreams               = [True]
+PersistentAcls             = [True]
+ReadOnlyVolume             = [False]
+SequentialWriteOnce        = [False]
+SerialNumber               = [1686851484]
+SupportsEncryption         = [True]
+SupportsExtendedAttributes = [True]
+SupportsHardLinks          = [True]
+SupportsObjectIds          = [True]
+SupportsOpenByFileId       = [True]
+SupportsRemoteStorage      = [False]
+SupportsReparsePoints      = [True]
+SupportsSparseFiles        = [True]
+SupportsTransactions       = [True]
+SupportsUsnJournal         = [True]
+UnicodeOnDisk              = [True]
+VolumeIsCompressed         = [False]
+VolumeQuotas               = [True]
+
+
+# Get the next available free drive letter (the example returns &quot;E&quot;).
+PS C:\&gt; $letter = [Alphaleonis.Win32.Filesystem.DriveInfo]::GetFreeDriveLetter()
+PS C:\&gt; $letter
+E
+</code></pre>
+<h3 id="browse-folders-using-privilegeenabler">Browse folders using PrivilegeEnabler</h3>
+<pre><code># Use the &quot;Backup&quot; privilege to browse folder: C:\Windows\CSC
+# Browsing without the PrivilegeEnabler results in ACCESS DENIED.
+$privilegeEnabler = $Null
+
+Try {
+    $privilege = [Alphaleonis.Win32.Security.Privilege]::Backup
+    $privilegeEnabler = New-Object Alphaleonis.Win32.Security.PrivilegeEnabler($privilege)
+
+    Dir -Recurse C:\Windows\CSC
+}
+Finally {
+    If ($Null -ne $privilegeEnabler) {
+        $privilegeEnabler.Dispose()
+    }
+}
+</code></pre>
+<h3 id="get-aggregated-properties-including-size-of-a-folder">Get aggregated properties, including size, of a folder</h3>
+<pre><code> # Set directory enumeration options.
+ PS C:\&gt; $dirEnumOptions = [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::Recursive -bor
+                           [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::SkipReparsePoints -bor
+                           [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::ContinueOnException
+
+ PS C:\&gt; $pathFormat = [Alphaleonis.Win32.Filesystem.PathFormat]::FullPath
+
+ # Get aggregated properties, including size, of a folder.
+ PS C:\&gt; $properties = [Alphaleonis.Win32.Filesystem.Directory]::GetProperties('C:\', $dirEnumOptions, $pathFormat)
+
+ PS C:\&gt; $properties.Size
+ 188647966064
+
+ # Show all aggregated properties for the folder.
+ PS C:\&gt; $properties | Format-Table -AutoSize
+
+ Key                      Value
+ ---                      -----
+ Archive                 304390
+ Compressed                3364
+ Device                       0
+ Directory                65178
+ Encrypted                   10
+ Hidden                    3960
+ IntegrityStream              0
+ Normal                   20954
+ NoScrubData                  0
+ NotContentIndexed         5555
+ Offline                      0
+ ReadOnly                  8278
+ ReparsePoint                 0
+ SparseFile                   1
+ System                    2493
+ Temporary                    6
+ File                    325431
+ Total                   390609
+ Size              188647966064
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/docs/articles/powershell/examples.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

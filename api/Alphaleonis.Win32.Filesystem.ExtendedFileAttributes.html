@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Enum ExtendedFileAttributes
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Enum ExtendedFileAttributes
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes">
+  
+  
+  <h1 id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes" data-uid="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes" class="text-break">Enum ExtendedFileAttributes
+  </h1>
+  <div class="markdown level0 summary"><p>Specifies how the operating system should open a file.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Filesystem.html">Alphaleonis.Win32.Filesystem</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Flags]
+public enum ExtendedFileAttributes</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Archive">Archive</td>
+        <td><p>The file should be archived. Applications use this attribute to mark files for backup or removal.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_BackupSemantics">BackupSemantics</td>
+        <td><p>The file is being opened or created for a backup or restore operation. The system ensures that the calling process overrides file security checks when the process has SE_BACKUP_NAME and SE_RESTORE_NAME privileges. You must set this flag to obtain a handle to a directory. A directory handle can be passed to some functions instead of a file handle.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Compressed">Compressed</td>
+        <td><p>A file or directory that is compressed. For a file, all of the data in the file is compressed. For a directory, compression is the default for newly created files and subdirectories.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_DeleteOnClose">DeleteOnClose</td>
+        <td><p>The file is to be deleted immediately after all of its handles are closed, which includes the specified handle and any other open or duplicated handles. If there are existing open handles to a file, the call fails unless they were all opened with the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare#System_IO_FileShare_Delete">Delete</a> share mode. Subsequent open requests for the file fail, unless the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileshare#System_IO_FileShare_Delete">Delete</a> share mode is specified.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Device">Device</td>
+        <td><p>Reserved for future use.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Directory">Directory</td>
+        <td><p>The handle that identifies a directory.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Encrypted">Encrypted</td>
+        <td><p>The file or directory is encrypted. For a file, this means that all data in the file is encrypted. For a directory, this means that encryption is the default for newly created files and subdirectories.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_FirstPipeInstance">FirstPipeInstance</td>
+        <td><p>...</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Hidden">Hidden</td>
+        <td><p>The file is hidden. Do not include it in an ordinary directory listing.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_IntegrityStream">IntegrityStream</td>
+        <td><p>The directory or user data stream is configured with integrity (only supported on ReFS volumes). It is not included in an ordinary directory listing. The integrity setting persists with the file if it's renamed. If a file is copied the destination file will have integrity set if either the source file or destination directory have integrity set.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_NoBuffering">NoBuffering</td>
+        <td><p>There are strict requirements for successfully working with files opened with the <a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html#Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_NoBuffering">NoBuffering</a> flag, for details see the section on &quot;File Buffering&quot; in the online MSDN documentation.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_None">None</td>
+        <td><p>If you pass <a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html#Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_None">None</a>, the set of attributes is unspecified. <a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html#Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Normal">Normal</a> explicitly sets no attributes.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Normal">Normal</td>
+        <td><p>The file does not have other attributes set. This attribute is valid only if used alone.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_NoScrubData">NoScrubData</td>
+        <td><p>The user data stream not to be read by the background data integrity scanner (AKA scrubber). When set on a directory it only provides inheritance. This flag is only supported on Storage Spaces and ReFS volumes. It is not included in an ordinary directory listing.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_NotContentIndexed">NotContentIndexed</td>
+        <td><p>The file or directory is not to be indexed by the content indexing service.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Offline">Offline</td>
+        <td><p>The data of a file is not immediately available. This attribute indicates that file data is physically moved to offline storage. This attribute is used by Remote Storage, the hierarchical storage management software. Applications should not arbitrarily change this attribute.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_OpenNoRecall">OpenNoRecall</td>
+        <td><p>The file data is requested, but it should continue to be located in remote storage. It should not be transported back to local storage. This flag is for use by remote storage systems.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_OpenReparsePoint">OpenReparsePoint</td>
+        <td><p>Normal reparse point processing will not occur; an attempt to open the reparse point will be made. When a file is opened, a file handle is returned, whether or not the filter that controls the reparse point is operational. See MSDN documentation for more information.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Overlapped">Overlapped</td>
+        <td><p>The file or device is being opened or created for asynchronous I/O.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_PosixSemantics">PosixSemantics</td>
+        <td><p>Access will occur according to POSIX rules. This includes allowing multiple files with names, differing only in case, for file systems that support that naming. Use care when using this option, because files created with this flag may not be accessible by applications that are written for MS-DOS or 16-bit Windows.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_RandomAccess">RandomAccess</td>
+        <td><p>Access is intended to be random. The system can use this as a hint to optimize file caching.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_ReadOnly">ReadOnly</td>
+        <td><p>The file is read only. Applications can read the file, but cannot write to or delete it.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_ReparsePoint">ReparsePoint</td>
+        <td><p>A file or directory that has an associated reparse point, or a file that is a symbolic link.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_SequentialScan">SequentialScan</td>
+        <td><p>Access is intended to be sequential from beginning to end. The system can use this as a hint to optimize file caching.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_SparseFile">SparseFile</td>
+        <td><p>A file that is a sparse file.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_System">System</td>
+        <td><p>The file is part of or used exclusively by an operating system.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_Temporary">Temporary</td>
+        <td><p>The file is being used for temporary storage.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_ExtendedFileAttributes_WriteThrough">WriteThrough</td>
+        <td><p>Write operations will not go through any intermediate cache, they will go directly to disk.</p>
+</td>
+      </tr>
+    </tbody>
+  </thead></thead></table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_ExtendedFileAttributes.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.ExtendedFileAttributes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Structures, Enumerations/ExtendedFileAttributes.cs/#L29" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

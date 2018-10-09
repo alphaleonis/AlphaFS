@@ -1,0 +1,854 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Shell32
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Shell32
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Filesystem.Shell32">
+  
+  
+  <h1 id="Alphaleonis_Win32_Filesystem_Shell32" data-uid="Alphaleonis.Win32.Filesystem.Shell32" class="text-break">Class Shell32
+  </h1>
+  <div class="markdown level0 summary"><p>Provides access to a file system object, using Shell32.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Shell32</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Filesystem.html">Alphaleonis.Win32.Filesystem</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Filesystem_Shell32_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class Shell32</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_DestroyIcon_System_IntPtr_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.DestroyIcon(System.IntPtr)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L466">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_DestroyIcon_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.DestroyIcon*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_DestroyIcon_System_IntPtr_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.DestroyIcon(System.IntPtr)">DestroyIcon(IntPtr)</h4>
+  <div class="markdown level1 summary"><p>Destroys an icon and frees any memory the icon occupied.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void DestroyIcon(IntPtr iconHandle)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
+        <td><span class="parametername">iconHandle</span></td>
+        <td><p>An <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">IntPtr</a> handle to an icon.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetFileAssociation_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetFileAssociation(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L476">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetFileAssociation_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileAssociation*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileAssociation_System_String_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileAssociation(System.String)">GetFileAssociation(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the file or protocol that is associated with <code data-dev-comment-type="paramref" class="paramref">path</code> from the registry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static string GetFileAssociation(string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A path to the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The associated file- or protocol-related string from the registry or <code>string.Empty</code> if no association can be found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetFileContentType_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetFileContentType(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L486">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetFileContentType_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileContentType*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileContentType_System_String_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileContentType(System.String)">GetFileContentType(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the content-type that is associated with <code data-dev-comment-type="paramref" class="paramref">path</code> from the registry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static string GetFileContentType(string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A path to the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The associated file- or protocol-related content-type from the registry or <code>string.Empty</code> if no association can be found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetFileDefaultIcon_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetFileDefaultIcon(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L496">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetFileDefaultIcon_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileDefaultIcon*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileDefaultIcon_System_String_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileDefaultIcon(System.String)">GetFileDefaultIcon(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the default icon that is associated with <code data-dev-comment-type="paramref" class="paramref">path</code> from the registry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static string GetFileDefaultIcon(string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A path to the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The associated file- or protocol-related default icon from the registry or <code>string.Empty</code> if no association can be found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetFileFriendlyAppName_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetFileFriendlyAppName(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L506">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetFileFriendlyAppName_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileFriendlyAppName*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileFriendlyAppName_System_String_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileFriendlyAppName(System.String)">GetFileFriendlyAppName(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the friendly application name that is associated with <code data-dev-comment-type="paramref" class="paramref">path</code> from the registry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static string GetFileFriendlyAppName(string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A path to the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The associated file- or protocol-related friendly application name from the registry or <code>string.Empty</code> if no association can be found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetFileFriendlyDocName_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetFileFriendlyDocName(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L516">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetFileFriendlyDocName_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileFriendlyDocName*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileFriendlyDocName_System_String_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileFriendlyDocName(System.String)">GetFileFriendlyDocName(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the friendly document name that is associated with <code data-dev-comment-type="paramref" class="paramref">path</code> from the registry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static string GetFileFriendlyDocName(string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A path to the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The associated file- or protocol-related friendly document name from the registry or <code>string.Empty</code> if no association can be found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetFileIcon_System_String_Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetFileIcon(System.String%2CAlphaleonis.Win32.Filesystem.Shell32.FileAttributes)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L534">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetFileIcon_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileIcon*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileIcon_System_String_Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileIcon(System.String,Alphaleonis.Win32.Filesystem.Shell32.FileAttributes)">GetFileIcon(String, Shell32.FileAttributes)</h4>
+  <div class="markdown level1 summary"><p>Gets an <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">IntPtr</a> handle to the Shell icon that represents the file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static IntPtr GetFileIcon(string filePath, Shell32.FileAttributes iconAttributes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">filePath</span></td>
+        <td><p>The path to the file system object which should not exceed maximum path length. Both absolute and
+relative paths are valid.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileAttributes.html">Shell32.FileAttributes</a></td>
+        <td><span class="parametername">iconAttributes</span></td>
+        <td><p>Icon size <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileAttributes.html#Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_SmallIcon">SmallIcon</a> or <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileAttributes.html#Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_LargeIcon">LargeIcon</a>. Can also be combined
+with <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileAttributes.html#Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_AddOverlays">AddOverlays</a> and others.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">IntPtr</a></td>
+        <td><p>An <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.intptr">IntPtr</a> handle to the Shell icon that represents the file, or IntPtr.Zero on failure.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileIcon_System_String_Alphaleonis_Win32_Filesystem_Shell32_FileAttributes__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Caller is responsible for destroying this handle with DestroyIcon() when no longer needed.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetFileInfo_System_String_System_IO_FileAttributes_Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_System_Boolean_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetFileInfo(System.String%2CSystem.IO.FileAttributes%2CAlphaleonis.Win32.Filesystem.Shell32.FileAttributes%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L559">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetFileInfo_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileInfo*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileInfo_System_String_System_IO_FileAttributes_Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_System_Boolean_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileInfo(System.String,System.IO.FileAttributes,Alphaleonis.Win32.Filesystem.Shell32.FileAttributes,System.Boolean)">GetFileInfo(String, FileAttributes, Shell32.FileAttributes, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static Shell32.FileInfo GetFileInfo(string filePath, FileAttributes attributes, Shell32.FileAttributes fileAttributes, bool continueOnException)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">filePath</span></td>
+        <td><p>The path to the file system object which should not exceed the maximum path length. Both absolute and relative paths are valid.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileattributes">FileAttributes</a></td>
+        <td><span class="parametername">attributes</span></td>
+        <td><p>A <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.fileattributes">FileAttributes</a> attribute.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileAttributes.html">Shell32.FileAttributes</a></td>
+        <td><span class="parametername">fileAttributes</span></td>
+        <td><p>One ore more <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileAttributes.html">Shell32.FileAttributes</a> attributes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">continueOnException</span></td>
+        <td><p><code>true</code> suppress any Exception that might be thrown as a result from a failure,</p>
+<p>such as ACLs protected directories or non-accessible reparse points.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html">Shell32.FileInfo</a></td>
+        <td><p>A <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html">Shell32.FileInfo</a> struct instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileInfo_System_String_System_IO_FileAttributes_Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>You should call this function from a background thread.</p>
+<p>Failure to do so could cause the UI to stop responding.</p>
+<p>Unicode path are supported.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetFileOpenWithAppName_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetFileOpenWithAppName(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L589">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetFileOpenWithAppName_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileOpenWithAppName*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileOpenWithAppName_System_String_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileOpenWithAppName(System.String)">GetFileOpenWithAppName(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the &quot;Open With&quot; command that is associated with <code data-dev-comment-type="paramref" class="paramref">path</code> from the registry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static string GetFileOpenWithAppName(string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A path to the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The associated file- or protocol-related &quot;Open With&quot; command from the registry or <code>string.Empty</code> if no association can be found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetFileVerbCommand_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetFileVerbCommand(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L599">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetFileVerbCommand_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileVerbCommand*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetFileVerbCommand_System_String_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetFileVerbCommand(System.String)">GetFileVerbCommand(String)</h4>
+  <div class="markdown level1 summary"><p>Gets the Shell command that is associated with <code data-dev-comment-type="paramref" class="paramref">path</code> from the registry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static string GetFileVerbCommand(string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A path to the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The associated file- or protocol-related Shell command from the registry or <code>string.Empty</code> if no association can be found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetShell32Info_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L569">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetShell32Info_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetShell32Info_System_String_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info(System.String)">GetShell32Info(String)</h4>
+  <div class="markdown level1 summary"><p>Retrieves an instance of <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32Info.html">Shell32Info</a> containing information about the specified file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static Shell32Info GetShell32Info(string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A path to the file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32Info.html">Shell32Info</a></td>
+        <td><p>A <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32Info.html">Shell32Info</a> class instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_GetShell32Info_System_String_Alphaleonis_Win32_Filesystem_PathFormat_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info(System.String%2CAlphaleonis.Win32.Filesystem.PathFormat)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L579">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_GetShell32Info_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_GetShell32Info_System_String_Alphaleonis_Win32_Filesystem_PathFormat_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info(System.String,Alphaleonis.Win32.Filesystem.PathFormat)">GetShell32Info(String, PathFormat)</h4>
+  <div class="markdown level1 summary"><p>Retrieves an instance of <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32Info.html">Shell32Info</a> containing information about the specified file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static Shell32Info GetShell32Info(string path, PathFormat pathFormat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>A path to the file.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.PathFormat.html">PathFormat</a></td>
+        <td><span class="parametername">pathFormat</span></td>
+        <td><p>Indicates the format of the path parameter(s).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32Info.html">Shell32Info</a></td>
+        <td><p>A <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32Info.html">Shell32Info</a> class instance.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_PathFileExists_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.PathFileExists(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L656">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_Shell32_PathFileExists_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.PathFileExists*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_Shell32_PathFileExists_System_String_" data-uid="Alphaleonis.Win32.Filesystem.Shell32.PathFileExists(System.String)">PathFileExists(String)</h4>
+  <div class="markdown level1 summary"><p>Determines whether a path to a file system object such as a file or folder is valid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public static bool PathFileExists(string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The full path of maximum length the maximum path length to the object to verify.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p><code>true</code> if the file exists; <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L32" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

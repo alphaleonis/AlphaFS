@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Introduction | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Introduction | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="introduction">Introduction</h1>
+
+<p>The file system support in .NET is pretty good for most uses. However there are a few shortcomings, which this library tries to alleviate. The most notable deficiency of the standard .NET <strong>System.IO</strong> is the lack of support of advanced NTFS features, most notably extended length path support (eg. file/directory paths longer than 260 characters).</p>
+<h2 id="feature-highlights">Feature Highlights</h2>
+<ul>
+<li>Support for extended length paths (longer than 260 characters)</li>
+<li>Creating Junctions/Hardlinks</li>
+<li>Accessing hidden volumes</li>
+<li>Enumeration of volumes</li>
+<li>Transactional file operations</li>
+<li>Support for NTFS Alternate Data Streams (files/folders)</li>
+<li>Accessing network resources (SMB/DFS)</li>
+<li>Create and access folders/files that have leading/trailing space(s) in their name</li>
+<li>Folder/file enumerator supporting custom filtering and error reporting/recovery (access denied exceptions)</li>
+<li>...and much more!</li>
+</ul>
+<h2 id="what-does-alphafs-provide">What does AlphaFS provide?</h2>
+<p>AlphaFS provides a namespace (<code>Alphaleonis.Win32.Filesystem</code>) containing a number of classes. Most notable
+are replications of the <code>System.IO.Path</code>, <code>System.IO.File</code>, <code>System.IO.FileInfo</code>, <code>System.IO.Directory</code> and <code>System.IO.DirectoryInfo</code>, all with support for the extended-length paths (up to 32.000 chars), full UNC support,
+recursive file enumerations, native backups and manipulations with advanced flags and options.
+They also contain extensions to these, and there are many more features for several functions.</p>
+<p>When only  these <code>System.IO</code> classes are used, it is just a matter of replacing <code>using System.IO;</code>
+with <code>using Alphaleonis.Win32.Filesystem;</code>, which makes AlphaFS a <strong>true</strong> drop-in replacement.</p>
+<p>Another thing AlphaFS brings to the table is support for transactional NTFS (TxF). Almost every method in
+these classes exist in two versions. One normal, and one that can work with transactions, more specifically the
+kernel transaction manager. This means that file operations can be performed using the simple, lightweight KTM
+on NTFS file systems, through .NET, using the interface of the standard classes we are all used to.</p>
+<p>AlphaFS also contains some NTFS security related functionality (in <code>Alphaleonis.Win32.Security</code>), providing
+the ability to enable token privileges for a user, which may be necessary for eg. changing ownership of a file.</p>
+<p>The <code>Alphaleonis.Win32.Network</code> namespace together with the <code>Alphaleonis.Win32.Network.Host</code> class offers
+network functionality to connect to SMB/DFS resources and easily access files and folders on the network,
+all with extended-length paths support.</p>
+<p>The library is Open Source, licensed under the <a href="https://github.com/alphaleonis/AlphaFS/blob/master/LICENSE.md">MIT license</a>.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/docs/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

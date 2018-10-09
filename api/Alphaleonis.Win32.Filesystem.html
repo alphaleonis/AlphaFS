@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Alphaleonis.Win32.Filesystem
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Alphaleonis.Win32.Filesystem
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Filesystem">
+  
+  <h1 id="Alphaleonis_Win32_Filesystem" data-uid="Alphaleonis.Win32.Filesystem" class="text-break">Namespace Alphaleonis.Win32.Filesystem
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual">
+<p>The <code>Filesystem</code> namespace contains classes to access and work with the local filesystem. Many of the classes in this namespace are replicas of the ones available in the System.IO namespace, but with added functionality. All methods in this namespace accept long windows unicode paths (i.e. paths starting with <code>\\?\</code>).</p>
+<p>Additional classes and methods are provided to provide more advanced functionality than that of <code>System.IO</code>.</p>
+</div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.AlreadyExistsException.html">AlreadyExistsException</a></h4>
+      <section><p>[AlphaFS] The exception that is thrown when an attempt to create a file or directory that already exists was made.
+Both <code>ERROR_ALREADY_EXISTS</code> and <code>ERROR_FILE_EXISTS</code> can cause this Exception.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a></h4>
+      <section><p>The <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupFileStream.html">BackupFileStream</a> provides access to data associated with a specific file or directory, including security information and alternative data streams, for backup and restore operations.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.BackupStreamInfo.html">BackupStreamInfo</a></h4>
+      <section><p>The <a class="xref" href="Alphaleonis.Win32.Filesystem.BackupStreamInfo.html">BackupStreamInfo</a> structure contains stream header data.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.ByHandleFileInfo.html">ByHandleFileInfo</a></h4>
+      <section><p>Contains information that the GetFileInformationByHandle function retrieves.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.CopyMoveResult.html">CopyMoveResult</a></h4>
+      <section><p>Class for CopyMoveResult that contains the results for the Copy or Move action.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Device.html">Device</a></h4>
+      <section><p>Provides static methods to retrieve device resource information from a local or remote host.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DeviceInfo.html">DeviceInfo</a></h4>
+      <section><p>Provides access to information of a device, on a local or remote host.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DeviceNotReadyException.html">DeviceNotReadyException</a></h4>
+      <section><p>[AlphaFS] The requested operation could not be completed because the device is not ready.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Directory.html">Directory</a></h4>
+      <section><p>Exposes static methods for creating, moving, and enumerating through directories and subdirectories.</p>
+<p>This class cannot be inherited.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters.html">DirectoryEnumerationFilters</a></h4>
+      <section><p>[AlphaFS] Specifies a set of custom filters to be used with enumeration methods of <a class="xref" href="Alphaleonis.Win32.Filesystem.Directory.html">Directory</a>, e.g., <a class="xref" href="Alphaleonis.Win32.Filesystem.Directory.html#Alphaleonis_Win32_Filesystem_Directory_EnumerateDirectories_System_String_">EnumerateDirectories(String)</a>, <a class="xref" href="Alphaleonis.Win32.Filesystem.Directory.html#Alphaleonis_Win32_Filesystem_Directory_EnumerateFiles_System_String_">EnumerateFiles(String)</a>, or <a class="xref" href="Alphaleonis.Win32.Filesystem.Directory.html#Alphaleonis_Win32_Filesystem_Directory_EnumerateFileSystemEntries_System_String_">EnumerateFileSystemEntries(String)</a>.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DirectoryInfo.html">DirectoryInfo</a></h4>
+      <section><p>Exposes instance methods for creating, moving, and enumerating through directories and subdirectories. This class cannot be inherited.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException.html">DirectoryNotEmptyException</a></h4>
+      <section><p>[AlphaFS] The operation could not be completed because the directory is not empty.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DirectoryReadOnlyException.html">DirectoryReadOnlyException</a></h4>
+      <section><p>[AlphaFS] The operation could not be completed because the directory is read-only.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DiskSpaceInfo.html">DiskSpaceInfo</a></h4>
+      <section><p>Retrieves information about the amount of space that is available on a disk volume, which is the total amount of space,
+the total amount of free space, and the total amount of free space available to the user that is associated with the calling thread.</p>
+<p>This class cannot be inherited.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DriveInfo.html">DriveInfo</a></h4>
+      <section><p>Provides access to information on a local or remote drive.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.File.html">File</a></h4>
+      <section><p>Provides static methods for the creation, copying, deletion, moving, and opening of a single file, and aids in the creation of FileStream objects.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.FileIdBothDirectoryInfo.html">FileIdBothDirectoryInfo</a></h4>
+      <section><p>[AlphaFS] Contains information about files in the specified directory. Used for directory handles.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.FileInfo.html">FileInfo</a></h4>
+      <section><p>Provides properties and instance methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.filestream">FileStream</a> objects. This class cannot be inherited.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.FileReadOnlyException.html">FileReadOnlyException</a></h4>
+      <section><p>[AlphaFS] The operation could not be completed because the file is read-only.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemEntryInfo.html">FileSystemEntryInfo</a></h4>
+      <section><p>Represents information about a file system entry.</p>
+<p>This class cannot be inherited.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.FileSystemInfo.html">FileSystemInfo</a></h4>
+      <section><p>Provides the base class for both <a class="xref" href="Alphaleonis.Win32.Filesystem.FileInfo.html">FileInfo</a> and <a class="xref" href="Alphaleonis.Win32.Filesystem.DirectoryInfo.html">DirectoryInfo</a> objects.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.InvalidTransactionException.html">InvalidTransactionException</a></h4>
+      <section><p>[AlphaFS] The transaction handle associated with this operation is not valid.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.KernelTransaction.html">KernelTransaction</a></h4>
+      <section><p>A KTM transaction object for use with the transacted operations in <a class="xref" href="Alphaleonis.Win32.Filesystem.html">Alphaleonis.Win32.Filesystem</a>.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.LinkTargetInfo.html">LinkTargetInfo</a></h4>
+      <section><p>Information about the target of a symbolic link or mount point.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.NotAReparsePointException.html">NotAReparsePointException</a></h4>
+      <section><p>[AlphaFS] The file or directory was not a reparse point.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.NotSameDeviceException.html">NotSameDeviceException</a></h4>
+      <section><p>[AlphaFS] The exception that is thrown when an attempt perform an operation across difference devices when this is not supported.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Path.html">Path</a></h4>
+      <section><p>Performs operations on String instances that contain file or directory path information. These operations are performed in a cross-platform manner.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.SafeFindFileHandle.html">SafeFindFileHandle</a></h4>
+      <section><p>Represents a wrapper class for a handle used by the FindFirstFile/FindNextFile Win32 API functions.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.SafeFindVolumeHandle.html">SafeFindVolumeHandle</a></h4>
+      <section><p>Represents a wrapper class for a handle used by the FindFirstVolume/FindNextVolume methods of the Win32 API.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.html">Shell32</a></h4>
+      <section><p>Provides access to a file system object, using Shell32.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32Info.html">Shell32Info</a></h4>
+      <section><p>Contains Shell32 information about a file.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.SymbolicLinkTargetInfo.html">SymbolicLinkTargetInfo</a></h4>
+      <section><p>Represents information about a symbolic link.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.TransactionalConflictException.html">TransactionalConflictException</a></h4>
+      <section><p>[AlphaFS] The function attempted to use a name that is reserved for use by another transaction.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.TransactionAlreadyAbortedException.html">TransactionAlreadyAbortedException</a></h4>
+      <section><p>[AlphaFS] It is too late to perform the requested operation, since the Transaction has already been aborted.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.TransactionAlreadyCommittedException.html">TransactionAlreadyCommittedException</a></h4>
+      <section><p>[AlphaFS] It is too late to perform the requested operation, since the Transaction has already been committed.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.TransactionException.html">TransactionException</a></h4>
+      <section><p>[AlphaFS] The exception that is thrown when an attempt to create a file or directory that already exists was made.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.UnrecognizedReparsePointException.html">UnrecognizedReparsePointException</a></h4>
+      <section><p>[AlphaFS] The function attempted to use a name that is reserved for use by another transaction.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.UnsupportedRemoteTransactionException.html">UnsupportedRemoteTransactionException</a></h4>
+      <section><p>[AlphaFS] The remote server or share does not support transacted file operations.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Volume.html">Volume</a></h4>
+      <section><p>[AlphaFS] Static class providing utility methods for working with Microsoft Windows devices and volumes.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.VolumeInfo.html">VolumeInfo</a></h4>
+      <section><p>Contains information about a filesystem Volume.</p>
+</section>
+    <h3 id="structs">Structs
+  </h3>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.AlternateDataStreamInfo.html">AlternateDataStreamInfo</a></h4>
+      <section><p>Information about an alternate data stream.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.FileIdInfo.html">FileIdInfo</a></h4>
+      <section><p>Contains information that the GetFileInformationByHandle function retrieves.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html">Shell32.FileInfo</a></h4>
+      <section><p>SHFILEINFO structure, contains information about a file system object.</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.CopyMoveProgressCallbackReason.html">CopyMoveProgressCallbackReason</a></h4>
+      <section><p>Used by CopyFileXxx and MoveFileXxx. The reason that <a class="xref" href="Alphaleonis.Win32.Filesystem.CopyMoveProgressRoutine.html">CopyMoveProgressRoutine</a> was called.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.CopyMoveProgressResult.html">CopyMoveProgressResult</a></h4>
+      <section><p>Used by CopyFileXxx and MoveFileXxx. The <a class="xref" href="Alphaleonis.Win32.Filesystem.CopyMoveProgressRoutine.html">CopyMoveProgressRoutine</a> function should return one of the following values.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.CopyOptions.html">CopyOptions</a></h4>
+      <section><p>Flags that specify how a file or directoryis to be copied.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DeviceGuid.html">DeviceGuid</a></h4>
+      <section><p>System-Defined Device Interface Classes</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.html">DirectoryEnumerationOptions</a></h4>
+      <section><p>[AlphaFS] Directory enumeration options, flags that specify how a directory is to be enumerated.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.DosDeviceAttributes.html">DosDeviceAttributes</a></h4>
+      <section><p>Defines the controllable aspects of the Volume.DefineDosDevice() method.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.ExtendedFileAttributes.html">ExtendedFileAttributes</a></h4>
+      <section><p>Specifies how the operating system should open a file.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.FileEncryptionStatus.html">FileEncryptionStatus</a></h4>
+      <section><p>Represents the encryption status of the specified file.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.FinalPathFormats.html">FinalPathFormats</a></h4>
+      <section><p>Determines the format to convert a path to using <a class="xref" href="Alphaleonis.Win32.Filesystem.Path.html#Alphaleonis_Win32_Filesystem_Path_GetFinalPathNameByHandle_Microsoft_Win32_SafeHandles_SafeFileHandle_">GetFinalPathNameByHandle(SafeFileHandle)</a>.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.GetFullPathOptions.html">GetFullPathOptions</a></h4>
+      <section><p>A bitfield of flags for specifying options for various internal operations that convert paths to full paths.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.MoveOptions.html">MoveOptions</a></h4>
+      <section><p>Used by MoveFileXxx.Flags that specify how a file or directory is to be moved.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.PathFormat.html">PathFormat</a></h4>
+      <section><p>Indicates the format of a path passed to a method.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.ReparsePointTag.html">ReparsePointTag</a></h4>
+      <section><p>Enumeration specifying the different reparse point tags.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.AssociationAttributes.html">Shell32.AssociationAttributes</a></h4>
+      <section><p>Provides information for the IQueryAssociations interface methods, used by Shell32.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.AssociationString.html">Shell32.AssociationString</a></h4>
+      <section><p>ASSOCSTR enumeration - Used by the AssocQueryString() function to define the type of string that is to be returned.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileAttributes.html">Shell32.FileAttributes</a></h4>
+      <section><p>Shell32 FileAttributes structure, used to retrieve the different types of a file system object.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.GetAttributesOf.html">Shell32.GetAttributesOf</a></h4>
+      <section><p>SFGAO - Attributes that can be retrieved from a file system object.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.UrlType.html">Shell32.UrlType</a></h4>
+      <section><p>Used by method UrlIs() to define a URL type.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.StreamAttribute.html">StreamAttribute</a></h4>
+      <section><p>Attributes of data to facilitate cross-operating system transfer. This member can be one or more of the following values.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.StreamId.html">StreamId</a></h4>
+      <section><p>The type of the data contained in the backup stream. This member can be one of the following values.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.html">SymbolicLinkTarget</a></h4>
+      <section><p>Indicates whether the link target is a file or directory.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.SymbolicLinkType.html">SymbolicLinkType</a></h4>
+      <section><p>Specifies the type of a symbolic link.</p>
+</section>
+    <h3 id="delegates">Delegates
+  </h3>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.CopyMoveProgressRoutine.html">CopyMoveProgressRoutine</a></h4>
+      <section><p>Callback used by CopyFileXxx and MoveFileXxx to report progress about the copy/move operation.</p>
+</section>
+      <h4><a class="xref" href="Alphaleonis.Win32.Filesystem.ErrorHandler.html">ErrorHandler</a></h4>
+      <section><p>[AlphaFS] Represents the method that will handle an error raised during retrieving file system entries.</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/docs/apidoc/namespaces/Alphaleonis.Win32.FileSystem.md/#L2" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

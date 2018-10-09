@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Enum Shell32.FileAttributes
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Enum Shell32.FileAttributes
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Filesystem.Shell32.FileAttributes">
+  
+  
+  <h1 id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes" data-uid="Alphaleonis.Win32.Filesystem.Shell32.FileAttributes" class="text-break">Enum Shell32.FileAttributes
+  </h1>
+  <div class="markdown level0 summary"><p>Shell32 FileAttributes structure, used to retrieve the different types of a file system object.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Filesystem.html">Alphaleonis.Win32.Filesystem</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Flags]
+public enum FileAttributes</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_AddOverlays">AddOverlays</td>
+        <td><p>0x000000020 - Apply the appropriate overlays to the file's icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_Attributes">Attributes</td>
+        <td><p>0x000000800 - Retrieve the item attributes. The attributes are copied to the <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html#Alphaleonis_Win32_Filesystem_Shell32_FileInfo_Attributes">Attributes</a> member of the structure.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_AttributesSpecified">AttributesSpecified</td>
+        <td><p>0x000020000 - Modify <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileAttributes.html#Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_Attributes">Attributes</a> to indicate that <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html#Alphaleonis_Win32_Filesystem_Shell32_FileInfo_Attributes">Attributes</a> contains specific attributes that are desired.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_DisplayName">DisplayName</td>
+        <td><p>0x000000200 - Retrieve the display name for the file. The name is copied to the <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html#Alphaleonis_Win32_Filesystem_Shell32_FileInfo_DisplayName">DisplayName</a> member of the structure.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_ExeType">ExeType</td>
+        <td><p>0x000002000 - Retrieve the type of the executable file if pszPath identifies an executable file.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_Icon">Icon</td>
+        <td><p>0x000000100 - Retrieve the handle to the icon that represents the file and the index of the icon within the system image list. The handle is copied to the <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html#Alphaleonis_Win32_Filesystem_Shell32_FileInfo_IconHandle">IconHandle</a> member of the structure, and the index is copied to the <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html#Alphaleonis_Win32_Filesystem_Shell32_FileInfo_IconIndex">IconIndex</a> member.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_IconLocation">IconLocation</td>
+        <td><p>0x000001000 - Retrieve the name of the file that contains the icon representing the file specified by pszPath. The name of the file containing the icon is copied to the <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html#Alphaleonis_Win32_Filesystem_Shell32_FileInfo_DisplayName">DisplayName</a> member of the structure.  The icon's index is copied to that structure's <a class="xref" href="Alphaleonis.Win32.Filesystem.Shell32.FileInfo.html#Alphaleonis_Win32_Filesystem_Shell32_FileInfo_IconIndex">IconIndex</a> member.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_LargeIcon">LargeIcon</td>
+        <td><p>0x000000000 - Get file system object large icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_LinkOverlay">LinkOverlay</td>
+        <td><p>0x000008000 - Add the link overlay to the file's icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_OpenIcon">OpenIcon</td>
+        <td><p>0x000000002 - Get file system object open icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_OverlayIndex">OverlayIndex</td>
+        <td><p>0x000000040 - Returns the index of the overlay icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_Pidl">Pidl</td>
+        <td><p>0x000000008 - Get file system object by its PIDL.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_Selected">Selected</td>
+        <td><p>0x000010000 - Blend the file's icon with the system highlight color.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_ShellIconSize">ShellIconSize</td>
+        <td><p>0x000000004 - Get file system object Shell-sized icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_SmallIcon">SmallIcon</td>
+        <td><p>0x000000001 - Get file system object small icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_SysIconIndex">SysIconIndex</td>
+        <td><p>0x000004000 - Retrieve the index of a system image list icon.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_TypeName">TypeName</td>
+        <td><p>0x000000400 - Retrieve the string that describes the file's type.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Filesystem_Shell32_FileAttributes_UseFileAttributes">UseFileAttributes</td>
+        <td><p>0x000000010 - Indicates that the given file should not be accessed. Rather, it should act as if the given file exists and use the supplied attributes.</p>
+</td>
+      </tr>
+    </tbody>
+  </thead></thead></table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_Shell32_FileAttributes.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.Shell32.FileAttributes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Filesystem/Shell32.cs/#L228" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

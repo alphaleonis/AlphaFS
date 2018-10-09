@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Enum DfsPropertyFlags
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Enum DfsPropertyFlags
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Network.DfsPropertyFlags">
+  
+  
+  <h1 id="Alphaleonis_Win32_Network_DfsPropertyFlags" data-uid="Alphaleonis.Win32.Network.DfsPropertyFlags" class="text-break">Enum DfsPropertyFlags
+  </h1>
+  <div class="markdown level0 summary"><p>A set of bit flags that describe specific properties of a DFS namespace, root, or link.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Network.html">Alphaleonis.Win32.Network</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Network_DfsPropertyFlags_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Flags]
+public enum DfsPropertyFlags</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_DfsPropertyFlags_AccessBasedDirectoryEnumeration">AccessBasedDirectoryEnumeration</td>
+        <td><p>DFS_PROPERTY_FLAG_ABDE</p>
+<p>Scope: Domain-based DFS roots and stand-alone DFS roots.</p>
+<p>When this flag is set, Access-Based Directory Enumeration (ABDE) mode support is enabled on the entire DFS root target share of the DFS namespace.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_DfsPropertyFlags_ClusterEnabled">ClusterEnabled</td>
+        <td><p>DFS_PROPERTY_FLAG_CLUSTER_ENABLED</p>
+<p>Scope: Stand-alone DFS roots and links only.</p>
+<p>The DFS root is clustered to provide high availability for storage failover.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_DfsPropertyFlags_InsiteReferrals">InsiteReferrals</td>
+        <td><p>DFS_PROPERTY_FLAG_INSITE_REFERRALS</p>
+<p>
+  Scope: Domain roots, stand-alone roots, and links.
+  If this flag is set at the DFS root, it applies to all links; otherwise, the value of this flag is considered for each individual link.
+</p>
+<p>
+  When this flag is set, a DFS referral response from a DFS server for a DFS root or link with the &quot;INSITE&quot; option enabled contains only
+  those targets which are in the same site as the DFS client requesting the referral.
+  Targets in the two global priority classes are always returned, regardless of their site location.
+</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_DfsPropertyFlags_None">None</td>
+        <td><p>No property flag.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_DfsPropertyFlags_RootScalability">RootScalability</td>
+        <td><p>DFS_PROPERTY_FLAG_ROOT_SCALABILITY</p>
+<p>
+  Scope: The entire DFS namespace for a domain-based DFS namespace only.
+</p>
+<p>
+  By default, a DFS root target server polls the PDS to detect changes to the DFS metadata.
+  To prevent heavy server load on the PDC, root scalability can be enabled for the DFS namespace.
+  Setting this flag will cause the DFS server to poll the nearest domain controller instead of the PDC for DFS metadata changes for the common namespace.
+  Note that any changes made to the metadata must still occur on the PDC, however.
+</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_DfsPropertyFlags_SiteCosting">SiteCosting</td>
+        <td><p>DFS_PROPERTY_FLAG_SITE_COSTING</p>
+<p>
+  Scope: The entire DFS namespace for both domain-based and stand-alone DFS namespaces.
+</p>
+<p>
+  By default, targets returned in a referral response from a DFS server to a DFS client for a DFS root or link
+  consists of two groups: targets in the same site as the client, and targets outside the site.
+</p>
+<p>
+  If site-costing is enabled for the Active Directory, the response can have more than two groups,
+  with each group containing targets with the same site cost for the specific DFS client requesting the referral.
+  The groups are ordered by increasing site cost. For more information about how site-costing is used to prioritize targets.
+</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_DfsPropertyFlags_TargetFailback">TargetFailback</td>
+        <td><p>DFS_PROPERTY_FLAG_TARGET_FAILBACK</p>
+<p>
+  Scope: Domain-based DFS roots, stand-alone DFS roots, and DFS links.
+  If this flag is set at the DFS root, it applies to all links; otherwise, the value of this flag is considered for each individual link.
+</p>
+<p>
+  When this flag is set, optimal target failback is enabled for V4 DFS clients,
+  allowing them to fail back to an optimal target after failing over to a non-optimal one.
+  The target failback setting is provided to the DFS client in a V4 referral response by a DFS server.
+</p>
+</td>
+      </tr>
+    </tbody>
+  </thead></thead></table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Network_DfsPropertyFlags.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Network.DfsPropertyFlags%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Network/Enumerations/DfsPropertyFlags.cs/#L28" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

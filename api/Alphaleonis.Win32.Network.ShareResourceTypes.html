@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Enum ShareResourceTypes
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Enum ShareResourceTypes
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Network.ShareResourceTypes">
+  
+  
+  <h1 id="Alphaleonis_Win32_Network_ShareResourceTypes" data-uid="Alphaleonis.Win32.Network.ShareResourceTypes" class="text-break">Enum ShareResourceTypes
+  </h1>
+  <div class="markdown level0 summary"><p>Contains information about the shared resource.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Network.html">Alphaleonis.Win32.Network</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Network_ShareResourceTypes_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Flags]
+public enum ShareResourceTypes</code></pre>
+  </div>
+  <h5 id="Alphaleonis_Win32_Network_ShareResourceTypes_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Minimum supported client: Windows XP [desktop apps only]</p>
+<p>Minimum supported server: Windows Server 2003 [desktop apps only]</p>
+</div>
+  <h3 id="fields">Fields
+  </h3>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_ShareResourceTypes_AccessBasedDirectoryEnum">AccessBasedDirectoryEnum</td>
+        <td><p>SHI1005_FLAGS_ACCESS_BASED_DIRECTORY_ENUM</p>
+<p>The server will filter directory entries based on the access permissions that the user on the client computer has for the server on which the files reside.</p>
+<p>Only files for which the user has read access and directories for which the user has FILE_LIST_DIRECTORY access will be returned. If the user has SeBackupPrivilege, all available information will be returned.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_ShareResourceTypes_AllowNamespaceCaching">AllowNamespaceCaching</td>
+        <td><p>SHI1005_FLAGS_ALLOW_NAMESPACE_CACHING</p>
+<p>Clients are allowed to cache the namespace of the specified share.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_ShareResourceTypes_Dfs">Dfs</td>
+        <td><p>SHI1005_FLAGS_DFS</p>
+<p>The specified share is present in a DFS tree structure. This flag cannot be set with NetShareSetInfo.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_ShareResourceTypes_DfsRoot">DfsRoot</td>
+        <td><p>SHI1005_FLAGS_DFS_ROOT</p>
+<p>The specified share is the root volume in a DFS tree structure. This flag cannot be set with NetShareSetInfo.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_ShareResourceTypes_EnableCa">EnableCa</td>
+        <td><p>SHI1005_FLAGS_ENABLE_CA (0X4000) - Enables server-side functionality needed for peer caching support. Clients on high-latency or low-bandwidth connections can use alternate methods to retrieve data from peers if available, instead of sending requests to the server. This is only supported on shares configured for manual caching (CSC_CACHE_MANUAL_REINT).</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_ShareResourceTypes_EnableHash">EnableHash</td>
+        <td><p>SHI1005_FLAGS_ENABLE_HASH</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_ShareResourceTypes_ForceLevel2OpLock">ForceLevel2OpLock</td>
+        <td><p>SHI1005_FLAGS_FORCE_LEVELII_OPLOCK</p>
+<p>Prevents exclusive caching modes that can cause delays for highly shared read-only data.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_ShareResourceTypes_ForceSharedDelete">ForceSharedDelete</td>
+        <td><p>SHI1005_FLAGS_FORCE_SHARED_DELETE</p>
+<p>Shared files in the specified share can be forcibly deleted.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_ShareResourceTypes_None">None</td>
+        <td><p>No specific resource type used.</p>
+</td>
+      </tr>
+      <tr>
+        <td id="Alphaleonis_Win32_Network_ShareResourceTypes_RestrictExclusiveOpens">RestrictExclusiveOpens</td>
+        <td><p>SHI1005_FLAGS_RESTRICT_EXCLUSIVE_OPENS</p>
+<p>The specified share disallows exclusive file opens, where reads to an open file are disallowed.</p>
+</td>
+      </tr>
+    </tbody>
+  </thead></thead></table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Network_ShareResourceTypes.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Network.ShareResourceTypes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Network/Enumerations/ShareResourceTypes.cs/#L32" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

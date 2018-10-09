@@ -1,0 +1,804 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DeviceInfo
+   | AlphaFS </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DeviceInfo
+   | AlphaFS ">
+    <meta name="generator" content="docfx 2.39.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo">
+  
+  
+  <h1 id="Alphaleonis_Win32_Filesystem_DeviceInfo" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo" class="text-break">Class DeviceInfo
+  </h1>
+  <div class="markdown level0 summary"><p>Provides access to information of a device, on a local or remote host.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">DeviceInfo</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Alphaleonis.Win32.Filesystem.html">Alphaleonis.Win32.Filesystem</a></h6>
+  <h6><strong>Assembly</strong>: AlphaFS.dll</h6>
+  <h5 id="Alphaleonis_Win32_Filesystem_DeviceInfo_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityPermission(SecurityAction.InheritanceDemand, UnmanagedCode = true)]
+[Serializable]
+[SecurityCritical]
+public sealed class DeviceInfo</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo__ctor.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L39">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo__ctor_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo__ctor" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.#ctor">DeviceInfo()</h4>
+  <div class="markdown level1 summary"><p>Initializes a DeviceInfo class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public DeviceInfo()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo__ctor_System_String_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.%23ctor(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L47">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo__ctor_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.#ctor*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo__ctor_System_String_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.#ctor(System.String)">DeviceInfo(String)</h4>
+  <div class="markdown level1 summary"><p>Initializes a DeviceInfo class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public DeviceInfo(string host)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">host</span></td>
+        <td><p>The DNS or NetBIOS name of the remote server. <code>null</code> refers to the local host.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_BaseContainerId.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.BaseContainerId%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L73">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_BaseContainerId_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.BaseContainerId*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_BaseContainerId" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.BaseContainerId">BaseContainerId</h4>
+  <div class="markdown level1 summary"><p>Represents the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a> value of the base container identifier (ID) .The Windows Plug and Play (PnP) manager assigns this value to the device node (devnode).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Guid BaseContainerId { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_ClassGuid.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.ClassGuid%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L81">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_ClassGuid_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.ClassGuid*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_ClassGuid" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.ClassGuid">ClassGuid</h4>
+  <div class="markdown level1 summary"><p>Represents the <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a> of the device setup class that a device instance belongs to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Guid ClassGuid { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_CompatibleIds.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.CompatibleIds%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L85">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_CompatibleIds_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.CompatibleIds*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_CompatibleIds" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.CompatibleIds">CompatibleIds</h4>
+  <div class="markdown level1 summary"><p>Represents the list of compatible identifiers for a device instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string CompatibleIds { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_DeviceClass.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.DeviceClass%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L77">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_DeviceClass_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.DeviceClass*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_DeviceClass" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.DeviceClass">DeviceClass</h4>
+  <div class="markdown level1 summary"><p>Represents the name of the device setup class that a device instance belongs to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string DeviceClass { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_DeviceDescription.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.DeviceDescription%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L89">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_DeviceDescription_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.DeviceDescription*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_DeviceDescription" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.DeviceDescription">DeviceDescription</h4>
+  <div class="markdown level1 summary"><p>Represents a description of a device instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string DeviceDescription { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_DevicePath.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.DevicePath%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L93">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_DevicePath_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.DevicePath*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_DevicePath" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.DevicePath">DevicePath</h4>
+  <div class="markdown level1 summary"><p>The device interface path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string DevicePath { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_Driver.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.Driver%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L97">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_Driver_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.Driver*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_Driver" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.Driver">Driver</h4>
+  <div class="markdown level1 summary"><p>Represents the registry entry name of the driver key for a device instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Driver { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_EnumeratorName.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.EnumeratorName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L101">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_EnumeratorName_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.EnumeratorName*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_EnumeratorName" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.EnumeratorName">EnumeratorName</h4>
+  <div class="markdown level1 summary"><p>Represents the name of the enumerator for a device instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string EnumeratorName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_FriendlyName.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.FriendlyName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L105">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_FriendlyName_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.FriendlyName*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_FriendlyName" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.FriendlyName">FriendlyName</h4>
+  <div class="markdown level1 summary"><p>Represents the friendly name of a device instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string FriendlyName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_HardwareId.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.HardwareId%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L109">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_HardwareId_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.HardwareId*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_HardwareId" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.HardwareId">HardwareId</h4>
+  <div class="markdown level1 summary"><p>Represents the list of hardware identifiers for a device instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string HardwareId { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_HostName.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.HostName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L113">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_HostName_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.HostName*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_HostName" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.HostName">HostName</h4>
+  <div class="markdown level1 summary"><p>The host name that was passed to the class constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string HostName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_InstanceId.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.InstanceId%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L117">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_InstanceId_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.InstanceId*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_InstanceId" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.InstanceId">InstanceId</h4>
+  <div class="markdown level1 summary"><p>Gets the instance Id of the device.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string InstanceId { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_LocationInformation.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.LocationInformation%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L121">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_LocationInformation_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.LocationInformation*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_LocationInformation" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.LocationInformation">LocationInformation</h4>
+  <div class="markdown level1 summary"><p>Represents the bus-specific physical location of a device instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string LocationInformation { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_LocationPaths.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.LocationPaths%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L125">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_LocationPaths_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.LocationPaths*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_LocationPaths" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.LocationPaths">LocationPaths</h4>
+  <div class="markdown level1 summary"><p>Represents the location of a device instance in the device tree.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string LocationPaths { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_Manufacturer.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.Manufacturer%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L129">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_Manufacturer_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.Manufacturer*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_Manufacturer" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.Manufacturer">Manufacturer</h4>
+  <div class="markdown level1 summary"><p>Represents the name of the manufacturer of a device instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Manufacturer { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_PhysicalDeviceObjectName.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.PhysicalDeviceObjectName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L133">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_PhysicalDeviceObjectName_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.PhysicalDeviceObjectName*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_PhysicalDeviceObjectName" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.PhysicalDeviceObjectName">PhysicalDeviceObjectName</h4>
+  <div class="markdown level1 summary"><p>Encapsulates the physical device location information provided by a device's firmware to Windows.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string PhysicalDeviceObjectName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_Service.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.Service%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L137">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_Service_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.Service*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_Service" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.Service">Service</h4>
+  <div class="markdown level1 summary"><p>Represents the name of the service that is installed for a device instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Service { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo_EnumerateDevices_Alphaleonis_Win32_Filesystem_DeviceGuid_.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo.EnumerateDevices(Alphaleonis.Win32.Filesystem.DeviceGuid)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L61">View Source</a>
+  </span>
+  <a id="Alphaleonis_Win32_Filesystem_DeviceInfo_EnumerateDevices_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.EnumerateDevices*"></a>
+  <h4 id="Alphaleonis_Win32_Filesystem_DeviceInfo_EnumerateDevices_Alphaleonis_Win32_Filesystem_DeviceGuid_" data-uid="Alphaleonis.Win32.Filesystem.DeviceInfo.EnumerateDevices(Alphaleonis.Win32.Filesystem.DeviceGuid)">EnumerateDevices(DeviceGuid)</h4>
+  <div class="markdown level1 summary"><p>Enumerates all available devices on the local host.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SecurityCritical]
+public IEnumerable&lt;DeviceInfo&gt; EnumerateDevices(DeviceGuid deviceGuid)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Alphaleonis.Win32.Filesystem.DeviceGuid.html">DeviceGuid</a></td>
+        <td><span class="parametername">deviceGuid</span></td>
+        <td><p>One of the <a class="xref" href="Alphaleonis.Win32.Filesystem.DeviceGuid.html">DeviceGuid</a> devices.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Alphaleonis.Win32.Filesystem.DeviceInfo.html">DeviceInfo</a>&gt;</td>
+        <td><p><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a> instances of type <a class="xref" href="Alphaleonis.Win32.Filesystem.DeviceGuid.html">DeviceGuid</a> from the local host.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/new/feature/new-csproj-format/apiSpec/new?filename=Alphaleonis_Win32_Filesystem_DeviceInfo.md&amp;value=---%0Auid%3A%20Alphaleonis.Win32.Filesystem.DeviceInfo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/alphaleonis/AlphaFS/blob/feature/new-csproj-format/src/AlphaFS/Device/DeviceInfo.cs/#L31" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
