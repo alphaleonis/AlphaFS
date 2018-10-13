@@ -1,126 +1,40 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{478C6563-C321-4AB5-9D4D-ABFC9C88EBF0}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		AlphaFS.nuspec = AlphaFS.nuspec
-		AlphaFS.testrunconfig = AlphaFS.testrunconfig
-		AlphaFS.vsmdi = AlphaFS.vsmdi
-		BuildRelease.proj = BuildRelease.proj
 		CHANGELOG.md = CHANGELOG.md
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaFS", "AlphaFS\AlphaFS.csproj", "{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaFS", "src\AlphaFS\AlphaFS.csproj", "{0E7FE1D8-9D72-4775-80EC-7828BDFB2BEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaFS.UnitTest", "AlphaFS.UnitTest\AlphaFS.UnitTest.csproj", "{BC336637-FDD7-4D13-9B24-1A888E85A944}"
-EndProject
-Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "AlphaFS.Doc", "AlphaFS.Doc\AlphaFS.Doc.shfbproj", "{81ED470C-0A64-4B10-B37E-61A06DDC497C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA} = {F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShell", "PowerShell", "{9D8AAD55-4083-454F-BBA9-1AB58D2B5FB9}"
-	ProjectSection(SolutionItems) = preProject
-		PowerShell\Copy-DirectoryWithProgress.ps1 = PowerShell\Copy-DirectoryWithProgress.ps1
-		PowerShell\Copy-FileWithProgress.ps1 = PowerShell\Copy-FileWithProgress.ps1
-		PowerShell\Enumerate-FileSystemEntryInfos.ps1 = PowerShell\Enumerate-FileSystemEntryInfos.ps1
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0C6848F4-3E55-423F-BE88-C8A72009927A}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlphaFS.UnitTest", "tests\AlphaFS.UnitTest\AlphaFS.UnitTest.csproj", "{718992F4-788E-4560-BBB4-6BAED28BD3FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Net35 Debug|Any CPU = Net35 Debug|Any CPU
-		Net35|Any CPU = Net35|Any CPU
-		Net40 Debug|Any CPU = Net40 Debug|Any CPU
-		Net40|Any CPU = Net40|Any CPU
-		Net45 Debug|Any CPU = Net45 Debug|Any CPU
-		Net45|Any CPU = Net45|Any CPU
-		Net451 Debug|Any CPU = Net451 Debug|Any CPU
-		Net451|Any CPU = Net451|Any CPU
-		Net452 Debug|Any CPU = Net452 Debug|Any CPU
-		Net452|Any CPU = Net452|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Debug|Any CPU.ActiveCfg = Net452 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Debug|Any CPU.Build.0 = Net452 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net35 Debug|Any CPU.ActiveCfg = Net35 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net35 Debug|Any CPU.Build.0 = Net35 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net35|Any CPU.ActiveCfg = Net35|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net35|Any CPU.Build.0 = Net35|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net40 Debug|Any CPU.ActiveCfg = Net40 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net40 Debug|Any CPU.Build.0 = Net40 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net40|Any CPU.ActiveCfg = Net40|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net40|Any CPU.Build.0 = Net40|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net45 Debug|Any CPU.ActiveCfg = Net45 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net45 Debug|Any CPU.Build.0 = Net45 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net45|Any CPU.ActiveCfg = Net45|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net45|Any CPU.Build.0 = Net45|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net451 Debug|Any CPU.ActiveCfg = Net451 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net451 Debug|Any CPU.Build.0 = Net451 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net451|Any CPU.ActiveCfg = Net451|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net451|Any CPU.Build.0 = Net451|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net452 Debug|Any CPU.ActiveCfg = Net452 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net452 Debug|Any CPU.Build.0 = Net452 Debug|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net452|Any CPU.ActiveCfg = Net452|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Net452|Any CPU.Build.0 = Net452|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Release|Any CPU.ActiveCfg = Net452|Any CPU
-		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}.Release|Any CPU.Build.0 = Net452|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Debug|Any CPU.ActiveCfg = Net452 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net35 Debug|Any CPU.ActiveCfg = Net35 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net35 Debug|Any CPU.Build.0 = Net35 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net35|Any CPU.ActiveCfg = NET35|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net35|Any CPU.Build.0 = NET35|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net40 Debug|Any CPU.ActiveCfg = Net40 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net40 Debug|Any CPU.Build.0 = Net40 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net40|Any CPU.ActiveCfg = Net40|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net40|Any CPU.Build.0 = Net40|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net45 Debug|Any CPU.ActiveCfg = Net45 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net45 Debug|Any CPU.Build.0 = Net45 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net45|Any CPU.ActiveCfg = Net45|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net45|Any CPU.Build.0 = Net45|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net451 Debug|Any CPU.ActiveCfg = Net451 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net451 Debug|Any CPU.Build.0 = Net451 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net451|Any CPU.ActiveCfg = Net451|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net451|Any CPU.Build.0 = Net451|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net452 Debug|Any CPU.ActiveCfg = Net452 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net452 Debug|Any CPU.Build.0 = Net452 Debug|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net452|Any CPU.ActiveCfg = Net452|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Net452|Any CPU.Build.0 = Net452|Any CPU
-		{BC336637-FDD7-4D13-9B24-1A888E85A944}.Release|Any CPU.ActiveCfg = Net452|Any CPU
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net35 Debug|Any CPU.ActiveCfg = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net35|Any CPU.ActiveCfg = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net35|Any CPU.Build.0 = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net40 Debug|Any CPU.ActiveCfg = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net40|Any CPU.ActiveCfg = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net40|Any CPU.Build.0 = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net45 Debug|Any CPU.ActiveCfg = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net45|Any CPU.ActiveCfg = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net45|Any CPU.Build.0 = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net451 Debug|Any CPU.ActiveCfg = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net451|Any CPU.ActiveCfg = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net451|Any CPU.Build.0 = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net452 Debug|Any CPU.ActiveCfg = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net452|Any CPU.ActiveCfg = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Net452|Any CPU.Build.0 = Release|x86
-		{81ED470C-0A64-4B10-B37E-61A06DDC497C}.Release|Any CPU.ActiveCfg = Release|x86
+		{0E7FE1D8-9D72-4775-80EC-7828BDFB2BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E7FE1D8-9D72-4775-80EC-7828BDFB2BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E7FE1D8-9D72-4775-80EC-7828BDFB2BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E7FE1D8-9D72-4775-80EC-7828BDFB2BEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{718992F4-788E-4560-BBB4-6BAED28BD3FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{718992F4-788E-4560-BBB4-6BAED28BD3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{718992F4-788E-4560-BBB4-6BAED28BD3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{718992F4-788E-4560-BBB4-6BAED28BD3FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{9D8AAD55-4083-454F-BBA9-1AB58D2B5FB9} = {478C6563-C321-4AB5-9D4D-ABFC9C88EBF0}
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C47DAE2E-05E8-4554-B693-E0AF5BEF37CA}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AlphaFS.vsmdi

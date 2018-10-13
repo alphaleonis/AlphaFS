@@ -1,0 +1,43 @@
+<Project>
+  <PropertyGroup>
+    <Product>AlphaFS</Product>
+    <Description>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes. Features highlights: creating hardlinks, accessing hidden volumes, enumeration of volumes, transactional file operations and much more.</Description>
+    <Authors>Alphaleonis;Yomodo</Authors>
+    <Copyright>Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</Copyright>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://github.com/alphaleonis/AlphaFS/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://alphafs.alphaleonis.com/</PackageProjectUrl>
+    <PackageIconUrl>http://alphaleonis.com/img/AlphaFS-icon.png</PackageIconUrl>
+    <PackageOutputPath>../../artifacts</PackageOutputPath>    
+    <RepositoryUrl>https://github.com/alphaleonis/AlphaFS</RepositoryUrl>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+ </PropertyGroup>
+ <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\build\AlphaFS.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CurrentDate>$([System.DateTime]::Now.ToString(yyMMdd-HHmm))</CurrentDate>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>7.2</LangVersion>
+    
+    <Major>2</Major>
+    <Minor>3</Minor>
+    <Revision>0</Revision>
+
+    <BuildNumber Condition=" '$(APPVEYOR_BUILD_NUMBER)' != '' ">$(APPVEYOR_BUILD_NUMBER)</BuildNumber>
+    <BuildNumber Condition=" '$(BuildNumber)' == '' ">0</BuildNumber>
+    
+    <PrereleaseLabel Condition="'$(APPVEYOR_REPO_BRANCH)' != 'master'">-dev-$(CurrentDate)</PrereleaseLabel>
+
+    <AssemblyVersion>$(Major).$(Minor).$(Revision).0</AssemblyVersion>
+    <AssemblyFileVersion>$(Major).$(Minor).$(Revision).$(BuildNumber)</AssemblyFileVersion>
+    <InformationalVersion>$(Major).$(Minor).$(Revision).$(BuildNumber)$(PrereleaseLabel)</InformationalVersion>
+    <PackageVersion>$(Major).$(Minor).$(Revision)$(PrereleaseLabel)</PackageVersion>
+  </PropertyGroup>
+</Project>

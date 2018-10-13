@@ -1,0 +1,23 @@
+image: Visual Studio 2017
+configuration: Release
+
+install:
+  - ps: $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
+  - ps: $fileContent += $env:deploy_key.Replace(' ', "`n")
+  - ps: $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
+  - ps: Set-Content $env:userprofile\.ssh\id_rsa $fileContent
+
+branches:
+  only:
+    - never-build-branch-automatically-dont-use-this-name
+
+pull_requests:
+  do_not_increment_build_number: true
+
+os: Visual Studio 2017
+
+build_script: 
+  - ps: .\build.ps1 -target DocPublish -verbosity verbose
+
+test: off
+deploy: off

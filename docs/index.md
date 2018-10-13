@@ -1,15 +1,7 @@
-# AlphaFS
+# Introduction
+The file system support in .NET is pretty good for most uses. However there are a few shortcomings, which this library tries to alleviate. The most notable deficiency of the standard .NET **System.IO** is the lack of support of advanced NTFS features, most notably extended length path support (eg. file/directory paths longer than 260 characters).
 
-[![Build status](https://ci.appveyor.com/api/projects/status/9kb175khv0k3rn7s?svg=true)](https://ci.appveyor.com/project/alphaleonis/alphafs/) [![Test status](https://img.shields.io/appveyor/tests/alphaleonis/alphafs.svg)](https://ci.appveyor.com/project/alphaleonis/alphafs/build/tests) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9b3af141aae74656b6135413564b7e5d)](https://app.codacy.com/app/Yomodo/AlphaFS?utm_source=github.com&utm_medium=referral&utm_content=alphaleonis/AlphaFS&utm_campaign=badger)
-
-AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard `System.IO` classes.
-
-## Introduction
-
-The file system support in .NET is pretty good for most uses. However there are a few shortcomings, which this library tries to alleviate. The most notable deficiency of the standard .NET `System.IO` is the lack of support of advanced NTFS features, most notably extended length path support (eg. file/directory paths longer than 260 characters: `System.IO.PathTooLongException`).
-
-### Feature Highlights
-
+## Feature Highlights
 * Support for extended length paths (longer than 260 characters)
 * Creating Junctions/Hardlinks
 * Accessing hidden volumes
@@ -22,7 +14,6 @@ The file system support in .NET is pretty good for most uses. However there are 
 * ...and much more!
 
 ## What does AlphaFS provide?
-
 AlphaFS provides a namespace (`Alphaleonis.Win32.Filesystem`) containing a number of classes. Most notable
 are replications of the `System.IO.Path`, `System.IO.File`, `System.IO.FileInfo`, `System.IO.Directory` and `System.IO.DirectoryInfo`, all with support for the extended-length paths (up to 32.000 chars), full UNC support,
 recursive file enumerations, native backups and manipulations with advanced flags and options.
@@ -43,4 +34,4 @@ The `Alphaleonis.Win32.Network` namespace together with the `Alphaleonis.Win32.N
 network functionality to connect to SMB/DFS resources and easily access files and folders on the network,
 all with extended-length paths support.
 
-The library is Open Source, licensed under the MIT license.
+The library is Open Source, licensed under the [MIT license](https://github.com/alphaleonis/AlphaFS/blob/master/LICENSE.md).
