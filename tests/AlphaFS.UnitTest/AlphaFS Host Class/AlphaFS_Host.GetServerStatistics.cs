@@ -29,6 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
+         // TODO: This test seems to fail on client OS? (no Server service. Examine further).
       [TestMethod]
       public void AlphaFS_Host_GetServerStatistics_Success()
       {

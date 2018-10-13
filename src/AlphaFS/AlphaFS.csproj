@@ -529,6 +529,11 @@
     <Compile Include="Filesystem\Path Class\Path.GetSuffixedDirectoryNameWithoutRoot.cs" />
     <Compile Include="Filesystem\Path Class\Path.LocalToUnc.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetTempPath.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Safe Handles\SafeTokenHandle.cs" />
     <Compile Include="Safe Handles\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />
@@ -637,11 +642,6 @@
     <Compile Include="Network\Native Other\SHARE_INFO_503.cs" />
     <Compile Include="OperatingSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Safe Handles\SafeGlobalMemoryBufferHandle.cs" />
     <Compile Include="Safe Handles\SafeNativeMemoryBufferHandle.cs" />
     <Compile Include="Security\CRC\Crc64.cs" />
@@ -704,8 +704,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Alphaleonis.Win32</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

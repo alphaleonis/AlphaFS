@@ -29,7 +29,6 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-
       [TestMethod]
       public void AlphaFS_Directory_Copy_3ExistingDirectories_FromVolumeShadowCopy_LocalAndNetwork_Success()
       {
@@ -38,6 +37,7 @@ namespace AlphaFS.UnitTest
       } 
 
 
+      // TODO: This test potentially takes a very long time since it just copies three random directories which may be very large. Fix this!
       private void AlphaFS_Directory_Copy_3ExistingDirectories_FromVolumeShadowCopy(bool isNetwork)
       {
          var testOk = false;

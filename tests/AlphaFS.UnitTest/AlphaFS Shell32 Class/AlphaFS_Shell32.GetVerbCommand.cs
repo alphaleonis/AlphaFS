@@ -36,7 +36,7 @@ namespace AlphaFS.UnitTest
          AlphaFS_Shell32Info_GetVerbCommand(true);
       }
       
-
+      // TODO: Bad assumption. Can we think of something better here?
       private void AlphaFS_Shell32Info_GetVerbCommand(bool isNetwork)
       {
          // Assumption: Extention: .txt is associated with: C:\Windows\System32\notepad.exe

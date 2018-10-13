@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
             using (System.IO.File.CreateText(junction)) { }
 
 
-            UnitTestAssert.ThrowsException<System.IO.IOException>(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
+            Assert.ThrowsException<System.IO.IOException>(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
          }
       }
    }

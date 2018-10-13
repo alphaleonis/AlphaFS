@@ -34,9 +34,10 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         UnitTestAssert.ThrowsException<ArgumentException>(() => System.IO.Path.GetFullPath(@"\\\\.txt"));
+         const string path = @"\\\\.txt";
+         Assert.ThrowsException<ArgumentException>(() => System.IO.Path.GetFullPath(path), $"System.IO did not throw expected exception for path \"{path}\"");
 
-         UnitTestAssert.ThrowsException<ArgumentException>(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(@"\\\\.txt"));
+         Assert.ThrowsException<ArgumentException>(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(path), $"Alphaleonis.Win32.FileSystem did not throw expected exception for path \"{path}\"");
       }
    }
 }
