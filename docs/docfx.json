@@ -7,12 +7,14 @@
             "src/**.csproj"
           ],
           "cwd": "..",
-          "TargetFramework": "net47"
         }
       ],
       "dest": "api",
       "disableGitFeatures": false,
-      "disableDefaultFilter": false
+      "disableDefaultFilter": false,
+      "properties": {
+          "TargetFramework": "net47"
+      }
     }
   ],
   "build": {
