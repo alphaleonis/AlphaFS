@@ -63,12 +63,14 @@
     "globalMetadata": {
       "_appTitle": "AlphaFS",
       "_appFooter": "<span>Copyright © 2018 <strong>AlphaFS contributors</strong></span>",
-      "_enableSearch": true      
+      "_enableSearch": true,
+      "_appLogoPath": "images/logo.svg"
     },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "default"
+      "default",
+      "theme/alphaleonis"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",
