@@ -69,7 +69,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>      
       [SecurityCritical]
+#pragma warning disable CS3005 // Identifier differing only in case is not CLS-compliant
       public static void CreateHardLink(string fileName, string existingFileName)
+#pragma warning restore CS3005 // Identifier differing only in case is not CLS-compliant
       {
          CreateHardLinkCore(null, fileName, existingFileName, PathFormat.RelativePath);
       }
@@ -83,7 +85,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
+#pragma warning disable CS3005 // Identifier differing only in case is not CLS-compliant
       public static void CreateHardLink(string fileName, string existingFileName, PathFormat pathFormat)
+#pragma warning restore CS3005 // Identifier differing only in case is not CLS-compliant
       {
          CreateHardLinkCore(null, fileName, existingFileName, pathFormat);
       }

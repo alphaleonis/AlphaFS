@@ -67,7 +67,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       [SecurityCritical]
+#pragma warning disable CS3005 // Identifier differing only in case is not CLS-compliant
       public static IEnumerable<string> EnumerateHardLinksTransacted(KernelTransaction transaction, string path)
+#pragma warning restore CS3005 // Identifier differing only in case is not CLS-compliant
       {
          return EnumerateHardLinksCore(transaction, path, PathFormat.RelativePath);
       }
@@ -80,7 +82,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+#pragma warning disable CS3005 // Identifier differing only in case is not CLS-compliant
       public static IEnumerable<string> EnumerateHardLinksTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+#pragma warning restore CS3005 // Identifier differing only in case is not CLS-compliant
       {
          return EnumerateHardLinksCore(transaction, path, pathFormat);
       }
