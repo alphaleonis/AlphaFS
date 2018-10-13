@@ -30,6 +30,10 @@ Version 2.3  (2018-XX-XX)
 - Added missing overloaded methods regarding timestamps and symbolic links.
 - Marked `Directory.Copy`/`DirectoryInfo.Copy` methods using parameters `overwrite` and `preserveDates` as obsolete. Use one of the `CopyOptions`.
 - Fixed a `Directory.Move` unit test creating endless drive mappings on error.
+- Issue #504: Move to Cake build system.
+- Issue #502: Upgrade to MSTest v2.
+- Issue #501: Documentation generated using DocFX.
+- Issue #482: AlphaFS .NET Core compatibility (netstandard 2.0 support added)
 
 ### Breaking Changes
 
@@ -37,7 +41,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
 - Issue #477: Move method `Path.GetMappedConnectionName` to `Host` class.
 - Issue #478: Move method `Path.GetMappedUncName` to `Host` class.
-
+- Issue #500: Drop support for .NET framework versions prior to .NET 4.5
 
 Version 2.2.6  (2018-08-18)
 -------------
