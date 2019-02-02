@@ -69,7 +69,7 @@ namespace AlphaFS.UnitTest
 
 
          // Hand counted 33 True's.
-         Assert.AreEqual(33, longPathCnt, "Number of local paths do not match.", errorCnt);
+         Assert.AreEqual(33, longPathCnt, $"Number of local paths does not match. errorCnt = {errorCnt}");
 
 
          Assert.AreEqual(0, errorCnt, "No errors were expected.");
