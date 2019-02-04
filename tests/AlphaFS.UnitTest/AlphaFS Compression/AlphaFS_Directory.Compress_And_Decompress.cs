@@ -90,19 +90,10 @@ namespace AlphaFS.UnitTest
 
             Alphaleonis.Win32.Filesystem.Directory.Decompress(folder, recursive ? Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive : Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.None);
 
-
-            if (recursive)
-            {
-               DirectoryAssert.IsNotCompressed(folderCcc);
-               FileAssert.IsNotCompressed(fileAaa);
-               FileAssert.IsNotCompressed(fileBbb);
-            }
-            else
-            {
-               DirectoryAssert.IsNotCompressed(folderCcc);
-               FileAssert.IsNotCompressed(fileAaa);
-               FileAssert.IsNotCompressed(fileBbb);
-            }
+            
+            DirectoryAssert.IsNotCompressed(folderCcc);
+            FileAssert.IsNotCompressed(fileAaa);
+            FileAssert.IsNotCompressed(fileBbb);           
          }
 
          Console.WriteLine();
