@@ -352,7 +352,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates an NTFS directory junction (similar to CMD command: "MKLINK /J").</summary>
       internal static void CreateDirectoryJunction(SafeFileHandle safeHandle, string directoryPath)
       {
-         var targetDirBytes = Encoding.Unicode.GetBytes(Path.NonInterpretedPathPrefix + Path.GetRegularPathCore(directoryPath, GetFullPathOptions.AddTrailingDirectorySeparator, false));
+         var targetDir = Path.GetRegularPathCore(directoryPath, GetFullPathOptions.AddTrailingDirectorySeparator, false);
+         // junctions to volume-prefixed paths need the long path prefix removed. Correct: \??\Volume{000...}\foo, wrong: \??\\\?\Volume{000...}\foo
+         if (targetDir.StartsWith(Path.VolumePrefix))
+            targetDir = targetDir.Substring(Path.LongPathPrefix.Length);
+         targetDir = Path.NonInterpretedPathPrefix + targetDir;
+         var targetDirBytes = Encoding.Unicode.GetBytes(targetDir);
 
          var header = new NativeMethods.ReparseDataBufferHeader
          {
