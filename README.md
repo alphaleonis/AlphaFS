@@ -1,6 +1,7 @@
 # AlphaFS
 
-[![Build status](https://ci.appveyor.com/api/projects/status/9kb175khv0k3rn7s?svg=true)](https://ci.appveyor.com/project/alphaleonis/alphafs/) [![Test status](https://img.shields.io/appveyor/tests/alphaleonis/alphafs.svg)](https://ci.appveyor.com/project/alphaleonis/alphafs/build/tests) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9b3af141aae74656b6135413564b7e5d)](https://app.codacy.com/app/Yomodo/AlphaFS?utm_source=github.com&utm_medium=referral&utm_content=alphaleonis/AlphaFS&utm_campaign=badger)
+[![Not Maintained](https://img.shields.io/badge/Maintenance%20Level-Abandoned-orange.svg)](https://gist.github.com/cheerfulstoic/d107229326a01ff0f333a1d3476e068d)
+[![Build status](https://ci.appveyor.com/api/projects/status/9kb175khv0k3rn7s?svg=true)](https://ci.appveyor.com/project/alphaleonis/alphafs/) [![Test status](https://img.shields.io/appveyor/tests/alphaleonis/alphafs.svg)](https://ci.appveyor.com/project/alphaleonis/alphafs/build/tests) 
 
 AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard `System.IO` classes.
 
