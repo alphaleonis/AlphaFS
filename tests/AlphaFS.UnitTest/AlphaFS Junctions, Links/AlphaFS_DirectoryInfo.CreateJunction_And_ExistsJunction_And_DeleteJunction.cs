@@ -32,11 +32,32 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_DirectoryInfo_CreateJunction_And_ExistsJunction_And_DeleteJunction_Local_Success()
       {
+         AlphaFS_DirectoryInfo_CreateJunction_And_ExistsJunction_And_DeleteJunction_Local_Success_core(false);
+      }
+
+      [TestMethod]
+      public void AlphaFS_DirectoryInfo_CreateJunction_And_ExistsJunction_And_DeleteJunction_Local_VolumePath_Success()
+      {
+         AlphaFS_DirectoryInfo_CreateJunction_And_ExistsJunction_And_DeleteJunction_Local_Success_core(true);
+      }
+
+      private void AlphaFS_DirectoryInfo_CreateJunction_And_ExistsJunction_And_DeleteJunction_Local_Success_core(bool volumeTarget)
+      {
          using (var tempRoot = new TemporaryDirectory())
          {
             var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
             var junction = System.IO.Path.Combine(toDelete.FullName, "MyJunctionPoint");
-            var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
+            var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget").FullName;
+
+            if (volumeTarget)
+            {
+               var volumeGuidPath = Alphaleonis.Win32.Filesystem.Volume.GetUniqueVolumeNameForPath(target);
+               var volumePath = Alphaleonis.Win32.Filesystem.Volume.GetVolumePathName(target);
+               var targetNew = target.Replace(volumePath, volumeGuidPath);
+               if (targetNew == target || !targetNew.StartsWith(Alphaleonis.Win32.Filesystem.Path.VolumePrefix))
+                  Assert.Inconclusive(@"Failed to construct a \\?\Volume style path for this test");
+               target = targetNew;
+            }
 
             Console.WriteLine("Input Directory JunctionPoint  Path: [{0}]", junction);
             Console.WriteLine("Input Directory JunctionTarget Path: [{0}]", target);
@@ -44,7 +65,7 @@ namespace AlphaFS.UnitTest
 
             #region CreateJunction
 
-            var dirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(target.FullName);
+            var dirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(target);
 
 
             // On success, dirInfo.FullName now points to the directory junction.
@@ -87,7 +108,7 @@ namespace AlphaFS.UnitTest
             const string subFolder = "Test folder";
             dirInfo.CreateSubdirectory(subFolder);
 
-            Assert.IsTrue(System.IO.Directory.Exists(System.IO.Path.Combine(target.FullName, subFolder)));
+            Assert.IsTrue(System.IO.Directory.Exists(System.IO.Path.Combine(target, subFolder)));
 
             #endregion // CreateJunction
 
