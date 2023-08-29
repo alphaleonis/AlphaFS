@@ -29,17 +29,6 @@ namespace Alphaleonis.Win32.Network
 {
    public static partial class Host
    {
-      /// <summary>Enumerates open connections from the local host.</summary>
-      /// <returns><see cref="OpenConnectionInfo"/> connection information from the local host.</returns>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NetworkInformationException"/>
-      [SecurityCritical]
-      public static IEnumerable<OpenConnectionInfo> EnumerateOpenConnections()
-      {
-         return EnumerateOpenConnectionsCore(null, null, false);
-      }
-
-
       /// <summary>Enumerates open connections from the specified host.</summary>
       /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>
